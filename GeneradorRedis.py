@@ -11,6 +11,7 @@ def main():
     cantidad_sesiones = 100
 
     for _ in range(cantidad_sesiones):
+        user_id = fake.uuid4()
         username = fake.user_name()
         display_name = fake.name()
         role = random.choice(["premium", "freemium"])
@@ -18,6 +19,7 @@ def main():
         unread_notifications = random.randint(1, 99)
 
         session_data = {
+            "user_id": user_id,
             "username": username,
             "display_name": display_name,
             "role": role,
