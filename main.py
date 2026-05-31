@@ -40,6 +40,11 @@ def main():
 
         # Elena es una usuaria nueva que solo es amiga de Ana por ahora
         db.crear_relacion_amigo("elena_m", "ana_p")
+
+        ruta_dataset = "dataset.json" 
+    
+    # Auto-ejecutamos la carga masiva
+        db.cargar_datos_desde_json(ruta_dataset)
         
         #Probar la función avanzada: "Quizás conozcas a" para Lautaro
         print("\n--- Ejecutando función 'Quizás conozcas a' para 'lautaro_g' ---")
