@@ -80,6 +80,7 @@ class Neo4jService:
             print("❌ Error: El archivo no tiene un formato JSON válido.")
             return
 
+<<<<<<< HEAD:Neo4JService.py
         print(f"⏳ Procesando e inyectando {len(datos)} registros en Neo4j...")
 
         # 2. La Query de Cypher optimizada para cargas masivas (UNWIND)
@@ -132,3 +133,6 @@ class Neo4jService:
             result = session.run(query, username=username_actual)
             return [linea["username"] for linea in result]
         
+=======
+        
+>>>>>>> b5561ce2b8576d81e91efff684cbe9afde6b7ee6:Neo4j/Neo4JService.py
