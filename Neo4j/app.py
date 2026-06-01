@@ -2,7 +2,7 @@ from flask import Flask, jsonify, render_template, request
 from Neo4JService import Neo4jService
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.')
 
 # Conexión a tu Neo4j local (¡Cambia la contraseña!)
 dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "Independiente2026")
@@ -97,6 +97,53 @@ def eliminar_usuario():
         # (Asegurate de que en tu Neo4JService.py la función se llame 'eliminar_usuario')
         dbGrafo.eliminar_usuario(username)
         return jsonify({"mensaje": f"Usuario '{username}' eliminado con éxito del grafo"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/crear_usuario', methods=['POST'])
+def api_crear_usuario():
+    datos = request.get_json()
+    if not datos:
+        return jsonify({"error": "No se enviaron datos"}), 400
+    username = datos.get('username')
+    nombre = datos.get('nombre')
+    if not username or not nombre:
+        return jsonify({"error": "Faltan campos obligatorios: username y nombre"}), 400
+    try:
+        nuevo = dbGrafo.crear_usuario(username, nombre)
+        return jsonify({"mensaje": "Usuario creado con éxito en el grafo", "usuario": nuevo}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/eliminar_usuario', methods=['POST'])
+def api_eliminar_usuario():
+    datos = request.get_json()
+    if not datos:
+        return jsonify({"error": "No se enviaron datos"}), 400
+    username = datos.get('username')
+    if not username:
+        return jsonify({"error": "Falta el campo obligatorio: username"}), 400
+    try:
+        dbGrafo.eliminar_usuario(username)
+        return jsonify({"mensaje": f"Usuario '{username}' eliminado con éxito del grafo"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/crear_amistad', methods=['POST'])
+def api_crear_amistad():
+    datos = request.get_json()
+    if not datos:
+        return jsonify({"error": "No se enviaron datos"}), 400
+    username1 = datos.get('username1')
+    username2 = datos.get('username2')
+    if not username1 or not username2:
+        return jsonify({"error": "Faltan campos obligatorios: username1 y username2"}), 400
+    try:
+        resultado = dbGrafo.crear_relacion_amigo(username1, username2)
+        return jsonify({"mensaje": f"Amistad entre '{username1}' y '{username2}' creada con éxito", "detalle": resultado}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
