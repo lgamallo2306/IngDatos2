@@ -20,7 +20,7 @@ public class Main {
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-    private static final String DATASET_PATH = "../datasetMediano.json";
+    private static final String DATASET_PATH = "datasetMediano.json";
 
     public static void main(String[] args) {
         CqlSession session = CassandraConnection.getInstance();
