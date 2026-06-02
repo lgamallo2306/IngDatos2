@@ -3,17 +3,12 @@ import json
 
 class Neo4jService:
     def __init__(self, uri, user, password):
-        """
-        Inicializa la conexión con la base de datos Neo4j.
-        Buenas prácticas: Se utiliza un único Driver para la aplicación.
-        """
         self.driver = GraphDatabase.driver(uri, auth=(user, password))
 
     def close(self):
-        """Cierra la conexión con el clúster o base de datos."""
         self.driver.close()
 
-    #OPERACIONES BÁSICAS
+    # OPERACIONES BÁSICAS
 
     def crear_usuario(self, username, nombre):
         query = """
@@ -46,9 +41,8 @@ class Neo4jService:
 
     def obtener_recomendaciones(self, username):
         """
-        Operación Avanzada: Algoritmo "Quizás conozcas a".
-        Busca amigos de mis amigos que NO sean mis amigos actualmente,
-        y los ordena por la cantidad de amigos en común.
+        Algoritmo "Quizás conozcas a".
+        Busca amigos de mis amigos que NO sean mis amigos actualmente.
         """
         query = """
         MATCH (usuario:Usuario {username: $username})-[:AMIGO_DE]-(amigo)-[:AMIGO_DE]-(posible_amigo:Usuario)
@@ -63,11 +57,9 @@ class Neo4jService:
             result = session.run(query, username=username)
             return [record.data() for record in result]
 
-
     def cargar_datos_desde_json(self, ruta_archivo):
         """
-        Lee un archivo JSON de Mockaroo e inyecta los datos de forma masiva en Neo4j
-        usando UNWIND para optimizar el rendimiento de la carga.
+        Lee el archivo JSON de Mockaroo e inyecta los datos respetando las claves con guion bajo.
         """
         try:
             with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
@@ -88,7 +80,6 @@ class Neo4jService:
                       u.apellido = fila.last_name,
                       u.id_original = fila.id
         """
-
         with self.driver.session() as session:
             try:
                 session.run(query, lista_datos=datos)
@@ -98,14 +89,13 @@ class Neo4jService:
 
     def sugerir_amigos(self, username_actual):
         """
-        [CONSULTA AVANZADA] Encuentra "amigos de mis amigos" que el
-        usuario actual todavía no sigue, ordenados por relevancia.
+        Encuentra amigos de mis amigos usando la relación AMIGO_DE.
         """
         query = """
-        MATCH (yo:Usuario {username: $username})-[r1:INTERACTUA_CON {tipo: 'follows'}]->(amigo:Usuario)
-        MATCH (amigo)-[r2:INTERACTUA_CON {tipo: 'follows'}]->(sugerido:Usuario)
+        MATCH (yo:Usuario {username: $username})-[:AMIGO_DE]->(amigo:Usuario)
+        MATCH (amigo)-[:AMIGO_DE]->(sugerido:Usuario)
         WHERE yo <> sugerido
-          AND NOT (yo)-[:INTERACTUA_CON {tipo: 'follows'}]->(sugerido)
+          AND NOT (yo)-[:AMIGO_DE]->(sugerido)
         RETURN sugerido.username AS username,
                sugerido.nombre AS nombre,
                COUNT(amigo) AS amigos_en_comun
@@ -118,11 +108,10 @@ class Neo4jService:
 
     def obtener_lista_seguidos(self, username_actual):
         """
-        [FUNCIÓN PARA INTERACCIÓN] Devuelve los usernames de la gente que sigue
-        el usuario actual. Sirve para alimentar el feed de Cassandra o Mongo.
+        Devuelve los usernames de las conexiones para alimentar el feed.
         """
         query = """
-        MATCH (u:Usuario {username: $username})-[r:INTERACTUA_CON {tipo: 'follows'}]->(seguido:Usuario)
+        MATCH (u:Usuario {username: $username})-[:AMIGO_DE]->(seguido:Usuario)
         RETURN seguido.username AS username
         """
         with self.driver.session() as session:
