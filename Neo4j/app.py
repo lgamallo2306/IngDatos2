@@ -1,10 +1,19 @@
+<<<<<<< Updated upstream
 from flask import Flask, jsonify, request
+=======
+from flask import Flask, jsonify, render_template, request
+>>>>>>> Stashed changes
 from flask_cors import CORS
 from Neo4JService import Neo4jService
 import json
 
+<<<<<<< Updated upstream
 app = Flask(__name__)
 CORS(app)  # Permite que React (port 5173) hable con Flask (port 5000)
+=======
+app = Flask(__name__, template_folder='.')
+CORS(app, origins=["http://localhost:5173"])
+>>>>>>> Stashed changes
 
 dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "Independiente2026")
 
@@ -15,6 +24,25 @@ except FileNotFoundError:
     basePublicaciones = []
     print("Aviso: No se encontró el archivo MOCK_DATA_Publicaciones.json")
 
+<<<<<<< Updated upstream
+=======
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/api/cargar-grafo', methods=['POST'])
+def cargar_grafo():
+    # datasetMediano.json está en la raíz del repo, un nivel arriba de /Neo4j
+    ruta = '../datasetMediano.json'
+    try:
+        resultado = dbGrafo.cargar_dataset_completo(ruta)
+        return jsonify({"status": "ok", **resultado}), 200
+    except FileNotFoundError:
+        return jsonify({"error": f"No se encontró el dataset en {ruta}"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+>>>>>>> Stashed changes
 @app.route('/api/recomendaciones')
 def recomendaciones():
     username = request.args.get('username')
