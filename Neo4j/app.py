@@ -1,15 +1,18 @@
 from flask import Flask, jsonify, render_template, request
 from Neo4JService import Neo4jService
+from flask_cors import CORS  # 1. Importás la extensión
 import json
 
+
 app = Flask(__name__, template_folder='.')
+CORS(app)
 
 # Conexión a tu Neo4j local (¡Cambia la contraseña!)
-dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "Independiente2026")
+dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "password123")
 
 # --- SIMULADOR DE MONGODB/CASSANDRA ---
 try:
-    with open('MOCK_DATA_Publicaciones.json', 'r', encoding='utf-8') as archivo:
+    with open('datasetMediano.json', 'r', encoding='utf-8') as archivo:
         basePublicaciones = json.load(archivo)
 except FileNotFoundError:
     basePublicaciones = []
@@ -44,7 +47,7 @@ def feed_publicaciones():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/usuarios', methods=['POST'])
+@app.route('{URL}/api/usuarios', methods=['POST'])
 def crear_usuario():
     datos = request.get_json()
     if not datos:

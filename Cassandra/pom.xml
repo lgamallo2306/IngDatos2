@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>IngDatos2</artifactId>
+    <artifactId>CassandraBackend</artifactId>
+    <name>Cassandra</name>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

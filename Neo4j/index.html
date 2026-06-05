@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+0<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -61,14 +61,18 @@
     </div>
 
     <script>
+        // Ajuste el puerto si su Flask corre en uno distinto (ej: http://127.0.0.1:5001)
+        const API_BASE_URL = 'http://127.0.0.1:5000';
+
         function cargarRecomendaciones() {
             const username = document.getElementById('usernameInput').value;
             const contenedor = document.getElementById('resultado');
             if (!username) return alert("Ingresa un username");
 
             contenedor.innerHTML = "<p>Consultando el Grafo (Neo4j)...</p>";
-            
-            fetch(`/api/recomendaciones?username=${username}`)
+
+            // Se usa la URL absoluta para evitar el error de file:///
+            fetch(`${API_BASE_URL}/api/recomendaciones?username=${username}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.error) {
@@ -103,37 +107,37 @@
             const nombre = document.getElementById('nuevoNombre').value.trim();
             if (!username || !nombre) return alert('Completá username y nombre');
 
-            fetch('/api/crear_usuario', {
+            fetch(`${API_BASE_URL}/api/crear_usuario`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, nombre })
             })
-            .then(res => res.json().then(data => ({ ok: res.ok, data })))
-            .then(({ ok, data }) => {
-                mostrarRespuesta(data, !ok);
-                if (ok) {
-                    document.getElementById('nuevoUsername').value = '';
-                    document.getElementById('nuevoNombre').value = '';
-                }
-            })
-            .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    mostrarRespuesta(data, !ok);
+                    if (ok) {
+                        document.getElementById('nuevoUsername').value = '';
+                        document.getElementById('nuevoNombre').value = '';
+                    }
+                })
+                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
         }
 
         function eliminarUsuario() {
             const username = document.getElementById('eliminarUsername').value.trim();
             if (!username) return alert('Ingresá un username para eliminar');
 
-            fetch('/api/eliminar_usuario', {
+            fetch(`${API_BASE_URL}/api/eliminar_usuario`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username })
             })
-            .then(res => res.json().then(data => ({ ok: res.ok, data })))
-            .then(({ ok, data }) => {
-                mostrarRespuesta(data, !ok);
-                if (ok) document.getElementById('eliminarUsername').value = '';
-            })
-            .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    mostrarRespuesta(data, !ok);
+                    if (ok) document.getElementById('eliminarUsername').value = '';
+                })
+                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
         }
 
         function crearAmistad() {
@@ -141,20 +145,20 @@
             const username2 = document.getElementById('amigo2').value.trim();
             if (!username1 || !username2) return alert('Completá ambos usernames');
 
-            fetch('/api/crear_amistad', {
+            fetch(`${API_BASE_URL}/api/crear_amistad`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username1, username2 })
             })
-            .then(res => res.json().then(data => ({ ok: res.ok, data })))
-            .then(({ ok, data }) => {
-                mostrarRespuesta(data, !ok);
-                if (ok) {
-                    document.getElementById('amigo1').value = '';
-                    document.getElementById('amigo2').value = '';
-                }
-            })
-            .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    mostrarRespuesta(data, !ok);
+                    if (ok) {
+                        document.getElementById('amigo1').value = '';
+                        document.getElementById('amigo2').value = '';
+                    }
+                })
+                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
         }
 
         function cargarFeed() {
@@ -163,8 +167,8 @@
             if (!username) return alert("Ingresa un username");
 
             contenedor.innerHTML = "<p>Cargando publicaciones...</p>";
-            
-            fetch(`/api/feed?username=${username}`)
+
+            fetch(`${API_BASE_URL}/api/feed?username=${username}`)
                 .then(res => res.json())
                 .then(data => {
                     if(data.length === 0) {
