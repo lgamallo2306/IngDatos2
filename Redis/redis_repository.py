@@ -35,3 +35,18 @@ class SessionRepository:
         key = f"auth:session:{token}"
         self.client.delete(key)
         print("Sesión destruida.")
+
+    def cargar_sesion_desde_json(self, user_id, username, session_data):
+
+        token = session_data["token_hash"]
+        key = f"auth:session:{token}"
+
+        self.client.hset(key, mapping={
+            "user_id": user_id,
+            "username": username,
+            "ip_address": session_data.get("ip_address", "Desconocida")
+        })
+
+        self.client.expire(key, session_data.get("ttl", 3600))
+
+        print(f"Sesión importada: {username} (Token: {token[:8]}...)")
