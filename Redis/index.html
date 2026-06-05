@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo Red Social - Test Redis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 p-8">
+
+    <div class="max-w-3xl mx-auto space-y-6">
+        
+        <header class="bg-white p-6 rounded-lg shadow text-center">
+            <h1 class="text-2xl font-bold text-blue-600">Testing Backend: Sesiones con Redis</h1>
+            <p class="text-sm text-gray-500 mt-2">Estado del Token Local: <span id="tokenStatus" class="font-bold text-red-500">Ninguno</span></p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow space-y-4">
+                <h2 class="text-xl font-semibold border-b pb-2">Acciones</h2>
+                
+                <button onclick="iniciarSesion()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition">
+                    1. Simular Login (Crear Sesión)
+                </button>
+                
+                <button onclick="verFeed()" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded transition">
+                    2. Ver Feed (Requiere Token)
+                </button>
+                
+                <button onclick="cerrarSesion()" class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition">
+                    3. Cerrar Sesión (Destruir Token)
+                </button>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-lg shadow text-green-400 font-mono text-sm overflow-auto h-64">
+                <h2 class="text-gray-400 border-b border-gray-600 pb-2 mb-4">Consola de Respuestas de la API</h2>
+                <pre id="consola">Esperando acciones...</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:5000/api';
+        const consola = document.getElementById('consola');
+        const tokenStatus = document.getElementById('tokenStatus');
+
+        function logMensaje(obj) {
+            consola.textContent = JSON.stringify(obj, null, 2);
+        }
+
+        function actualizarEstadoToken() {
+            const token = localStorage.getItem('mi_token_social');
+            if (token) {
+                tokenStatus.textContent = "Guardado (" + token.substring(0,8) + "...)";
+                tokenStatus.className = "font-bold text-green-500";
+            } else {
+                tokenStatus.textContent = "Ninguno";
+                tokenStatus.className = "font-bold text-red-500";
+            }
+        }
+
+        // 1. Iniciar Sesión
+        async function iniciarSesion() {
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: "821b449e-f36f-5f88-9844-df534e54aaf3" })
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.token) {
+                    // Guardamos el token en el almacenamiento local del navegador
+                    localStorage.setItem('mi_token_social', data.token);
+                    actualizarEstadoToken();
+                }
+                logMensaje(data);
+            } catch (error) {
+                logMensaje({ error: error.message });
+            }
+        }
+
+        // 2. Ver Feed (Petición Autenticada)
+        async function verFeed() {
+            const token = localStorage.getItem('mi_token_social');
+            
+            try {
+                const response = await fetch(`${API_URL}/feed`, {
+                    method: 'GET',
+                    headers: { 
+                        'Authorization': `Bearer ${token}` 
+                    }
+                });
+                const data = await response.json();
+                logMensaje(data);
+            } catch (error) {
+                logMensaje({ error: error.message });
+            }
+        }
+
+        // 3. Cerrar Sesión
+        async function cerrarSesion() {
+            const token = localStorage.getItem('mi_token_social');
+            
+            try {
+                const response = await fetch(`${API_URL}/logout`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}` 
+                    }
+                });
+                const data = await response.json();
+                
+                // Borramos el token del navegador
+                localStorage.removeItem('mi_token_social');
+                actualizarEstadoToken();
+                logMensaje(data);
+            } catch (error) {
+                logMensaje({ error: error.message });
+            }
+        }
+
+        // Iniciar el estado visual
+        actualizarEstadoToken();
+    </script>
+</body>
+</html>
