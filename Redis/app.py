@@ -50,4 +50,4 @@ def logout():
 
 if __name__ == '__main__':
     print("Iniciando API de la Red Social...")
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=6000)

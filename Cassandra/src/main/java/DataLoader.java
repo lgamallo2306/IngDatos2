@@ -8,13 +8,11 @@ import java.time.Instant;
 import java.util.UUID;
 
 public class DataLoader {
-    private final FeedRepository feedRepo;
-    private final MessageRepository messageRepo;
+    private final CassandraService service;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public DataLoader(FeedRepository feedRepo, MessageRepository messageRepo) {
-        this.feedRepo = feedRepo;
-        this.messageRepo = messageRepo;
+    public DataLoader(CassandraService service) {
+        this.service = service;
     }
 
     public int[] loadFromFile(String jsonPath) throws Exception {
@@ -38,7 +36,7 @@ public class DataLoader {
                     node.get("content_preview").asText(),
                     node.get("post_type").asText()
                 );
-                feedRepo.insert(entry);
+                service.insertFeed(entry);
                 count++;
             } catch (Exception e) {
                 System.err.println("[DataLoader] Feed error: " + e.getMessage());
@@ -70,7 +68,7 @@ public class DataLoader {
                     node.get("read").asBoolean(),
                     mediaUrl
                 );
-                messageRepo.insert(msg);
+                service.insertMessage(msg);
                 count++;
             } catch (Exception e) {
                 System.err.println("[DataLoader] Message error: " + e.getMessage());
