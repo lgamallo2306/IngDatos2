@@ -77,14 +77,33 @@ Gestión de sesiones de autenticación con TTL automático. Usa hashes de Redis 
 
 ## Cassandra
 
-Feed de usuario y mensajería entre conversaciones. El diseño de claves de partición permite lecturas secuenciales eficientes sin ALLOW FILTERING.
+Feed de usuario y mensajería entre conversaciones. El diseño de claves de partición permite lecturas secuenciales eficientes sin ALLOW FILTERING. Cada escritura se replica en tablas secundarias para soportar distintos patrones de acceso.
 
 **Estructura:** `Cassandra/src/main/java/` (Main.java, CassandraService.java, DataLoader.java, models/)
 
-**Tablas:**
-- `feed_by_user` — PK `(owner_user_id)`, clustering `created_at DESC`
-- `feed_by_user_and_type` — PK `(owner_user_id, post_type)`, clustering `created_at DESC`
-- `messages_by_conversation` — PK `(conversation_id)`, clustering `sent_at ASC`
+### Tablas
+
+#### Feed (keyspace `social_network`)
+
+| Tabla | Partition key | Clustering | Uso |
+|-------|--------------|------------|-----|
+| `feed` | `owner_user_id` | `created_at DESC`, `post_id ASC` | Q1/Q2: feed principal del usuario |
+| `feed_by_type` | `owner_user_id` | `post_type ASC`, `created_at DESC`, `post_id ASC` | Q3: filtrar por tipo de publicación |
+| `feed_by_author` | `author_id` | `created_at DESC`, `post_id ASC` | Q4: todas las publicaciones de un autor |
+
+#### Mensajes (keyspace `social_network`)
+
+| Tabla | Partition key | Clustering | Uso |
+|-------|--------------|------------|-----|
+| `messages` | `conversation_id` | `sent_at DESC`, `message_id ASC` | Q5/Q6: mensajes de una conversación |
+| `messages_unread` | `conversation_id` | `sent_at DESC`, `message_id ASC` | Q7: no leídos (tabla dedicada, sin ALLOW FILTERING) |
+| `messages_by_sender` | `sender_id` | `sent_at DESC`, `message_id ASC` | Q8: todos los mensajes enviados por un usuario |
+
+Cada INSERT en `feed` (Q2) escribe automáticamente en `feed_by_type` (Q3) y `feed_by_author` (Q4).  
+Cada INSERT en `messages` (Q6) escribe automáticamente en `messages_unread` (Q7, solo si no leído) y `messages_by_sender` (Q8).  
+Al marcar un mensaje como leído se elimina de `messages_unread`.
+
+
 
 ### Carga de datos
 
@@ -96,21 +115,23 @@ Feed de usuario y mensajería entre conversaciones. El diseño de claves de part
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| `GET` | `/feed/{ownerId}` | Últimas 50 entradas del feed |
-| `POST` | `/feed` | Crear entrada `{ownerUserId, postId, authorId, authorUsername, contentPreview, postType, createdAt?}` |
+| `GET` | `/feed/{ownerId}` | Q1: últimas 50 entradas del feed |
+| `POST` | `/feed` | Q2: crear entrada `{ownerUserId, postId, authorId, authorUsername, contentPreview, postType, createdAt?}` — escribe en las 3 tablas |
 | `DELETE` | `/feed/{ownerId}/{createdAt}/{postId}` | Eliminar una entrada del feed |
 | `GET` | `/feed/{ownerId}/rango?desde=&hasta=` | Entradas en un rango de timestamps (ISO 8601) |
 | `GET` | `/feed/{ownerId}/ultimos/{n}` | Las N entradas más recientes |
-| `GET` | `/feed/{ownerId}/tipo/{postType}` | Entradas filtradas por tipo (tabla secundaria) |
+| `GET` | `/feed/{ownerId}/tipo/{postType}` | Q3: entradas filtradas por tipo (`feed_by_type`) |
+| `GET` | `/feed/autor/{authorId}` | Q4: todas las publicaciones de un autor (`feed_by_author`) |
 
 ### Mensajes
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| `GET` | `/mensajes/{conversationId}` | Todos los mensajes de una conversación |
-| `POST` | `/mensajes` | Crear mensaje `{conversationId, senderId, receiverId, content, mediaUrl?, sentAt?}` |
-| `PUT` | `/mensajes/leer` | Marcar mensaje como leído `{conversationId, sentAt, messageId}` |
-| `DELETE` | `/mensajes/{convId}/{sentAt}/{messageId}` | Eliminar un mensaje |
+| `GET` | `/mensajes/{conversationId}` | Q5: todos los mensajes de una conversación |
+| `POST` | `/mensajes` | Q6: crear mensaje `{conversationId, senderId, receiverId, content, mediaUrl?, sentAt?}` — escribe en las 3 tablas |
+| `PUT` | `/mensajes/leer` | Marcar mensaje como leído `{conversationId, sentAt, messageId}` — elimina de `messages_unread` |
+| `DELETE` | `/mensajes/{convId}/{sentAt}/{messageId}` | Eliminar un mensaje de `messages` y `messages_unread` |
 | `GET` | `/mensajes/{conversationId}/rango?desde=&hasta=` | Mensajes en un rango de timestamps |
 | `GET` | `/mensajes/{conversationId}/desde/{timestamp}` | Mensajes nuevos desde un timestamp (polling) |
-| `GET` | `/mensajes/{conversationId}/no-leidos` | Mensajes no leídos de la conversación |
+| `GET` | `/mensajes/{conversationId}/no-leidos` | Q7: mensajes no leídos (`messages_unread`, sin ALLOW FILTERING) |
+| `GET` | `/mensajes/sender/{senderId}` | Q8: todos los mensajes enviados por un usuario (`messages_by_sender`) |

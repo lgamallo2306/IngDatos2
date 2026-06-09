@@ -34,9 +34,10 @@ public class Main {
         app.delete("/feed/{ownerId}/{createdAt}/{postId}", Main::eliminarFeedEntry);
 
         // Feed — queries secuenciales
-        app.get("/feed/{ownerId}/rango", Main::getFeedRango);           // ?desde=&hasta=
-        app.get("/feed/{ownerId}/ultimos/{n}", Main::getFeedUltimos);   // top N
-        app.get("/feed/{ownerId}/tipo/{postType}", Main::getFeedByTipo); // tabla secundaria
+        app.get("/feed/{ownerId}/rango", Main::getFeedRango);            // ?desde=&hasta=
+        app.get("/feed/{ownerId}/ultimos/{n}", Main::getFeedUltimos);    // top N
+        app.get("/feed/{ownerId}/tipo/{postType}", Main::getFeedByTipo); // Q3: feed_by_type
+        app.get("/feed/autor/{authorId}", Main::getFeedByAutor);         // Q4: feed_by_author
 
         // Mensajes — CRUD base
         app.get("/mensajes/{conversationId}", Main::getMensajes);
@@ -45,9 +46,10 @@ public class Main {
         app.delete("/mensajes/{convId}/{sentAt}/{messageId}", Main::eliminarMensaje);
 
         // Mensajes — queries secuenciales
-        app.get("/mensajes/{conversationId}/rango", Main::getMensajesRango);   // ?desde=&hasta=
+        app.get("/mensajes/{conversationId}/rango", Main::getMensajesRango);      // ?desde=&hasta=
         app.get("/mensajes/{conversationId}/desde/{timestamp}", Main::getMensajesDesde);
-        app.get("/mensajes/{conversationId}/no-leidos", Main::getMensajesNoLeidos);
+        app.get("/mensajes/{conversationId}/no-leidos", Main::getMensajesNoLeidos); // Q7: messages_unread
+        app.get("/mensajes/sender/{senderId}", Main::getMensajesBySender);          // Q8: messages_by_sender
 
         System.out.println("[Main] Servidor iniciado en http://localhost:7000");
 
@@ -156,6 +158,18 @@ public class Main {
         }
     }
 
+    private static void getFeedByAutor(Context ctx) {
+        try {
+            UUID authorId = UUID.fromString(ctx.pathParam("authorId"));
+            ctx.result(mapper.writeValueAsString(service.getFeedByAuthor(authorId)));
+            ctx.contentType("application/json");
+        } catch (IllegalArgumentException e) {
+            ctx.status(400).json(Map.of("error", "UUID inválido"));
+        } catch (Exception e) {
+            ctx.status(500).json(Map.of("error", e.getMessage()));
+        }
+    }
+
     // =========================================================================
     // MENSAJES — CRUD base
     // =========================================================================
@@ -254,6 +268,18 @@ public class Main {
             UUID convId = UUID.fromString(ctx.pathParam("conversationId"));
             ctx.result(mapper.writeValueAsString(service.getUnreadMessages(convId)));
             ctx.contentType("application/json");
+        } catch (Exception e) {
+            ctx.status(500).json(Map.of("error", e.getMessage()));
+        }
+    }
+
+    private static void getMensajesBySender(Context ctx) {
+        try {
+            UUID senderId = UUID.fromString(ctx.pathParam("senderId"));
+            ctx.result(mapper.writeValueAsString(service.getMessagesBySender(senderId)));
+            ctx.contentType("application/json");
+        } catch (IllegalArgumentException e) {
+            ctx.status(400).json(Map.of("error", "UUID inválido"));
         } catch (Exception e) {
             ctx.status(500).json(Map.of("error", e.getMessage()));
         }

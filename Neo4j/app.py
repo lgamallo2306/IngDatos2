@@ -18,7 +18,6 @@ try:
         basePublicaciones = json.load(archivo)
 except FileNotFoundError:
     basePublicaciones = []
-    print("Aviso: No se encontró el archivo MOCK_DATA_Publicaciones.json")
 
 @app.route('/')
 def index():
