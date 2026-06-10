@@ -9,15 +9,23 @@ repo = SessionRepository()
 
 @app.route('/api/login', methods=['POST'])
 def login():
+
     data = request.json or {}
-    usuario_id = data.get("user_id", "1001") 
-    
-    token = repo.crear_sesion(user_id=usuario_id)
+    usuario_id = data.get("user_id") 
+    username = data.get("username")
+
+    if not usuario_id or not username:
+        return jsonify({"error": "Faltan los datos 'user_id' o 'username'"}), 400
+
+    ip_cliente = request.remote_addr
+
+    token = repo.crear_sesion(user_id=usuario_id, username=username, ip_address=ip_cliente)
     
     return jsonify({
         "mensaje": "Login exitoso",
         "token": token
     }), 200
+
 
 @app.route('/api/feed', methods=['GET'])
 def ver_feed():
