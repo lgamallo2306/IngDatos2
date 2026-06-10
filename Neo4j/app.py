@@ -7,6 +7,8 @@ import json
 app = Flask(__name__, template_folder='.')
 CORS(app)
 
+URL = "localhost:7687"
+
 # Conexión a tu Neo4j local (¡Cambia la contraseña!)
 dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "password123")
 
@@ -47,7 +49,7 @@ def feed_publicaciones():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('{URL}/api/usuarios', methods=['POST'])
+@app.route('/{URL}/api/usuarios', methods=['POST'])
 def crear_usuario():
     datos = request.get_json()
     if not datos:
