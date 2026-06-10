@@ -6,13 +6,15 @@ class SessionRepository:
         self.client = redis.Redis(host=host, port=port, db=db, decode_responses=True)
         self.session_ttl = 3600
 
-    def crear_sesion(self, user_id, device_os="Web"):
+    def crear_sesion(self, user_id, username, ip_address):
+        
         token = str(uuid.uuid4())
         key = f"auth:session:{token}"
 
         self.client.hset(key, mapping={
             "user_id": user_id,
-            "device": device_os
+            "username": username,
+            "ip_address": ip_address
         })
 
         self.client.expire(key, self.session_ttl)

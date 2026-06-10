@@ -5,7 +5,7 @@ def poblar_redis():
     print("Se inicia la carga")
     repo = SessionRepository()
 
-    ruta_dataset = '../dataset.json'
+    ruta_dataset = '../datasetMediano.json'
     try:
         with open(ruta_dataset, 'r', encoding='utf-8') as archivo:
             contenido = archivo.read()
