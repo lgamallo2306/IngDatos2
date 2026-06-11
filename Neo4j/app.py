@@ -38,20 +38,6 @@ def recomendaciones():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/feed')
-def feed_publicaciones():
-    username = request.args.get('username')
-    if not username:
-        return jsonify({"error": "Falta el nombre de usuario"}), 400
-
-    try:
-        seguidos = dbGrafo.obtener_lista_seguidos(username)
-        feedUsuario = [post for post in basePublicaciones if post['autor_user'] in seguidos]
-        return jsonify(feedUsuario)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
 @app.route('/api/crear_usuario', methods=['POST'])
 def api_crear_usuario():
     datos = request.get_json()
