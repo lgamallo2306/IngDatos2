@@ -8,15 +8,19 @@ app = Flask(__name__, template_folder='.')
 CORS(app)
 
 # Conexión a tu Neo4j local (¡Cambia la contraseña!)
-dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "password123")
-
-# --- SIMULADOR DE MONGODB/CASSANDRA ---
+dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "Independiente2026")
+# --- SIMULADOR DE DATASET (Adaptado a tu estructura) ---
 try:
-    with open('datasetMediano.json', 'r', encoding='utf-8') as archivo:
-        basePublicaciones = json.load(archivo)
+    with open('dataset.json', 'r', encoding='utf-8') as archivo:
+        datos_completos = json.load(archivo)
+        # Extraemos la lista de publicaciones. Si tu clave en el JSON se llama 'posts' o 'feed', cambiala acá:
+        basePublicaciones = datos_completos.get('posts', []) 
 except FileNotFoundError:
     basePublicaciones = []
-    print("Aviso: No se encontró el archivo MOCK_DATA_Publicaciones.json")
+    print("Aviso: No se encontró el archivo dataset.json")
+except json.JSONDecodeError as e:
+    basePublicaciones = []
+    print(f"⚠️ Error: El archivo JSON sigue teniendo fallas de sintaxis: {e}")
 
 @app.route('/')
 def index():
@@ -44,62 +48,6 @@ def feed_publicaciones():
         seguidos = dbGrafo.obtener_lista_seguidos(username)
         feedUsuario = [post for post in basePublicaciones if post['autor_user'] in seguidos]
         return jsonify(feedUsuario)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('{URL}/api/usuarios', methods=['POST'])
-def crear_usuario():
-    datos = request.get_json()
-    if not datos:
-        return jsonify({"error": "No se enviaron datos"}), 400
-        
-    username = datos.get('username')
-    nombre = datos.get('nombre')
-
-    if not username or not nombre:
-        return jsonify({"error": "Faltan campos obligatorios (username y nombre)"}), 400
-
-    try:
-        # LLAMADA AL SERVICE: Llama a tu función exacta del Neo4jService
-        nuevo_usuario = dbGrafo.crear_usuario(username, nombre)
-        return jsonify({"mensaje": "Usuario creado con éxito en el grafo", "usuario": nuevo_usuario}), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-# 4. CREAR UNA RELACIÓN DE AMISTAD/SEGUIMIENTO
-@app.route('/api/relaciones', methods=['POST'])
-def crear_relacion():
-    datos = request.get_json()
-    if not datos:
-        return jsonify({"error": "No se enviaron datos"}), 400
-
-    username1 = datos.get('username1')
-    username2 = datos.get('username2')
-
-    if not username1 or not username2:
-        return jsonify({"error": "Faltan los nombres de usuario para conectar (username1 y username2)"}), 400
-
-    try:
-        # LLAMADA AL SERVICE: Vincula los dos nodos mediante la arista
-        resultado_relacion = dbGrafo.crear_relacion_amigo(username1, username2)
-        return jsonify({"mensaje": "Vínculo de amistad creado en el grafo", "detalle": resultado_relacion}), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/api/usuarios', methods=['DELETE'])
-def eliminar_usuario():
-    # Capturamos el username que viene como parámetro en la URL (ej: /api/usuarios?username=luca_94)
-    username = request.args.get('username')
-
-    if not username:
-        return jsonify({"error": "Falta el parámetro 'username' para eliminar"}), 400
-
-    try:
-        # LLAMADA AL SERVICE: Usamos el método de tu Neo4jService
-        # (Asegurate de que en tu Neo4JService.py la función se llame 'eliminar_usuario')
-        dbGrafo.eliminar_usuario(username)
-        return jsonify({"mensaje": f"Usuario '{username}' eliminado con éxito del grafo"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -147,6 +95,88 @@ def api_crear_amistad():
     try:
         resultado = dbGrafo.crear_relacion_amigo(username1, username2)
         return jsonify({"mensaje": f"Amistad entre '{username1}' y '{username2}' creada con éxito", "detalle": resultado}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/crear_familiar', methods=['POST'])
+def api_crear_Familiar():
+    datos = request.get_json()
+    if not datos:
+        return jsonify({"error": "No se enviaron datos"}), 400
+    username1 = datos.get('username1')
+    username2 = datos.get('username2')
+    if not username1 or not username2:
+        return jsonify({"error": "Faltan campos obligatorios: username1 y username2"}), 400
+    try:
+        resultado = dbGrafo.crear_relacion_familiar(username1, username2)
+        return jsonify({"mensaje": f"Familiar entre '{username1}' y '{username2}' creada con éxito", "detalle": resultado}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/eliminar_amistad', methods=['DELETE'])
+def api_eliminar_amistad():
+    datos = request.get_json()
+    if not datos:
+        return jsonify({"error": "No se enviaron datos"}), 400
+        
+    username1 = datos.get('username1')
+    username2 = datos.get('username2')
+    
+    if not username1 or not username2:
+        return jsonify({"error": "Faltan campos obligatorios: username1 y username2"}), 400
+        
+    try:
+        resultado = dbGrafo.eliminar_relacion_amigo(username1, username2)
+        cant_eliminadas = resultado[0].get('relaciones_eliminadas', 0) if resultado else 0
+        
+        if cant_eliminadas == 0:
+            return jsonify({"mensaje": f"No existía una relación de amistad previa entre '{username1}' y '{username2}'"}), 200
+            
+        return jsonify({"mensaje": f"Amistad entre '{username1}' y '{username2}' eliminada con éxito"}), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/eliminar_familiar', methods=['DELETE'])
+def api_eliminar_familiar():
+    datos = request.get_json()
+    if not datos:
+        return jsonify({"error": "No se enviaron datos"}), 400
+        
+    username1 = datos.get('username1')
+    username2 = datos.get('username2')
+    
+    if not username1 or not username2:
+        return jsonify({"error": "Faltan campos obligatorios: username1 y username2"}), 400
+        
+    try:
+        resultado = dbGrafo.eliminar_relacion_familiar(username1, username2)
+        cant_eliminadas = resultado[0].get('relaciones_eliminadas', 0) if resultado else 0
+        
+        if cant_eliminadas == 0:
+            return jsonify({"mensaje": f"No existía una relación familiar previa entre '{username1}' y '{username2}'"}), 200
+            
+        return jsonify({"mensaje": f"Relación familiar entre '{username1}' y '{username2}' eliminada con éxito"}), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/obtener_amigos_comun', methods = ['GET'])
+def api_obtener_amigos_comun():
+    username1 = request.args.get('username1')
+    username2 = request.args.get('username2')
+    
+    # Validamos que no vengan vacíos
+    if not username1 or not username2:
+        return jsonify({"error": "Faltan campos obligatorios: username1 y username2"}), 400
+        
+    try:
+        # Llamamos al método que creamos recién en el servicio de Neo4j
+        resultado = dbGrafo.obtener_amigos_comun(username1, username2)
+        
+        # Devolvemos la lista de amigos en común en formato JSON
+        return jsonify(resultado), 200
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
