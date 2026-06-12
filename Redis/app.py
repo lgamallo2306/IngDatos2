@@ -58,4 +58,5 @@ def logout():
 
 if __name__ == '__main__':
     print("Iniciando API de la Red Social...")
+    # Puerto 6001: los navegadores bloquean el 6000 por ser un "puerto inseguro" (X11)
     app.run(debug=True, port=6000)

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Red Social - Cassandra</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .contenedor { max-width: 900px; margin: auto; }
+        .controles { margin-bottom: 15px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .controles strong { display: block; margin-bottom: 10px; color: #333; }
+        input, select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 4px 4px 4px 0; font-size: 0.9em; }
+        input[type="text"] { width: 280px; }
+        input[type="number"] { width: 80px; }
+        input[type="datetime-local"] { width: 200px; }
+        button { padding: 9px 14px; cursor: pointer; border: none; border-radius: 4px; color: white; margin: 4px 4px 4px 0; font-size: 0.9em; }
+        .btn-feed    { background-color: #008cc1; }
+        .btn-msg     { background-color: #8e44ad; }
+        .btn-ok      { background-color: #4CAF50; }
+        .btn-peligro { background-color: #e74c3c; }
+        .btn-cargar  { background-color: #f39c12; }
+        .resultado-ok    { color: #27ae60; font-weight: bold; }
+        .resultado-error { color: #e74c3c; font-weight: bold; }
+
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab { padding: 10px 20px; cursor: pointer; background: white; border-radius: 6px 6px 0 0;
+               border: 2px solid #ddd; border-bottom: none; font-weight: bold; color: #666; }
+        .tab.activo { background: #008cc1; color: white; border-color: #008cc1; }
+        .panel { display: none; }
+        .panel.activo { display: block; }
+
+        .seccion { margin-bottom: 10px; }
+        .seccion-titulo { font-size: 0.85em; font-weight: bold; color: #888; text-transform: uppercase;
+                          letter-spacing: 0.05em; margin-bottom: 6px; }
+
+        .card { background: white; padding: 13px 15px; margin: 8px 0; border-radius: 4px; font-size: 0.9em; }
+        .card-feed { border-left: 5px solid #008cc1; }
+        .card-msg  { border-left: 5px solid #8e44ad; }
+        .card-msg.no-leido { border-left-color: #e74c3c; }
+        .meta { color: #999; font-size: 0.82em; margin-top: 4px; }
+        .badge { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 0.78em;
+                 background: #e8f4fd; color: #008cc1; margin-left: 6px; }
+        .badge-leido   { background: #eafaea; color: #27ae60; }
+        .badge-noleido { background: #fdecea; color: #e74c3c; }
+
+        #resultado { margin-top: 15px; }
+        hr { margin: 25px 0; border-color: #ddd; }
+    </style>
+</head>
+<body>
+<div class="contenedor">
+    <h1>Red Social &mdash; Cassandra</h1>
+
+    <div class="tabs">
+        <div class="tab activo" onclick="cambiarTab('feed')">Feed</div>
+        <div class="tab" onclick="cambiarTab('mensajes')">Mensajes</div>
+        <div class="tab" onclick="cambiarTab('admin')">Administración</div>
+    </div>
+
+    <!-- ===== PANEL FEED ===== -->
+    <div id="panel-feed" class="panel activo">
+
+        <div class="controles">
+            <strong>Consultar Feed</strong>
+            <div class="seccion">
+                <div class="seccion-titulo">Owner ID (UUID del usuario)</div>
+                <input type="text" id="feedOwnerId" placeholder="ej. 550e8400-e29b-41d4-a716-446655440000">
+            </div>
+
+            <div class="seccion">
+                <div class="seccion-titulo">Últimos 50 / Top N</div>
+                <button class="btn-feed" onclick="getFeed()">Ver últimos 50</button>
+                <input type="number" id="feedTopN" placeholder="N" min="1" max="100">
+                <button class="btn-feed" onclick="getFeedTopN()">Top N</button>
+            </div>
+
+            <div class="seccion">
+                <div class="seccion-titulo">Filtrar por tipo</div>
+                <select id="feedTipo">
+                    <option value="text">text</option>
+                    <option value="image">image</option>
+                    <option value="video">video</option>
+                    <option value="link">link</option>
+                </select>
+                <button class="btn-feed" onclick="getFeedByTipo()">Buscar por tipo</button>
+            </div>
+
+            <div class="seccion">
+                <div class="seccion-titulo">Rango de fechas</div>
+                <input type="datetime-local" id="feedDesde">
+                <input type="datetime-local" id="feedHasta">
+                <button class="btn-feed" onclick="getFeedRango()">Buscar rango</button>
+            </div>
+
+            <div class="seccion">
+                <div class="seccion-titulo">Por autor (feed_by_author)</div>
+                <input type="text" id="feedAuthorId" placeholder="authorId (UUID)">
+                <button class="btn-feed" onclick="getFeedByAutor()">Buscar por autor</button>
+            </div>
+        </div>
+
+        <div id="resultado-feed"><p>Ingresa un Owner ID y selecciona una consulta.</p></div>
+    </div>
+
+    <!-- ===== PANEL MENSAJES ===== -->
+    <div id="panel-mensajes" class="panel">
+
+        <div class="controles">
+            <strong>Consultar Mensajes</strong>
+            <div class="seccion">
+                <div class="seccion-titulo">Conversation ID (UUID)</div>
+                <input type="text" id="msgConvId" placeholder="ej. 550e8400-e29b-41d4-a716-446655440001">
+            </div>
+
+            <div class="seccion">
+                <div class="seccion-titulo">Todas / No leídas</div>
+                <button class="btn-msg" onclick="getMensajes()">Ver todos</button>
+                <button class="btn-msg" onclick="getMensajesNoLeidos()">Solo no leídos</button>
+            </div>
+
+            <div class="seccion">
+                <div class="seccion-titulo">Rango de fechas</div>
+                <input type="datetime-local" id="msgDesde">
+                <input type="datetime-local" id="msgHasta">
+                <button class="btn-msg" onclick="getMensajesRango()">Buscar rango</button>
+            </div>
+
+            <div class="seccion">
+                <div class="seccion-titulo">Desde un momento (mensajes nuevos)</div>
+                <input type="datetime-local" id="msgDesdeTs">
+                <button class="btn-msg" onclick="getMensajesDesde()">Buscar desde</button>
+            </div>
+
+            <div class="seccion">
+                <div class="seccion-titulo">Por emisor (messages_by_sender)</div>
+                <input type="text" id="msgSenderId" placeholder="senderId (UUID)">
+                <button class="btn-msg" onclick="getMensajesBySender()">Buscar por emisor</button>
+            </div>
+        </div>
+
+        <div id="resultado-mensajes"><p>Ingresa un Conversation ID y selecciona una consulta.</p></div>
+    </div>
+
+    <!-- ===== PANEL ADMIN ===== -->
+    <div id="panel-admin" class="panel">
+
+        <div class="controles">
+            <strong>Cargar Dataset</strong>
+            <button class="btn-cargar" onclick="cargarDataset()">Cargar datasetMediano.json</button>
+        </div>
+
+        <div class="controles">
+            <strong>Crear entrada de Feed</strong>
+            <input type="text" id="newFeedOwner"   placeholder="ownerUserId (UUID)">
+            <input type="text" id="newFeedPostId"  placeholder="postId (UUID)">
+            <input type="text" id="newFeedAuthor"  placeholder="authorId (UUID)">
+            <input type="text" id="newFeedUser"    placeholder="authorUsername">
+            <input type="text" id="newFeedContent" placeholder="contentPreview">
+            <select id="newFeedTipo">
+                <option value="text">text</option>
+                <option value="image">image</option>
+                <option value="video">video</option>
+                <option value="link">link</option>
+            </select>
+            <button class="btn-ok" onclick="crearFeedEntry()">Crear entrada</button>
+        </div>
+
+        <div class="controles">
+            <strong>Eliminar entrada de Feed</strong>
+            <input type="text" id="delFeedOwner"     placeholder="ownerUserId (UUID)">
+            <input type="text" id="delFeedCreatedAt" placeholder="createdAt (ISO, ej. 2023-01-15T10:30:00Z)">
+            <input type="text" id="delFeedPostId"    placeholder="postId (UUID)">
+            <button class="btn-peligro" onclick="eliminarFeedEntry()">Eliminar entrada</button>
+        </div>
+
+        <div class="controles">
+            <strong>Enviar Mensaje</strong>
+            <input type="text" id="newMsgConvId"   placeholder="conversationId (UUID)">
+            <input type="text" id="newMsgSender"   placeholder="senderId (UUID)">
+            <input type="text" id="newMsgReceiver" placeholder="receiverId (UUID)">
+            <input type="text" id="newMsgContent"  placeholder="Contenido del mensaje">
+            <button class="btn-ok" onclick="crearMensaje()">Enviar</button>
+        </div>
+
+        <div class="controles">
+            <strong>Marcar mensaje como leído</strong>
+            <input type="text" id="leerConvId"  placeholder="conversationId (UUID)">
+            <input type="text" id="leerSentAt"  placeholder="sentAt (ISO, ej. 2023-01-15T10:30:00Z)">
+            <input type="text" id="leerMsgId"   placeholder="messageId (UUID)">
+            <button class="btn-ok" onclick="marcarLeido()">Marcar leído</button>
+        </div>
+
+        <div class="controles">
+            <strong>Eliminar Mensaje</strong>
+            <input type="text" id="delMsgConvId"  placeholder="conversationId (UUID)">
+            <input type="text" id="delMsgSentAt"  placeholder="sentAt (ISO, ej. 2023-01-15T10:30:00Z)">
+            <input type="text" id="delMsgId"      placeholder="messageId (UUID)">
+            <button class="btn-peligro" onclick="eliminarMensaje()">Eliminar mensaje</button>
+        </div>
+
+        <div id="resultado-admin"><p>Selecciona una operación.</p></div>
+    </div>
+</div>
+
+<script>
+    const API = 'http://localhost:7000';
+
+    // ── Tabs ──────────────────────────────────────────────────────────────────
+
+    function cambiarTab(nombre) {
+        document.querySelectorAll('.tab').forEach((t, i) => {
+            const ids = ['feed', 'mensajes', 'admin'];
+            t.classList.toggle('activo', ids[i] === nombre);
+        });
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('activo'));
+        document.getElementById('panel-' + nombre).classList.add('activo');
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    function mostrar(id, html) {
+        document.getElementById(id).innerHTML = html;
+    }
+
+    function ok(id, msg) {
+        mostrar(id, `<p class="resultado-ok">${msg}</p>`);
+    }
+
+    function err(id, msg) {
+        mostrar(id, `<p class="resultado-error">Error: ${msg}</p>`);
+    }
+
+    function localToISO(localStr) {
+        if (!localStr) return null;
+        return new Date(localStr).toISOString();
+    }
+
+    function fmtFecha(isoStr) {
+        if (!isoStr) return '';
+        return new Date(isoStr).toLocaleString('es-AR');
+    }
+
+    function requireId(val, nombre, resultId) {
+        if (!val.trim()) { err(resultId, `Ingresa el ${nombre}`); return false; }
+        return true;
+    }
+
+    // ── Feed — Consultas ──────────────────────────────────────────────────────
+
+    function getFeed() {
+        const id = document.getElementById('feedOwnerId').value.trim();
+        if (!requireId(id, 'Owner ID', 'resultado-feed')) return;
+        mostrar('resultado-feed', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/feed/${id}`)
+            .then(r => r.json())
+            .then(data => renderFeed(data, 'resultado-feed'))
+            .catch(() => err('resultado-feed', 'Error de conexión'));
+    }
+
+    function getFeedTopN() {
+        const id = document.getElementById('feedOwnerId').value.trim();
+        const n  = document.getElementById('feedTopN').value.trim();
+        if (!requireId(id, 'Owner ID', 'resultado-feed')) return;
+        if (!n) { err('resultado-feed', 'Ingresa N'); return; }
+        mostrar('resultado-feed', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/feed/${id}/ultimos/${n}`)
+            .then(r => r.json())
+            .then(data => renderFeed(data, 'resultado-feed'))
+            .catch(() => err('resultado-feed', 'Error de conexión'));
+    }
+
+    function getFeedByTipo() {
+        const id   = document.getElementById('feedOwnerId').value.trim();
+        const tipo = document.getElementById('feedTipo').value;
+        if (!requireId(id, 'Owner ID', 'resultado-feed')) return;
+        mostrar('resultado-feed', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/feed/${id}/tipo/${tipo}`)
+            .then(r => r.json())
+            .then(data => renderFeed(data, 'resultado-feed'))
+            .catch(() => err('resultado-feed', 'Error de conexión'));
+    }
+
+    function getFeedRango() {
+        const id    = document.getElementById('feedOwnerId').value.trim();
+        const desde = localToISO(document.getElementById('feedDesde').value);
+        const hasta = localToISO(document.getElementById('feedHasta').value);
+        if (!requireId(id, 'Owner ID', 'resultado-feed')) return;
+        if (!desde || !hasta) { err('resultado-feed', 'Completa ambas fechas'); return; }
+        mostrar('resultado-feed', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/feed/${id}/rango?desde=${encodeURIComponent(desde)}&hasta=${encodeURIComponent(hasta)}`)
+            .then(r => r.json())
+            .then(data => renderFeed(data, 'resultado-feed'))
+            .catch(() => err('resultado-feed', 'Error de conexión'));
+    }
+
+    function renderFeed(data, resultId) {
+        if (data.error) { err(resultId, data.error); return; }
+        if (!Array.isArray(data) || data.length === 0) {
+            mostrar(resultId, '<p>No hay entradas para mostrar.</p>'); return;
+        }
+        let html = `<h3>${data.length} entrada(s) de feed</h3>`;
+        data.forEach(e => {
+            html += `
+            <div class="card card-feed">
+                <strong>@${e.authorUsername || '—'}</strong>
+                <span class="badge">${e.postType || ''}</span>
+                <p>${e.contentPreview || ''}</p>
+                <div class="meta">
+                    Post ID: ${e.postId}<br>
+                    Owner: ${e.ownerUserId} &nbsp;|&nbsp; ${fmtFecha(e.createdAt)}
+                </div>
+            </div>`;
+        });
+        mostrar(resultId, html);
+    }
+
+    // ── Mensajes — Consultas ──────────────────────────────────────────────────
+
+    function getMensajes() {
+        const id = document.getElementById('msgConvId').value.trim();
+        if (!requireId(id, 'Conversation ID', 'resultado-mensajes')) return;
+        mostrar('resultado-mensajes', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/mensajes/${id}`)
+            .then(r => r.json())
+            .then(data => renderMensajes(data, 'resultado-mensajes'))
+            .catch(() => err('resultado-mensajes', 'Error de conexión'));
+    }
+
+    function getMensajesNoLeidos() {
+        const id = document.getElementById('msgConvId').value.trim();
+        if (!requireId(id, 'Conversation ID', 'resultado-mensajes')) return;
+        mostrar('resultado-mensajes', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/mensajes/${id}/no-leidos`)
+            .then(r => r.json())
+            .then(data => renderMensajes(data, 'resultado-mensajes'))
+            .catch(() => err('resultado-mensajes', 'Error de conexión'));
+    }
+
+    function getMensajesRango() {
+        const id    = document.getElementById('msgConvId').value.trim();
+        const desde = localToISO(document.getElementById('msgDesde').value);
+        const hasta = localToISO(document.getElementById('msgHasta').value);
+        if (!requireId(id, 'Conversation ID', 'resultado-mensajes')) return;
+        if (!desde || !hasta) { err('resultado-mensajes', 'Completa ambas fechas'); return; }
+        mostrar('resultado-mensajes', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/mensajes/${id}/rango?desde=${encodeURIComponent(desde)}&hasta=${encodeURIComponent(hasta)}`)
+            .then(r => r.json())
+            .then(data => renderMensajes(data, 'resultado-mensajes'))
+            .catch(() => err('resultado-mensajes', 'Error de conexión'));
+    }
+
+    function getMensajesDesde() {
+        const id = document.getElementById('msgConvId').value.trim();
+        const ts = localToISO(document.getElementById('msgDesdeTs').value);
+        if (!requireId(id, 'Conversation ID', 'resultado-mensajes')) return;
+        if (!ts) { err('resultado-mensajes', 'Ingresa la fecha'); return; }
+        mostrar('resultado-mensajes', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/mensajes/${id}/desde/${encodeURIComponent(ts)}`)
+            .then(r => r.json())
+            .then(data => renderMensajes(data, 'resultado-mensajes'))
+            .catch(() => err('resultado-mensajes', 'Error de conexión'));
+    }
+
+    function renderMensajes(data, resultId) {
+        if (data.error) { err(resultId, data.error); return; }
+        if (!Array.isArray(data) || data.length === 0) {
+            mostrar(resultId, '<p>No hay mensajes para mostrar.</p>'); return;
+        }
+        let html = `<h3>${data.length} mensaje(s)</h3>`;
+        data.forEach(m => {
+            const leido = m.read;
+            html += `
+            <div class="card card-msg ${leido ? '' : 'no-leido'}">
+                <strong>De:</strong> ${m.senderId}
+                <span class="badge ${leido ? 'badge-leido' : 'badge-noleido'}">${leido ? 'leído' : 'no leído'}</span>
+                <p>${m.content || ''}</p>
+                <div class="meta">
+                    Conv: ${m.conversationId}<br>
+                    Msg ID: ${m.messageId} &nbsp;|&nbsp; ${fmtFecha(m.sentAt)}
+                </div>
+            </div>`;
+        });
+        mostrar(resultId, html);
+    }
+
+    function getFeedByAutor() {
+        const id = document.getElementById('feedAuthorId').value.trim();
+        if (!requireId(id, 'Author ID', 'resultado-feed')) return;
+        mostrar('resultado-feed', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/feed/autor/${id}`)
+            .then(r => r.json())
+            .then(data => renderFeed(data, 'resultado-feed'))
+            .catch(() => err('resultado-feed', 'Error de conexión'));
+    }
+
+    function getMensajesBySender() {
+        const id = document.getElementById('msgSenderId').value.trim();
+        if (!requireId(id, 'Sender ID', 'resultado-mensajes')) return;
+        mostrar('resultado-mensajes', '<p>Consultando Cassandra...</p>');
+        fetch(`${API}/mensajes/sender/${id}`)
+            .then(r => r.json())
+            .then(data => renderMensajes(data, 'resultado-mensajes'))
+            .catch(() => err('resultado-mensajes', 'Error de conexión'));
+    }
+
+    // ── Admin — operaciones ───────────────────────────────────────────────────
+
+    function cargarDataset() {
+        mostrar('resultado-admin', '<p>Cargando dataset...</p>');
+        fetch(`${API}/cargar`, { method: 'POST' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.error) { err('resultado-admin', data.error); return; }
+                ok('resultado-admin',
+                    `Dataset cargado — Feed: ${data.feed_insertados} | Mensajes: ${data.mensajes_insertados}`);
+            })
+            .catch(() => err('resultado-admin', 'Error de conexión'));
+    }
+
+    function crearFeedEntry() {
+        const owner   = document.getElementById('newFeedOwner').value.trim();
+        const postId  = document.getElementById('newFeedPostId').value.trim();
+        const author  = document.getElementById('newFeedAuthor').value.trim();
+        const user    = document.getElementById('newFeedUser').value.trim();
+        const content = document.getElementById('newFeedContent').value.trim();
+        const tipo    = document.getElementById('newFeedTipo').value;
+        if (!owner || !postId || !author || !user || !content)
+            return err('resultado-admin', 'Completa todos los campos de la entrada de feed');
+
+        fetch(`${API}/feed`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ownerUserId: owner, postId, authorId: author,
+                                   authorUsername: user, contentPreview: content, postType: tipo })
+        })
+            .then(r => r.json().then(d => ({ ok: r.ok, d })))
+            .then(({ ok: isOk, d }) => {
+                if (!isOk) { err('resultado-admin', d.error); return; }
+                ok('resultado-admin', 'Entrada de feed creada correctamente.');
+            })
+            .catch(() => err('resultado-admin', 'Error de conexión'));
+    }
+
+    function eliminarFeedEntry() {
+        const owner     = document.getElementById('delFeedOwner').value.trim();
+        const createdAt = document.getElementById('delFeedCreatedAt').value.trim();
+        const postId    = document.getElementById('delFeedPostId').value.trim();
+        if (!owner || !createdAt || !postId)
+            return err('resultado-admin', 'Completa todos los campos para eliminar');
+
+        fetch(`${API}/feed/${owner}/${encodeURIComponent(createdAt)}/${postId}`, { method: 'DELETE' })
+            .then(r => r.json().then(d => ({ ok: r.ok, d })))
+            .then(({ ok: isOk, d }) => {
+                if (!isOk) { err('resultado-admin', d.error); return; }
+                ok('resultado-admin', 'Entrada de feed eliminada.');
+            })
+            .catch(() => err('resultado-admin', 'Error de conexión'));
+    }
+
+    function crearMensaje() {
+        const convId   = document.getElementById('newMsgConvId').value.trim();
+        const sender   = document.getElementById('newMsgSender').value.trim();
+        const receiver = document.getElementById('newMsgReceiver').value.trim();
+        const content  = document.getElementById('newMsgContent').value.trim();
+        if (!convId || !sender || !receiver || !content)
+            return err('resultado-admin', 'Completa todos los campos del mensaje');
+
+        fetch(`${API}/mensajes`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ conversationId: convId, senderId: sender, receiverId: receiver, content })
+        })
+            .then(r => r.json().then(d => ({ ok: r.ok, d })))
+            .then(({ ok: isOk, d }) => {
+                if (!isOk) { err('resultado-admin', d.error); return; }
+                ok('resultado-admin', `Mensaje enviado. ID: ${d.messageId}`);
+                document.getElementById('newMsgContent').value = '';
+            })
+            .catch(() => err('resultado-admin', 'Error de conexión'));
+    }
+
+    function marcarLeido() {
+        const convId  = document.getElementById('leerConvId').value.trim();
+        const sentAt  = document.getElementById('leerSentAt').value.trim();
+        const msgId   = document.getElementById('leerMsgId').value.trim();
+        if (!convId || !sentAt || !msgId)
+            return err('resultado-admin', 'Completa todos los campos para marcar como leído');
+
+        fetch(`${API}/mensajes/leer`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ conversationId: convId, sentAt, messageId: msgId })
+        })
+            .then(r => r.json().then(d => ({ ok: r.ok, d })))
+            .then(({ ok: isOk, d }) => {
+                if (!isOk) { err('resultado-admin', d.error); return; }
+                ok('resultado-admin', d.status || 'Marcado como leído.');
+            })
+            .catch(() => err('resultado-admin', 'Error de conexión'));
+    }
+
+    function eliminarMensaje() {
+        const convId = document.getElementById('delMsgConvId').value.trim();
+        const sentAt = document.getElementById('delMsgSentAt').value.trim();
+        const msgId  = document.getElementById('delMsgId').value.trim();
+        if (!convId || !sentAt || !msgId)
+            return err('resultado-admin', 'Completa todos los campos para eliminar el mensaje');
+
+        fetch(`${API}/mensajes/${convId}/${encodeURIComponent(sentAt)}/${msgId}`, { method: 'DELETE' })
+            .then(r => r.json().then(d => ({ ok: r.ok, d })))
+            .then(({ ok: isOk, d }) => {
+                if (!isOk) { err('resultado-admin', d.error); return; }
+                ok('resultado-admin', 'Mensaje eliminado.');
+            })
+            .catch(() => err('resultado-admin', 'Error de conexión'));
+    }
+</script>
+</body>
+</html>
