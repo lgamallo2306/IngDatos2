@@ -1,5 +1,6 @@
 import redis 
 import uuid
+import time
 
 class SessionRepository:
     def __init__(self, host='localhost', port=6379, db=0):
@@ -52,3 +53,37 @@ class SessionRepository:
         self.client.expire(key, session_data.get("ttl", 3600))
 
         print(f"Sesión importada: {username} (Token: {token[:8]}...)")
+
+
+    #
+    # MONITOREAR USUARIOS
+    #
+    def registrar_actividad(self, user_id):
+
+        timestamp_actual = int(time.time())
+        self.client.zadd("metricas:usuarios_online", {user_id: timestamp_actual})
+
+    def contar_usuarios_online(self, margen_minutos=5):
+
+        tiempo_limite = int(time.time()) - (margen_minutos * 60)
+        
+        self.client.zremrangebyscore("metricas:usuarios_online",0, tiempo_limite)
+
+        activos = self.client.zcard("metricas:usuarios_online")
+
+        return activos
+    
+    #
+    # BANEAR IP
+    #
+
+    def banear_ip(self, ip_address, timpo_segundos= 86400):
+
+        key = f"blalcklist:ip:{ip_address}"
+
+        self.client.set(key, "bloqueado", ex=timpo_segundos)
+        print(f"La IP: {ip_address} fue agregada a la Blacklist")
+
+    def ip_esta_baneada(self, ip_address):
+        key = f"blacklist:ip:{ip_address}"
+        return self.client.exists(key) > 0    
