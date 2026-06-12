@@ -1,0 +1,240 @@
+0<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Red Social - Relaciones</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .contenedor { max-width: 800px; margin: auto; }
+        .controles { margin-bottom: 20px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        input { padding: 10px; width: 250px; border: 1px solid #ccc; border-radius: 4px; margin-right: 10px;}
+        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 4px; color: white; margin-right: 5px; }
+        .btn-grafos { background-color: #008cc1; }
+        .btn-documentos { background-color: #4CAF50; }
+        .btn-crear { background-color: #4CAF50; }
+        .btn-conectar { background-color: #8e44ad; }
+        .btn-eliminar { background-color: #e74c3c; }
+        .resultado-ok { color: #27ae60; font-weight: bold; }
+        .resultado-error { color: #e74c3c; font-weight: bold; }
+        
+        .card-amigo { background: white; border-left: 5px solid #008cc1; padding: 15px; margin: 10px 0; border-radius: 4px; }
+        .card-post { background: white; border-left: 5px solid #4CAF50; padding: 15px; margin: 10px 0; border-radius: 4px; }
+        .fecha { color: #888; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Mi Red Social</h1>
+        
+        <div class="controles">
+            <strong>Sugerencia de amistad.</strong><br><br>
+            <input type="text" id="usernameInput" placeholder="Ingresa tu username (ej. osowray51)">
+            <button class="btn-grafos" onclick="cargarRecomendaciones()">Buscar</button>
+        </div>
+        
+        <hr style="margin: 25px 0; border-color: #ddd;">
+        <h2 style="color: #555;">Principales Funcionalidades</h2>
+
+        <div class="controles">
+            <strong>Crear Amistad.</strong><br><br>
+            <input type="text" id="amigo1" placeholder="Username 1 (ej. juan_99)">
+            <input type="text" id="amigo2" placeholder="Username 2 (ej. maria_88)">
+            <button class="btn-conectar" onclick="crearAmistad()">Conectar Usuarios</button>
+        </div>
+        
+        <div class="controles">
+            <strong>Crear Relacion Familiar.</strong><br><br>
+            <input type="text" id="familiar1" placeholder="Username 1 (ej. juan_99)">
+            <input type="text" id="familiar2" placeholder="Username 2 (ej. maria_88)">
+            <button class="btn-conectar" onclick="crearFamiliar()">Conectar Usuarios</button>
+        </div>
+        <div class="controles">
+            <strong>Eliminar Amistad.</strong><br><br>
+            <input type="text" id="eliminarAmigo1" placeholder="Username 1 (ej. juan_99)">
+            <input type="text" id="eliminarAmigo2" placeholder="Username 2 (ej. maria_88)">
+            <button class="btn-eliminar" onclick="eliminarAmistad()">Eliminar Amistad</button>
+        </div>
+
+        <div class="controles">
+            <strong>Eliminar Relación Familiar.</strong><br><br>
+            <input type="text" id="eliminarFamiliar1" placeholder="Username 1 (ej. juan_99)">
+            <input type="text" id="eliminarFamiliar2" placeholder="Username 2 (ej. maria_88)">
+            <button class="btn-eliminar" onclick="eliminarFamiliar()">Eliminar Familiar</button>
+        </div>
+        
+        <div class="controles">
+            <strong>Obtener amigos en comun.</strong><br><br>
+            <input type="text" id="comun1" placeholder="Username 1 (ej. juan_99)">
+            <input type="text" id="comun2" placeholder="Username 2 (ej. maria_88)">
+            <button class="btn-conectar" onclick="obtenerAmigosEnComun()">Buscar</button>
+        </div>
+
+        <div id="resultado">
+            <p>Ingresa un usuario y selecciona una opción para comenzar.</p>
+        </div>
+    </div>
+
+    <script>
+        // Ajuste el puerto si su Flask corre en uno distinto (ej: http://127.0.0.1:5001)
+        const API_BASE_URL = 'http://127.0.0.1:5000';
+
+        function cargarRecomendaciones() {
+            const username = document.getElementById('usernameInput').value;
+            const contenedor = document.getElementById('resultado');
+            if (!username) return alert("Ingresa un username");
+
+            contenedor.innerHTML = "<p>Consultando el Grafo (Neo4j)...</p>";
+
+            // Se usa la URL absoluta para evitar el error de file:///
+            fetch(`${API_BASE_URL}/api/recomendaciones?username=${username}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        contenedor.innerHTML = `<p style="color:red">Error: ${data.error}</p>`;
+                        return;
+                    }
+                    if (data.length === 0) {
+                        contenedor.innerHTML = "<p>No hay sugerencias para este usuario.</p>";
+                        return;
+                    }
+                    let html = '<h2>Quizás conozcas a...</h2>';
+                    data.forEach(persona => {
+                        html += `
+                        <div class="card-amigo">
+                            <h3>${persona.nombre} (@${persona.recomendado})</h3>
+                            <p>Tienen <strong>${persona.amigos_en_comun}</strong> amigos en común</p>
+                        </div>`;
+                    });
+                    contenedor.innerHTML = html;
+                }).catch(err => contenedor.innerHTML = "<p>Error de conexión.</p>");
+        }
+
+        function mostrarRespuesta(data, esError) {
+            const contenedor = document.getElementById('resultado');
+            const clase = esError ? 'resultado-error' : 'resultado-ok';
+            const mensaje = data.error || data.mensaje || JSON.stringify(data);
+            contenedor.innerHTML = `<p class="${clase}">${mensaje}</p>`;
+        }
+
+        function crearAmistad() {
+            const username1 = document.getElementById('amigo1').value.trim();
+            const username2 = document.getElementById('amigo2').value.trim();
+            if (!username1 || !username2) return alert('Completá ambos usernames');
+
+            fetch(`${API_BASE_URL}/api/crear_amistad`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username1, username2 })
+            })
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    mostrarRespuesta(data, !ok);
+                    if (ok) {
+                        document.getElementById('amigo1').value = '';
+                        document.getElementById('amigo2').value = '';
+                    }
+                })
+                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
+        }
+
+        function crearFamiliar() {
+            const username1 = document.getElementById('familiar1').value.trim();
+            const username2 = document.getElementById('familiar2').value.trim();
+            if (!username1 || !username2) return alert('Completá ambos usernames');
+
+            fetch(`${API_BASE_URL}/api/crear_familiar`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username1, username2 })
+            })
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    mostrarRespuesta(data, !ok);
+                    if (ok) {
+                        document.getElementById('amigo1').value = '';
+                        document.getElementById('amigo2').value = '';
+                    }
+                })
+                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
+            }
+        
+        function eliminarAmistad() {
+            const username1 = document.getElementById('eliminarAmigo1').value.trim();
+            const username2 = document.getElementById('eliminarAmigo2').value.trim();
+            if (!username1 || !username2) return alert('Completá ambos usernames');
+
+            fetch(`${API_BASE_URL}/api/eliminar_amistad`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username1, username2 })
+            })
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    mostrarRespuesta(data, !ok);
+                    if (ok) {
+                        document.getElementById('eliminarAmigo1').value = '';
+                        document.getElementById('eliminarAmigo2').value = '';
+                    }
+                })
+                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
+        }
+
+        function eliminarFamiliar() {
+            const username1 = document.getElementById('eliminarFamiliar1').value.trim();
+            const username2 = document.getElementById('eliminarFamiliar2').value.trim();
+            if (!username1 || !username2) return alert('Completá ambos usernames');
+
+            fetch(`${API_BASE_URL}/api/eliminar_familiar`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username1, username2 })
+            })
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    mostrarRespuesta(data, !ok);
+                    if (ok) {
+                        document.getElementById('eliminarFamiliar1').value = '';
+                        document.getElementById('eliminarFamiliar2').value = '';
+                    }
+                })
+                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
+        }
+        
+        function obtenerAmigosEnComun(){
+            const username1 = document.getElementById('comun1').value.trim();
+            const username2 = document.getElementById('comun2').value.trim();
+            const contenedor = document.getElementById('resultado');
+            
+            if (!username1 || !username2) return alert('Completá ambos usernames');
+
+            contenedor.innerHTML = "<p>Buscando intersecciones en el Grafo...</p>";
+
+            fetch(`${API_BASE_URL}/api/obtener_amigos_comun?username1=${username1}&username2=${username2}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        contenedor.innerHTML = `<p style="color:red">Error: ${data.error}</p>`;
+                        return;
+                    }
+                    if (data.length === 0) {
+                        contenedor.innerHTML = `<p style="color:#e74c3c; font-weight:bold;">❌ Estos usuarios no tienen amigos en común.</p>`;
+                        return;
+                    }
+                    
+                    let html = `<h2>Amigos en común entre @${username1} y @${username2}</h2>`;
+                    data.forEach(persona => {
+                        html += `
+                        <div class="card-amigo" style="border-left-color: #8e44ad;">
+                            <h3>${persona.nombre}</h3>
+                            <p>Username: <strong>@${persona.username}</strong></p>
+                        </div>`;
+                    });
+                    contenedor.innerHTML = html;
+                })
+                .catch(() => contenedor.innerHTML = "<p style='color:red'>Error de conexión con el servidor.</p>");
+        }
+        
+        
+    </script>
+</body>
+</html>
