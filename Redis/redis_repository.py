@@ -79,7 +79,7 @@ class SessionRepository:
 
     def banear_ip(self, ip_address, timpo_segundos= 86400):
 
-        key = f"blalcklist:ip:{ip_address}"
+        key = f"blacklist:ip:{ip_address}"
 
         self.client.set(key, "bloqueado", ex=timpo_segundos)
         print(f"La IP: {ip_address} fue agregada a la Blacklist")
