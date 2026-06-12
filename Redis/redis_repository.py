@@ -88,3 +88,17 @@ class SessionRepository:
     def ip_esta_baneada(self, ip_address):
         key = f"blacklist:ip:{ip_address}"
         return self.client.exists(key) > 0    
+
+    
+    def desbanear_ip(self, ip_address):
+        key = f"blacklist:ip:{ip_address}"
+        
+        # self.client.delete() devuelve 1 si borró algo, o 0 si la clave no existía
+        resultado = self.client.delete(key)
+        
+        if resultado > 0:
+            print(f"La IP: {ip_address} fue eliminada de la Blacklist.")
+            return True
+        else:
+            print(f"La IP: {ip_address} no estaba baneada.")
+            return False

@@ -10,6 +10,11 @@ repo = SessionRepository()
 @app.route('/api/login', methods=['POST'])
 def login():
 
+    ip_cliente = request.remote_addr
+
+    if repo.ip_esta_baneada(ip_cliente):
+        return jsonify({"error": "Acceso denegado. Tu IP ha sido bloqueada."}), 403
+    
     data = request.json or {}
     usuario_id = data.get("user_id") 
     username = data.get("username")
@@ -17,7 +22,7 @@ def login():
     if not usuario_id or not username:
         return jsonify({"error": "Faltan los datos 'user_id' o 'username'"}), 400
 
-    ip_cliente = request.remote_addr
+    
 
     token = repo.crear_sesion(user_id=usuario_id, username=username, ip_address=ip_cliente)
     
@@ -79,6 +84,24 @@ def banear_usuario():
     repo.banear_ip(ip_a_banear)
     return jsonify({"mensaje": f"IP {ip_a_banear} ha sido baneada con éxito."}), 200
 
+
+@app.route('/api/admin/unban', methods=['POST'])
+def desbanear_usuario():
+    """Recibe una IP en formato JSON y la elimina de la lista negra"""
+    data = request.json or {}
+    ip_a_desbanear = data.get("ip_address")
+    
+    if not ip_a_desbanear:
+        return jsonify({"error": "Se requiere la ip_address para desbanear"}), 400
+        
+    exito = repo.desbanear_ip(ip_a_desbanear)
+    
+    if exito:
+        return jsonify({"mensaje": f"IP {ip_a_desbanear} ha sido desbaneada con éxito y vuelve a tener acceso."}), 200
+    else:
+        return jsonify({"mensaje": f"La IP {ip_a_desbanear} no se encontraba en la lista negra."}), 404
+    
+    
 if __name__ == '__main__':
     print("Iniciando API de la Red Social...")
     app.run(debug=True, port=5001)

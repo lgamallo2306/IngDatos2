@@ -60,6 +60,9 @@
                         <button onclick="banearIP()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded transition font-medium">
                             🚫 Aplicar Baneo de IP (24hs)
                         </button>
+                        <button onclick="desbanearIP()" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded transition font-medium mt-2">
+                                Quitar Baneo de IP
+                        </button>
                     </div>
                 </div>
             </div>
@@ -181,6 +184,23 @@
             
             try {
                 const response = await fetch(`${API_URL}/admin/ban`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ip_address: ipValue })
+                });
+                const data = await response.json();
+                logMensaje(data);
+            } catch (error) {
+                logMensaje({ error: error.message });
+            }
+        }
+
+        // 6. Enviar IP para quitar baneo
+        async function desbanearIP() {
+            const ipValue = document.getElementById('ipBanInput').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/admin/unban`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ip_address: ipValue })
