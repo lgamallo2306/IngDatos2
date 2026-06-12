@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Query
 from app.database import get_database
+import uuid
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -143,3 +144,23 @@ async def update_user(user_id: str, body: dict):
 
     updated = await db.users.find_one({"_id": user_id}, {"session": 0})
     return serialize(updated)
+
+
+@router.post("/", status_code=201)
+async def create_user(body: dict):
+    db = get_database()
+    if "username" not in body or "display_name" not in body:
+        raise HTTPException(status_code=400, detail="Faltan campos requeridos")
+    
+    body["_id"] = str(uuid.uuid4())
+    await db.users.insert_one(body)
+    body["user_id"] = body.pop("_id")
+    return body
+
+@router.delete("/{user_id}")
+async def delete_user(user_id: str):
+    db = get_database()
+    result = await db.users.delete_one({"_id": user_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return {"status": "success", "message": "Usuario eliminado de MongoDB"}

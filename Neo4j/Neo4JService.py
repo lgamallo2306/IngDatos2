@@ -15,15 +15,6 @@ class Neo4jService:
 
     #OPERACIONES BÁSICAS
 
-    def crear_usuario(self, username, nombre):
-        query = """
-        CREATE (u:Usuario {username: $username, nombre: $nombre})
-        RETURN u.username AS username, u.nombre AS nombre
-        """
-        with self.driver.session() as session:
-            result = session.run(query, username=username, nombre=nombre)
-            return result.single().data()
-
     def crear_relacion_amigo(self, username1, username2):
         query = """
         MATCH (a:Usuario {username: $username1})
@@ -35,14 +26,36 @@ class Neo4jService:
             result = session.run(query, username1=username1, username2=username2)
             return result.data()
 
-    def eliminar_usuario(self, username):
+    def crear_relacion_familiar(self, username1, username2):
         query = """
-        MATCH (u:Usuario {username: $username})
-        DETACH DELETE u
+        MATCH (a:Usuario {username: $username1})
+        MATCH (b:Usuario {username: $username2})
+        MERGE (a)-[r:FAMILIAR_DE]->(b)
+        RETURN type(r) AS relacion
         """
         with self.driver.session() as session:
-            session.run(query, username=username)
-            return f"Usuario {username} eliminado con éxito."
+            result = session.run(query, username1=username1, username2=username2)
+            return result.data()
+
+    def eliminar_relacion_amigo(self, username1, username2):
+        query = """
+        MATCH (a:Usuario {username: $username1})-[r:AMIGO_DE]-(b:Usuario {username: $username2})
+        DELETE r
+        RETURN count(r) AS relaciones_eliminadas
+        """
+        with self.driver.session() as session:
+            result = session.run(query, username1= username1, username2=username2)
+            return result.data()
+        
+    def eliminar_relacion_familiar(self, username1, username2):
+        query = """
+        MATCH (a:Usuario {username: $username1})-[r:FAMILIAR_DE]-(b:Usuario {username: $username2})
+        DELETE r
+        RETURN count(r) AS relaciones_eliminadas
+        """
+        with self.driver.session() as session:
+            result = session.run(query, username1=username1, username2=username2)
+            return result.data()
 
     def obtener_recomendaciones(self, username):
         """
@@ -63,68 +76,18 @@ class Neo4jService:
             result = session.run(query, username=username)
             return [record.data() for record in result]
 
-
-    def cargar_datos_desde_json(self, ruta_archivo):
+    def obtener_amigos_comun(self, username1, username2):
         """
-        Lee un archivo JSON de Mockaroo e inyecta los datos de forma masiva en Neo4j
-        usando UNWIND para optimizar el rendimiento de la carga.
-        """
-        try:
-            with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
-                datos = json.load(archivo)
-        except FileNotFoundError:
-            print(f"❌ Error: No se encontró el archivo en la ruta: {ruta_archivo}")
-            return
-        except json.JSONDecodeError:
-            print("❌ Error: El archivo no tiene un formato JSON válido.")
-            return
-
-        print(f"⏳ Procesando e inyectando {len(datos)} registros en Neo4j...")
-
-        query = """
-        UNWIND $lista_datos AS fila
-        MERGE (u:Usuario {username: fila.user_name})
-        ON CREATE SET u.nombre = fila.first_name,
-                      u.apellido = fila.last_name,
-                      u.id_original = fila.id
-        """
-
-        with self.driver.session() as session:
-            try:
-                session.run(query, lista_datos=datos)
-                print("✅ ¡Inyección masiva completada con éxito en el grafo!")
-            except Exception as e:
-                print(f"❌ Ocurrió un error al interactuar con Neo4j: {e}")
-
-    def sugerir_amigos(self, username_actual):
-        """
-        [CONSULTA AVANZADA] Encuentra "amigos de mis amigos" que el
-        usuario actual todavía no sigue, ordenados por relevancia.
+        Encuentra los usuarios que tienen una relación de amistad en común
+        entre dos usuarios específicos.
         """
         query = """
-        MATCH (yo:Usuario {username: $username})-[r1:INTERACTUA_CON {tipo: 'follows'}]->(amigo:Usuario)
-        MATCH (amigo)-[r2:INTERACTUA_CON {tipo: 'follows'}]->(sugerido:Usuario)
-        WHERE yo <> sugerido
-          AND NOT (yo)-[:INTERACTUA_CON {tipo: 'follows'}]->(sugerido)
-        RETURN sugerido.username AS username,
-               sugerido.nombre AS nombre,
-               COUNT(amigo) AS amigos_en_comun
-        ORDER BY amigos_en_comun DESC
-        LIMIT 5
+        MATCH (a:Usuario {username: $username1})-[:AMIGO_DE]-(comun:Usuario)-[:AMIGO_DE]-(b:Usuario {username: $username2})
+        RETURN comun.username AS username, comun.nombre AS nombre
         """
         with self.driver.session() as session:
-            result = session.run(query, username=username_actual)
-            return [linea.data() for linea in result]
+            result = session.run(query, username1 = username1, username2 = username2)
+            return result.data()
 
-    def obtener_lista_seguidos(self, username_actual):
-        """
-        [FUNCIÓN PARA INTERACCIÓN] Devuelve los usernames de la gente que sigue
-        el usuario actual. Sirve para alimentar el feed de Cassandra o Mongo.
-        """
-        query = """
-        MATCH (u:Usuario {username: $username})-[r:INTERACTUA_CON {tipo: 'follows'}]->(seguido:Usuario)
-        RETURN seguido.username AS username
-        """
-        with self.driver.session() as session:
-            result = session.run(query, username=username_actual)
-            return [linea["username"] for linea in result]
+
+    
