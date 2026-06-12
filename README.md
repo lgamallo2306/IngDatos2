@@ -10,7 +10,7 @@ Proyecto que implementa distintas funcionalidades de una red social usando cuatr
 |-------|-----------|--------|----------------------|
 | MongoDB | FastAPI (Python) | 8000 | Búsqueda de texto y perfiles |
 | Neo4j | Flask (Python) | 5000 | Grafo social y recomendaciones |
-| Redis | Flask (Python) | 5000 | Gestión de sesiones |
+| Redis | Flask (Python) | 6000 | Gestión de sesiones |
 | Cassandra | Javalin (Java) | 7000 | Feed y mensajería en tiempo real |
 
 ---
@@ -57,7 +57,9 @@ Grafo social de usuarios y sus relaciones de amistad. Permite obtener recomendac
 | `GET` | `/api/feed?username={u}` | Publicaciones de los usuarios que sigue |
 | `POST` | `/api/crear_usuario` | Crear nodo usuario en el grafo `{username, nombre}` |
 | `POST` | `/api/crear_amistad` | Crear relación AMIGO_DE entre dos usuarios `{username1, username2}` |
+| `POST` | `/api/relaciones` | Alias para crear relación AMIGO_DE `{username1, username2}` |
 | `POST` | `/api/eliminar_usuario` | Eliminar nodo y sus relaciones del grafo `{username}` |
+| `DELETE` | `/api/usuarios?username={u}` | Eliminar usuario vía query param |
 
 ---
 
@@ -69,7 +71,7 @@ Gestión de sesiones de autenticación con TTL automático. Usa hashes de Redis 
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| `POST` | `/api/login` | Iniciar sesión — devuelve token Bearer `{user_id}` |
+| `POST` | `/api/login` | Iniciar sesión — devuelve token Bearer `{user_id, username}` |
 | `GET` | `/api/feed` | Acceder al feed (requiere `Authorization: Bearer {token}`) |
 | `POST` | `/api/logout` | Cerrar sesión e invalidar el token |
 
@@ -135,3 +137,31 @@ Al marcar un mensaje como leído se elimina de `messages_unread`.
 | `GET` | `/mensajes/{conversationId}/desde/{timestamp}` | Mensajes nuevos desde un timestamp (polling) |
 | `GET` | `/mensajes/{conversationId}/no-leidos` | Q7: mensajes no leídos (`messages_unread`, sin ALLOW FILTERING) |
 | `GET` | `/mensajes/sender/{senderId}` | Q8: todos los mensajes enviados por un usuario (`messages_by_sender`) |
+
+---
+
+## Frontend
+
+Interfaz React + Vite que consume los cuatro backends. Cada página se conecta al motor más adecuado para esa funcionalidad.
+
+**Estructura:** `frontend/src/`
+
+### Configuración de APIs
+
+| Variable | URL | Backend |
+|----------|-----|---------|
+| `API.mongo` | `http://localhost:8000` | FastAPI — usuarios y posts |
+| `API.neo4j` | `http://localhost:5000` | Flask — grafo social |
+| `API.redis` | `http://localhost:6001` | Flask — sesiones |
+| `API.cassandra` | `http://localhost:7000` | Javalin — feed y mensajería |
+
+### Páginas
+
+| Página | Archivo | Backends usados |
+|--------|---------|----------------|
+| Login | `pages/Login.jsx` | Redis (autenticación) |
+| Feed | `pages/Feed.jsx` | Cassandra (entradas), Neo4j (recomendaciones) |
+| Explorar | `pages/Explorar.jsx` | MongoDB (búsqueda de usuarios y posts) |
+| Perfil | `pages/Perfil.jsx` | MongoDB (perfil y estadísticas) |
+| Amigos | `pages/Amigos.jsx` | Neo4j (amistades y recomendaciones) |
+| Mensajes | `pages/Mensajes.jsx` | Cassandra (mensajería) |
