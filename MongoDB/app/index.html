@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoSQL Social Network — Admin Panel</title>
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background-color: #111827;
+            border-bottom: 1px solid #1f2937;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header h1 {
+            font-size: 1.25rem;
+            color: #818cf8;
+            margin: 0;
+        }
+        .nav-tabs button {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .nav-tabs button.active {
+            color: #818cf8;
+            border-bottom: 2px solid #6366f1;
+        }
+        .db-badge {
+            font-size: 0.75rem;
+            font-family: monospace;
+            background-color: #1f2937;
+            color: #9ca3af;
+            padding: 4px 10px;
+            border-radius: 15px;
+            border: 1px solid #374151;
+        }
+        main {
+            max-width: 650px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+        .hidden { display: none !important; }
+        .card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #818cf8;
+            letter-spacing: 0.05em;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #030712;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 10px;
+            color: #f1f5f9;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            outline: none;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #6366f1;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+        button.btn-submit {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        button.btn-submit:hover { background-color: #4338ca; }
+        button.btn-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        button.btn-danger:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+        .post-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .post-header h4 { margin: 0; color: #a5b4fc; }
+        .post-id-sub {
+            font-size: 0.7rem;
+            font-family: monospace;
+            color: #6b7280;
+            margin: 2px 0 0 0;
+        }
+        .post-content {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            margin-bottom: 15px;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: #818cf8;
+            background-color: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            border-top: 1px solid #1f2937;
+            padding-top: 12px;
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .action-btn:hover { color: #f43f5e; }
+        .user-row { display: flex; gap: 15px; align-items: flex-start; }
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #374151;
+            object-fit: cover;
+        }
+        .user-info-block { flex: 1; }
+        .user-info-block h4 { margin: 0; color: #e2e8f0; }
+        .user-display-name { color: #818cf8; font-size: 0.8rem; font-weight: 500; margin: 2px 0; }
+        .user-bio { color: #9ca3af; font-size: 0.85rem; margin: 5px 0 10px 0; }
+        #loading { text-align: center; color: #6b7280; font-family: monospace; padding: 20px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚡ NoSQL Admin Panel</h1>
+        <div class="nav-tabs">
+            <button onclick="switchTab('feed')" id="tab-feed" class="active">Trending Feed</button>
+            <button onclick="switchTab('search-posts')" id="tab-search-posts">Buscar Posts</button>
+            <button onclick="switchTab('search-users')" id="tab-search-users">Gestionar Usuarios</button>
+        </div>
+        <div class="db-badge">FastAPI & MongoDB</div>
+    </header>
+
+    <main>
+        <section id="create-post-section" class="card">
+            <h3>Crear Nuevo Post</h3>
+            <form onsubmit="createPost(event)">
+                <input type="text" id="post-user-id" placeholder="Pegá acá el _id del usuario (Ej: d8defe1e-bd72-5b36-b97c-aadc2cdcf4f1)" required>
+                <textarea id="post-content" placeholder="¿Qué indexamos hoy en MongoDB?" rows="3" required></textarea>
+                <input type="text" id="post-tags" placeholder="Tags separados por coma (ej: python, apis)">
+                <div class="form-footer">
+                    <select id="post-visibility" style="width: 40%; margin: 0;">
+                        <option value="public">Public</option>
+                        <option value="followers">Followers</option>
+                        <option value="private">Private</option>
+                    </select>
+                    <button type="submit" class="btn-submit">Publicar Post</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="create-user-section" class="card hidden">
+            <h3>Registrar Nuevo Usuario en MongoDB</h3>
+            <form onsubmit="createUser(event)">
+                <div class="form-grid">
+                    <input type="text" id="user-username" placeholder="Username (ej: lucas_dev)" required>
+                    <input type="text" id="user-display-name" placeholder="Nombre Público (ej: Lucas G.)" required>
+                </div>
+                <input type="text" id="user-bio" placeholder="Biografía corta...">
+                <div class="form-grid">
+                    <input type="text" id="user-location" placeholder="Ubicación (ej: Quilmes, Argentina)">
+                    <input type="text" id="user-avatar" placeholder="URL del Avatar (Opcional)">
+                </div>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn-submit">Crear Usuario NoSQL</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="search-bar-section" class="hidden" style="margin-bottom: 20px;">
+            <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Escribí para buscar...">
+        </section>
+
+        <div id="loading" class="hidden">Consultando cluster NoSQL...</div>
+        <div id="results-container"></div>
+    </main>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000";
+        let currentTab = "feed";
+
+        document.addEventListener("DOMContentLoaded", () => { fetchTrending(); });
+
+        function switchTab(tab) {
+            currentTab = tab;
+            ['feed', 'search-posts', 'search-users'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.toggle("active", t === tab);
+            });
+
+            const createPostSec = document.getElementById("create-post-section");
+            const createUserSec = document.getElementById("create-user-section");
+            const searchBarSec = document.getElementById("search-bar-section");
+            const searchInput = document.getElementById("search-input");
+            
+            searchInput.value = "";
+            document.getElementById("results-container").innerHTML = "";
+
+            if (tab === "feed") {
+                createPostSec.classList.remove("hidden");
+                createUserSec.classList.add("hidden");
+                searchBarSec.classList.add("hidden");
+                fetchTrending();
+            } else if (tab === "search-users") {
+                createPostSec.classList.add("hidden");
+                createUserSec.classList.remove("hidden");
+                searchBarSec.classList.remove("hidden");
+                searchInput.placeholder = "Buscar usuarios activos por nombre o bio (Regex)...";
+            } else {
+                createPostSec.classList.add("hidden");
+                createUserSec.classList.add("hidden");
+                searchBarSec.classList.remove("hidden");
+                searchInput.placeholder = "Buscar posts (Full-Text Search)...";
+            }
+        }
+
+        function toggleLoading(show) { document.getElementById("loading").classList.toggle("hidden", !show); }
+
+        async function fetchTrending() {
+            toggleLoading(true);
+            try {
+                const res = await fetch(`${API_URL}/posts/trending`);
+                const data = await res.json();
+                renderPosts(data.posts || []);
+            } catch (err) {
+                document.getElementById("results-container").innerHTML = `<p style="color: #f87171; text-align: center;">❌ Error al conectar con FastAPI.</p>`;
+            } finally { toggleLoading(false); }
+        }
+
+        let searchTimeout;
+        function handleSearch(query) {
+            clearTimeout(searchTimeout);
+            if (!query.trim()) { document.getElementById("results-container").innerHTML = ""; return; }
+            searchTimeout = setTimeout(() => {
+                if (currentTab === "search-posts") searchPosts(query);
+                if (currentTab === "search-users") searchUsers(query);
+            }, 300);
+        }
+
+        async function searchPosts(query) {
+            toggleLoading(true);
+            try {
+                const res = await fetch(`${API_URL}/posts/search?q=${encodeURIComponent(query)}`);
+                const data = await res.json();
+                renderPosts(data.posts || []);
+            } catch (err) { console.error(err); }
+            finally { toggleLoading(false); }
+        }
+
+        async function searchUsers(query) {
+            toggleLoading(true);
+            try {
+                const res = await fetch(`${API_URL}/users/search?q=${encodeURIComponent(query)}`);
+                const data = await res.json();
+                renderUsers(data.users || []);
+            } catch (err) { console.error(err); }
+            finally { toggleLoading(false); }
+        }
+
+        // --- FUNCIONALIDAD NUEVA: CREAR USUARIO DIRECTO EN MONGODB ---
+        async function createUser(e) {
+            e.preventDefault();
+            const username = document.getElementById("user-username").value.trim();
+            const display_name = document.getElementById("user-display-name").value.trim();
+            const bio = document.getElementById("user-bio").value.trim();
+            const location = document.getElementById("user-location").value.trim();
+            let avatar_url = document.getElementById("user-avatar").value.trim();
+
+            if (!avatar_url) {
+                avatar_url = `https://api.dicebear.com/7.x/bottts/svg?seed=${username}`;
+            }
+
+            // Usamos una inyección directa controlada simulando un endpoint genérico en el router
+            // Si tus compañeros no crearon POST /users/, lo insertamos simulando la estructura nativa BSON:
+            const newUserObj = {
+                username, display_name, bio, location, avatar_url,
+                interests: [], settings: {}, session: null, created_at: new Date().toISOString()
+            };
+
+            // Intentamos pegarle al router por si lo llegan a implementar, si no, tiramos error claro descriptivo
+            try {
+                const res = await fetch(`${API_URL}/users/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newUserObj)
+                });
+
+                if (res.status === 404) {
+                    alert(`⚠️ Nota del Sistema NoSQL:\nEl backend actual no tiene expuesta la ruta corporativa 'POST /users/'.\n\nPara habilitarlo por completo, recordá agregar el decorator @router.post("/") en tu archivo 'users.py'.`);
+                    return;
+                }
+
+                if (res.ok) {
+                    alert("¡Usuario creado exitosamente!");
+                    e.target.reset();
+                }
+            } catch (err) { alert("Error de conexión con la API."); }
+        }
+
+        // --- FUNCIONALIDAD NUEVA: ELIMINAR USUARIO DIRECTO EN MONGODB ---
+        async function deleteUser(userId, username) {
+            if (!confirm(`¿Estás completamente seguro de borrar permanentemente a @${username} de MongoDB?\nEsta acción es irreversible.`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/users/${userId}`, {
+                    method: 'DELETE'
+                });
+
+                if (res.status === 404) {
+                    alert(`⚠️ Nota del Sistema NoSQL:\nEl backend no cuenta con la ruta 'DELETE /users/{user_id}'.\n\nPara que la eliminación persista en el cluster, debés declarar el @router.delete("/{user_id}") en tu backend de Python.`);
+                    return;
+                }
+
+                if (res.ok) {
+                    alert(`Usuario @${username} eliminado con éxito.`);
+                    const searchInput = document.getElementById("search-input").value;
+                    if (searchInput) searchUsers(searchInput);
+                }
+            } catch (err) { alert("Error al intentar procesar la baja NoSQL."); }
+        }
+
+        async function createPost(e) {
+            e.preventDefault();
+            const userId = document.getElementById("post-user-id").value.trim();
+            const content = document.getElementById("post-content").value.trim();
+            const tagsInput = document.getElementById("post-tags").value;
+            const visibility = document.getElementById("post-visibility").value;
+            
+            const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
+
+            try {
+                const res = await fetch(`${API_URL}/posts/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId, content, tags, visibility })
+                });
+
+                if (res.ok) {
+                    document.getElementById("post-content").value = "";
+                    document.getElementById("post-tags").value = "";
+                    if (currentTab === "feed") fetchTrending();
+                    else alert("¡Post creado con éxito!");
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.detail || "No se pudo crear (Verificá que el _id del usuario exista)"}`);
+                }
+            } catch (err) { alert("Error de red."); }
+        }
+
+        async function likePost(postId) {
+            try {
+                const res = await fetch(`${API_URL}/posts/${postId}/like`, { method: 'PATCH' });
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById(`like-count-${postId}`).innerText = data.likes_count;
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        function renderPosts(posts) {
+            const container = document.getElementById("results-container");
+            if (posts.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #6b7280; font-size: 0.9rem;">No se encontraron posts.</p>`;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => {
+                const authorName = post.author?.username ? `@${post.author.username}` : `User ID: ${post.user_id}`;
+                const displayName = post.author?.display_name || '';
+                const tagsHTML = post.tags?.map(t => `<span class="tag">#${t}</span>`).join('') || '';
+                
+                return `
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div>
+                                <h4>${authorName}</h4>
+                                ${displayName ? `<p style="margin: 2px 0; font-size: 0.8rem; color: #9ca3af;">${displayName}</p>` : ''}
+                                <p class="post-id-sub">Post ID: ${post.post_id}</p>
+                            </div>
+                            <span class="db-badge">${post.visibility || 'public'}</span>
+                        </div>
+                        <p class="post-content">${post.content}</p>
+                        <div>${tagsHTML}</div>
+                        <div class="post-actions">
+                            <button onclick="likePost('${post.post_id}')" class="action-btn">
+                                ❤️ <span id="like-count-${post.post_id}">${post.likes_count || 0}</span>
+                            </button>
+                            <span>💬 ${post.comments_count || 0}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderUsers(users) {
+            const container = document.getElementById("results-container");
+            if (users.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #6b7280; font-size: 0.9rem;">No se encontraron usuarios.</p>`;
+                return;
+            }
+
+            container.innerHTML = users.map(user => {
+                const avatarUrl = user.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.username}`;
+                return `
+                    <div class="post-card user-row">
+                        <img src="${avatarUrl}" class="avatar" onerror="this.src='https://www.w3schools.com/howto/img_avatar.png'">
+                        <div class="user-info-block">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <h4>@${user.username}</h4>
+                                    <p class="user-display-name">${user.display_name || ''}</p>
+                                </div>
+                                <button onclick="deleteUser('${user.user_id}', '${user.username}')" class="btn-danger">Eliminar</button>
+                            </div>
+                            <p class="user-bio">${user.bio || 'Sin biografía.'}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                                <p class="post-id-sub">📍 ${user.location || 'No especificada'}</p>
+                                <p class="post-id-sub" style="color: #4b5563;">ID: ${user.user_id}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>
