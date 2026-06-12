@@ -51,6 +51,7 @@ class SessionRepository:
         })
 
         self.client.expire(key, session_data.get("ttl", 3600))
+        self.registrar_actividad(user_id)
 
         print(f"Sesión importada: {username} (Token: {token[:8]}...)")
 

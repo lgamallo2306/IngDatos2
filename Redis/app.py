@@ -21,6 +21,8 @@ def login():
 
     token = repo.crear_sesion(user_id=usuario_id, username=username, ip_address=ip_cliente)
     
+    repo.registrar_actividad(user_id=usuario_id)
+
     return jsonify({
         "mensaje": "Login exitoso",
         "token": token
@@ -39,7 +41,9 @@ def ver_feed():
     sesion = repo.validar_sesion(token)
     
     if sesion:
-        return jsonify({
+
+        repo.registrar_actividad(user_id=sesion.get('user_id'))
+        return jsonify({    
             "mensaje": "Acceso autorizado al Feed",
             "usuario": sesion
         }), 200
