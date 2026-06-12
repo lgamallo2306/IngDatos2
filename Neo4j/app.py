@@ -38,36 +38,6 @@ def recomendaciones():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/crear_usuario', methods=['POST'])
-def api_crear_usuario():
-    datos = request.get_json()
-    if not datos:
-        return jsonify({"error": "No se enviaron datos"}), 400
-    username = datos.get('username')
-    nombre = datos.get('nombre')
-    if not username or not nombre:
-        return jsonify({"error": "Faltan campos obligatorios: username y nombre"}), 400
-    try:
-        nuevo = dbGrafo.crear_usuario(username, nombre)
-        return jsonify({"mensaje": "Usuario creado con éxito en el grafo", "usuario": nuevo}), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route('/api/eliminar_usuario', methods=['POST'])
-def api_eliminar_usuario():
-    datos = request.get_json()
-    if not datos:
-        return jsonify({"error": "No se enviaron datos"}), 400
-    username = datos.get('username')
-    if not username:
-        return jsonify({"error": "Falta el campo obligatorio: username"}), 400
-    try:
-        dbGrafo.eliminar_usuario(username)
-        return jsonify({"mensaje": f"Usuario '{username}' eliminado con éxito del grafo"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 
 @app.route('/api/crear_amistad', methods=['POST'])
 def api_crear_amistad():

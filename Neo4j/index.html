@@ -27,25 +27,13 @@
         <h1>Mi Red Social</h1>
         
         <div class="controles">
+            <strong>Sugerencia de amistad.</strong><br><br>
             <input type="text" id="usernameInput" placeholder="Ingresa tu username (ej. osowray51)">
-            <button class="btn-grafos" onclick="cargarRecomendaciones()">Sugerencias de Amigos</button>
+            <button class="btn-grafos" onclick="cargarRecomendaciones()">Buscar</button>
         </div>
         
         <hr style="margin: 25px 0; border-color: #ddd;">
         <h2 style="color: #555;">Principales Funcionalidades</h2>
-
-        <div class="controles">
-            <strong>Crear Usuario.</strong><br><br>
-            <input type="text" id="nuevoUsername" placeholder="Username (ej. juan_99)">
-            <input type="text" id="nuevoNombre" placeholder="Nombre completo (ej. Juan Pérez)">
-            <button class="btn-crear" onclick="crearUsuario()">Crear Usuario</button>
-        </div>
-
-        <div class="controles">
-            <strong>Eliminar Usuario.</strong><br><br>
-            <input type="text" id="eliminarUsername" placeholder="Username a eliminar (ej. juan_99)">
-            <button class="btn-eliminar" onclick="eliminarUsuario()">Eliminar Usuario</button>
-        </div>
 
         <div class="controles">
             <strong>Crear Amistad.</strong><br><br>
@@ -78,7 +66,7 @@
             <strong>Obtener amigos en comun.</strong><br><br>
             <input type="text" id="comun1" placeholder="Username 1 (ej. juan_99)">
             <input type="text" id="comun2" placeholder="Username 2 (ej. maria_88)">
-            <button class="btn-conectar" onclick="obtenerAmigosEnComun()">Conectar Usuarios</button>
+            <button class="btn-conectar" onclick="obtenerAmigosEnComun()">Buscar</button>
         </div>
 
         <div id="resultado">
@@ -126,44 +114,6 @@
             const clase = esError ? 'resultado-error' : 'resultado-ok';
             const mensaje = data.error || data.mensaje || JSON.stringify(data);
             contenedor.innerHTML = `<p class="${clase}">${mensaje}</p>`;
-        }
-
-        function crearUsuario() {
-            const username = document.getElementById('nuevoUsername').value.trim();
-            const nombre = document.getElementById('nuevoNombre').value.trim();
-            if (!username || !nombre) return alert('Completá username y nombre');
-
-            fetch(`${API_BASE_URL}/api/crear_usuario`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, nombre })
-            })
-                .then(res => res.json().then(data => ({ ok: res.ok, data })))
-                .then(({ ok, data }) => {
-                    mostrarRespuesta(data, !ok);
-                    if (ok) {
-                        document.getElementById('nuevoUsername').value = '';
-                        document.getElementById('nuevoNombre').value = '';
-                    }
-                })
-                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
-        }
-
-        function eliminarUsuario() {
-            const username = document.getElementById('eliminarUsername').value.trim();
-            if (!username) return alert('Ingresá un username para eliminar');
-
-            fetch(`${API_BASE_URL}/api/eliminar_usuario`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username })
-            })
-                .then(res => res.json().then(data => ({ ok: res.ok, data })))
-                .then(({ ok, data }) => {
-                    mostrarRespuesta(data, !ok);
-                    if (ok) document.getElementById('eliminarUsername').value = '';
-                })
-                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
         }
 
         function crearAmistad() {

@@ -15,15 +15,6 @@ class Neo4jService:
 
     #OPERACIONES BÁSICAS
 
-    def crear_usuario(self, username, nombre):
-        query = """
-        CREATE (u:Usuario {username: $username, nombre: $nombre})
-        RETURN u.username AS username, u.nombre AS nombre
-        """
-        with self.driver.session() as session:
-            result = session.run(query, username=username, nombre=nombre)
-            return result.single().data()
-
     def crear_relacion_amigo(self, username1, username2):
         query = """
         MATCH (a:Usuario {username: $username1})
@@ -45,15 +36,6 @@ class Neo4jService:
         with self.driver.session() as session:
             result = session.run(query, username1=username1, username2=username2)
             return result.data()
-
-    def eliminar_usuario(self, username):
-        query = """
-        MATCH (u:Usuario {username: $username})
-        DETACH DELETE u
-        """
-        with self.driver.session() as session:
-            session.run(query, username=username)
-            return f"Usuario {username} eliminado con éxito."
 
     def eliminar_relacion_amigo(self, username1, username2):
         query = """
