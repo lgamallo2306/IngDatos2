@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: dev-mongodb
+    ports:
+      - "27017:27017"
+    profiles: ["mongo", "all"]
+
+  redis:
+    image: redis:latest
+    container_name: dev-redis
+    ports:
+      - "6379:6379"
+    profiles: ["redis", "all"]
+
+  neo4j:
+    image: neo4j:latest
+    container_name: dev-neo4j
+    environment:
+      - NEO4J_AUTH=neo4j/passwordsecreta
+    ports:
+      - "7474:7474" # HTTP
+      - "7687:7687" # Bolt
+    profiles: ["neo4j", "all"]
+
+  cassandra:
+    image: cassandra:latest
+    container_name: dev-cassandra
+    ports:
+      - "9042:9042"
+    profiles: ["cassandra", "all"]

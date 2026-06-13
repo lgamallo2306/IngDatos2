@@ -8,7 +8,7 @@ app = Flask(__name__, template_folder='.')
 CORS(app)
 
 # Conexión a tu Neo4j local (¡Cambia la contraseña!)
-dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "Independiente2026")
+dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "passwordsecreta")
 # --- SIMULADOR DE DATASET (Adaptado a tu estructura) ---
 try:
     with open('dataset.json', 'r', encoding='utf-8') as archivo:

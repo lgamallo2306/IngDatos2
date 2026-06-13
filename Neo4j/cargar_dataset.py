@@ -4,8 +4,8 @@ from Neo4JService import Neo4jService
 # 1. Configuración de conexión con Neo4j
 URI = "bolt://localhost:7687"  
 USER = "neo4j"                 
-PASSWORD = "Independiente2026"  
-RUTA_DATASET = "datasetMediano.json"
+PASSWORD = "passwordsecreta"  
+RUTA_DATASET = "../datasetMediano.json"
 
 def main():
     print("🔄 Iniciando cargador inteligente de dataset...")
