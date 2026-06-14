@@ -8,7 +8,7 @@ app = Flask(__name__, template_folder='.')
 CORS(app)
 
 # Conexión a tu Neo4j local (¡Cambia la contraseña!)
-dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "passwordsecreta")
+dbGrafo = Neo4jService("bolt://localhost:7687", "neo4j", "Independiente2026")
 # --- SIMULADOR DE DATASET (Adaptado a tu estructura) ---
 try:
     with open('dataset.json', 'r', encoding='utf-8') as archivo:
@@ -136,6 +136,23 @@ def api_obtener_amigos_comun():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+@app.route('/api/actualizar_usuario', methods=['PUT'])
+def api_actualizar_usuario():
+    datos = request.get_json()
+    if not datos:
+        return jsonify({"error": "No se enviaron datos"}), 400
+    username = datos.get('username')
+    nuevo_nombre = datos.get('nuevo_nombre')
+    if not username or not nuevo_nombre:
+        return jsonify({"error": "Faltan campos: username y nuevo_nombre"}), 400
+    try:
+        resultado = dbGrafo.actualizar_usuario(username, nuevo_nombre)
+        if not resultado:
+            return jsonify({"error": f"Usuario '{username}' no encontrado"}), 404
+        return jsonify({"mensaje": "Usuario actualizado", "detalle": resultado}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

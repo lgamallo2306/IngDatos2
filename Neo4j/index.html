@@ -14,6 +14,7 @@
         .btn-crear { background-color: #4CAF50; }
         .btn-conectar { background-color: #8e44ad; }
         .btn-eliminar { background-color: #e74c3c; }
+        .btn-actualizar { background-color: #e67e22; }
         .resultado-ok { color: #27ae60; font-weight: bold; }
         .resultado-error { color: #e74c3c; font-weight: bold; }
         
@@ -67,6 +68,13 @@
             <input type="text" id="comun1" placeholder="Username 1 (ej. juan_99)">
             <input type="text" id="comun2" placeholder="Username 2 (ej. maria_88)">
             <button class="btn-conectar" onclick="obtenerAmigosEnComun()">Buscar</button>
+        </div>
+
+        <div class="controles">
+            <strong>Actualizar nombre de usuario.</strong><br><br>
+            <input type="text" id="updateUsername" placeholder="Username a modificar (ej. juan_99)">
+            <input type="text" id="updateNombre" placeholder="Nuevo nombre (ej. Juan García)">
+            <button class="btn-actualizar" onclick="actualizarUsuario()">Actualizar</button>
         </div>
 
         <div id="resultado">
@@ -233,8 +241,28 @@
                 })
                 .catch(() => contenedor.innerHTML = "<p style='color:red'>Error de conexión con el servidor.</p>");
         }
-        
-        
+
+        function actualizarUsuario() {
+            const username = document.getElementById('updateUsername').value.trim();
+            const nuevo_nombre = document.getElementById('updateNombre').value.trim();
+            if (!username || !nuevo_nombre) return alert('Completá el username y el nuevo nombre');
+
+            fetch(`${API_BASE_URL}/api/actualizar_usuario`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, nuevo_nombre })
+            })
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    mostrarRespuesta(data, !ok);
+                    if (ok) {
+                        document.getElementById('updateUsername').value = '';
+                        document.getElementById('updateNombre').value = '';
+                    }
+                })
+                .catch(() => mostrarRespuesta({ error: 'Error de conexión con el servidor' }, true));
+        }
+
     </script>
 </body>
 </html>

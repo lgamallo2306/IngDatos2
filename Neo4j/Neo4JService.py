@@ -1,5 +1,4 @@
 from neo4j import GraphDatabase
-import json
 
 class Neo4jService:
     def __init__(self, uri, user, password):
@@ -89,5 +88,12 @@ class Neo4jService:
             result = session.run(query, username1 = username1, username2 = username2)
             return result.data()
 
-
-    
+    def actualizar_usuario(self, username, nuevo_nombre):
+        query = """
+        MATCH (u:Usuario {username: $username})
+        SET u.nombre = $nuevo_nombre
+        RETURN u.username AS username, u.nombre AS nombre
+        """
+        with self.driver.session() as session:
+            result = session.run(query, username=username, nuevo_nombre=nuevo_nombre)
+            return result.data()
