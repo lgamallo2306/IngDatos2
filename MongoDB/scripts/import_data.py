@@ -16,7 +16,7 @@ MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 MONGO_DB  = os.getenv("MONGO_DB", "social_network")
 
 # Ajustá esta ruta si tu dataset está en otro lugar
-DATASET_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "datasetMediano.json")
+DATASET_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "datasetMediano.json")
 
 
 def load_dataset(path: str) -> dict:
