@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/redis': {
-        target: 'http://localhost:6001',
+        target: 'http://localhost:5001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/redis/, ''),
       },

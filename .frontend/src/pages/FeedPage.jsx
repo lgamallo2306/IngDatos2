@@ -206,15 +206,16 @@ function CassandraFeed({ me }) {
 /* ---------------- Feed por seguidos (Neo4j + dataset) ---------------- */
 
 function Neo4jFeed({ me }) {
-  const [posts, setPosts] = useState(null)
+  const [recs, setRecs] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [added, setAdded] = useState({})
 
   useEffect(() => {
     (async () => {
       setLoading(true); setError(null)
       try {
-        setPosts(await neo4j.feedSeguidos(me.username))
+        setRecs(await neo4j.feedSeguidos(me.username))
       } catch (err) {
         setError(err)
       }
@@ -222,26 +223,43 @@ function Neo4jFeed({ me }) {
     })()
   }, [me.username])
 
+  const agregar = async (username) => {
+    try {
+      await neo4j.crearAmistad(me.username, username)
+      setAdded((p) => ({ ...p, [username]: true }))
+    } catch (err) {
+      setError(err)
+    }
+  }
+
   return (
     <>
       <p className="hint">
-        Neo4j resuelve a quién seguís en el grafo y arma el feed con esas publicaciones.
+        Neo4j recorre el grafo de amistades y sugiere personas que quizás conozcas.
       </p>
       {loading && <Loader label="Recorriendo el grafo…" />}
       <ErrorNote error={error} />
-      {posts?.length === 0 && <Empty>No seguís a nadie todavía — agregá amigos desde «Personas».</Empty>}
+      {recs?.length === 0 && <Empty>Sin sugerencias por ahora — agregá amigos desde «Personas».</Empty>}
       <div className="feed-list">
-        {posts?.map((p, i) => (
-          <article key={i} className="card feed-entry reveal" style={{ '--delay': `${i * 35}ms` }}>
+        {recs?.map((r, i) => (
+          <article key={r.recomendado} className="card feed-entry reveal" style={{ '--delay': `${i * 35}ms` }}>
             <header className="post-head">
-              <Avatar name={p.autor_user || '?'} size={42} />
+              <Avatar name={r.nombre || r.recomendado} size={42} />
               <div className="post-who">
-                <span className="post-author">@{p.autor_user}</span>
-                {p.created_at && <span className="post-meta">{fmtDate(p.created_at)}</span>}
+                <span className="post-author">{r.nombre || r.recomendado}</span>
+                <span className="post-meta mono">@{r.recomendado} · {r.amigos_en_comun} amigos en común</span>
               </div>
               <DbBadge db="neo4j" />
             </header>
-            <p className="post-content">{p.contenido || p.content}</p>
+            <footer className="post-foot">
+              <button
+                className="btn btn-sm"
+                disabled={added[r.recomendado]}
+                onClick={() => agregar(r.recomendado)}
+              >
+                {added[r.recomendado] ? '✓ Amigos' : '+ Agregar'}
+              </button>
+            </footer>
           </article>
         ))}
       </div>

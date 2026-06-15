@@ -140,25 +140,12 @@ function GraphOps({ me }) {
     }
   }
 
-  const [nuUser, setNuUser] = useState('')
-  const [nuNombre, setNuNombre] = useState('')
   const [rel1, setRel1] = useState(me.username)
   const [rel2, setRel2] = useState('')
-  const [delUser, setDelUser] = useState('')
 
   return (
     <Panel title="Taller del grafo" db="neo4j">
       <p className="hint">Operaciones crudas sobre los nodos y aristas de Neo4j.</p>
-
-      <form className="stack-form graph-form" onSubmit={(e) => {
-        e.preventDefault()
-        if (nuUser && nuNombre) wrap(() => neo4j.crearUsuario(nuUser.trim(), nuNombre.trim()))
-      }}>
-        <h3 className="graph-form-title">Crear nodo Usuario</h3>
-        <input className="input input-sm mono" placeholder="username" value={nuUser} onChange={(e) => setNuUser(e.target.value)} />
-        <input className="input input-sm" placeholder="nombre" value={nuNombre} onChange={(e) => setNuNombre(e.target.value)} />
-        <button className="btn btn-sm">Crear (:Usuario)</button>
-      </form>
 
       <form className="stack-form graph-form" onSubmit={(e) => {
         e.preventDefault()
@@ -168,17 +155,6 @@ function GraphOps({ me }) {
         <input className="input input-sm mono" placeholder="username 1" value={rel1} onChange={(e) => setRel1(e.target.value)} />
         <input className="input input-sm mono" placeholder="username 2" value={rel2} onChange={(e) => setRel2(e.target.value)} />
         <button className="btn btn-sm">Vincular —[:AMIGO_DE]→</button>
-      </form>
-
-      <form className="stack-form graph-form" onSubmit={(e) => {
-        e.preventDefault()
-        if (delUser && window.confirm(`¿Eliminar el nodo «${delUser}» del grafo?`)) {
-          wrap(() => neo4j.eliminarUsuario(delUser.trim()))
-        }
-      }}>
-        <h3 className="graph-form-title">Eliminar nodo</h3>
-        <input className="input input-sm mono" placeholder="username a eliminar" value={delUser} onChange={(e) => setDelUser(e.target.value)} />
-        <button className="btn btn-sm danger">DETACH DELETE</button>
       </form>
 
       <OkNote>{ok}</OkNote>

@@ -4,7 +4,7 @@ export const API = {
   mongo: import.meta.env.VITE_MONGO_URL || 'http://localhost:8000',
   neo4j: import.meta.env.VITE_NEO4J_URL || 'http://localhost:5000',
   redis: import.meta.env.VITE_REDIS_URL || '/redis',
-  cassandra: import.meta.env.VITE_CASSANDRA_URL || 'http://localhost:7000',
+  cassandra: import.meta.env.VITE_CASSANDRA_URL || 'http://localhost:5002',
 }
 
 export const DB = {
