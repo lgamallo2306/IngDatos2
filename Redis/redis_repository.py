@@ -35,9 +35,23 @@ class SessionRepository:
         return None
     
     def cerrar_sesion(self, token):
+
         key = f"auth:session:{token}"
-        self.client.delete(key)
+        session_data = self.client.hgetall(key)
+
+        if session_data:
+            user_id = session_data.get('user_id')
+
+            if user_id:
+                self.client.zrem("metricas:usuarios_online", user_id)
+
+            self.client.delete(key) 
+            print(f"Sesión destruida y métrica actualizada para el usuario: {user_id}")
+        else:
+            print("El token no existe o ya expiró.")   
+
         print("Sesión destruida.")
+
 
     def cargar_sesion_desde_json(self, user_id, username, session_data):
 

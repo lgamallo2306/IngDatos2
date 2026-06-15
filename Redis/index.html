@@ -3,100 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototipo Red Social - Test Redis</title>
+    <title>Gestion de Sesiones</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 font-sans text-gray-800 p-8">
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
 
-    <div class="max-w-4xl mx-auto space-y-6">
-        
-        <header class="bg-white p-6 rounded-lg shadow text-center">
-            <h1 class="text-2xl font-bold text-blue-600">Testing Backend: Sesiones y Métricas con Redis</h1>
-            <p class="text-sm text-gray-500 mt-2">Estado del Token Local: <span id="tokenStatus" class="font-bold text-red-500">Ninguno</span></p>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <div class="space-y-6">
-                
-                <div class="bg-white p-6 rounded-lg shadow space-y-4">
-                    <h2 class="text-xl font-semibold border-b pb-2 text-gray-700">Acciones de Usuario</h2>
-                    
-                    <div class="bg-gray-50 p-4 rounded border border-gray-200 space-y-3">
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">User ID</label>
-                            <input type="text" id="userIdInput" value="d8defe1e-bd72-5b36-b97c-aadc2cdcf4f1" class="w-full px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">Username</label>
-                            <input type="text" id="usernameInput" value="luca_gonzalez940" class="w-full px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500">
-                        </div>
-                        <button onclick="iniciarSesion()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition font-medium">
-                            1. Simular Login (Crear Sesión)
-                        </button>
-                    </div>
-                    
-                    <button onclick="verFeed()" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded transition font-medium">
-                        2. Ver Feed (Requiere Token)
-                    </button>
-                    
-                    <button onclick="cerrarSesion()" class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition font-medium">
-                        3. Cerrar Sesión (Destruir Token)
-                    </button>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow space-y-4 border-t-4 border-purple-500">
-                    <h2 class="text-xl font-semibold border-b pb-2 text-purple-700">Panel de Administración</h2>
-                    
-                    <button onclick="verUsuariosOnline()" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded transition font-medium">
-                        📊 Consultar Usuarios Online (Últimos 5 min)
-                    </button>
-                    
-                    <div class="bg-purple-50 p-4 rounded border border-purple-200 space-y-3">
-                        <div>
-                            <label class="block text-xs font-bold text-purple-800 mb-1">IP a Banear</label>
-                            <input type="text" id="ipBanInput" value="127.0.0.1" class="w-full px-3 py-2 border border-purple-300 rounded text-sm focus:outline-none focus:border-purple-500">
-                        </div>
-                        <button onclick="banearIP()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded transition font-medium">
-                            🚫 Aplicar Baneo de IP (24hs)
-                        </button>
-                        <button onclick="desbanearIP()" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded transition font-medium mt-2">
-                                Quitar Baneo de IP
-                        </button>
-                    </div>
-                </div>
+    <header class="bg-indigo-700 shadow-md text-white">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight">
+                    <i class="fa-solid fa-database mr-2"></i>Gestion de Sesiones
+                </h1>
+              
             </div>
-
-            <div class="bg-gray-800 p-6 rounded-lg shadow text-green-400 font-mono text-sm flex flex-col h-[530px]">
-                <h2 class="text-gray-400 border-b border-gray-600 pb-2 mb-4">Consola de Respuestas de la API</h2>
-                <pre id="consola" class="flex-1 overflow-auto whitespace-pre-wrap">Esperando acciones...</pre>
+            <div class="flex items-center space-x-3 bg-indigo-800 px-4 py-2 rounded-lg shadow-inner">
+                <i class="fa-solid fa-key text-indigo-300"></i>
+                <span class="text-sm font-medium">Estado del Token:</span>
+                <span id="tokenStatus" class="text-sm font-bold text-red-400">Desconectado</span>
             </div>
-            
         </div>
-    </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-7 space-y-6">
+            
+            <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
+                    <h2 class="text-lg font-semibold text-slate-700">
+                        <i class="fa-solid fa-users text-indigo-500 mr-2"></i>Gestión de Sesiones
+                    </h2>
+                </div>
+                <div class="p-6 space-y-5">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">User ID</label>
+                            <input type="text" id="userIdInput" value="d8defe1e-bd72-5b36-b97c-aadc2cdcf4f1" class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Username</label>
+                            <input type="text" id="usernameInput" value="luca_gonzalez940" class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button onclick="iniciarSesion()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg shadow-sm transition font-medium flex justify-center items-center">
+                            <i class="fa-solid fa-right-to-bracket mr-2"></i> Crear Sesión
+                        </button>
+                        <button onclick="verFeed()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white py-2 px-4 rounded-lg shadow-sm transition font-medium flex justify-center items-center">
+                            <i class="fa-solid fa-rss mr-2"></i> Consultar Feed
+                        </button>
+                        <button onclick="cerrarSesion()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white py-2 px-4 rounded-lg shadow-sm transition font-medium flex justify-center items-center">
+                            <i class="fa-solid fa-power-off mr-2"></i> Destruir Token
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+                    <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
+                        <h2 class="text-lg font-semibold text-slate-700">
+                            <i class="fa-solid fa-chart-line text-blue-500 mr-2"></i>Métricas Redis
+                        </h2>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <p class="text-sm text-slate-500">Consulta los usuarios activos en una ventana móvil de 5 minutos mediante Sorted Sets.</p>
+                        <button onclick="verUsuariosOnline()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg shadow-sm transition font-medium flex justify-center items-center">
+                            <i class="fa-solid fa-eye mr-2"></i> Ver Usuarios Online
+                        </button>
+                    </div>
+                </section>
+                <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
+                        <h2 class="text-lg font-semibold text-slate-700">
+                            <i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i>Seguridad 
+                        </h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Dirección IP</label>
+                            <input type="text" id="ipBanInput" value="127.0.0.1" class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none transition">
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="banearIP()" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2 px-2 rounded-lg shadow-sm transition text-sm font-medium">
+                                <i class="fa-solid fa-ban mr-1"></i> Ban (24h)
+                            </button>
+                            <button onclick="desbanearIP()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-2 px-2 rounded-lg shadow-sm transition text-sm font-medium border border-slate-300">
+                                <i class="fa-solid fa-unlock mr-1"></i> Unban
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 h-[600px] flex flex-col bg-slate-900 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
+            <div class="bg-slate-800 px-4 py-3 border-b border-slate-700 flex justify-between items-center">
+                <h2 class="text-sm font-semibold text-slate-300 flex items-center">
+                    <i class="fa-solid fa-terminal mr-2"></i>Terminal de Respuestas (API)
+                </h2>
+                <button onclick="limpiarConsola()" class="text-xs text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-trash-can"></i> Limpiar
+                </button>
+            </div>
+            <div class="flex-1 p-4 overflow-auto font-mono text-xs sm:text-sm text-green-400 bg-[#0d1117] relative">
+                <pre id="consola" class="whitespace-pre-wrap break-all">Esperando comandos...</pre>
+            </div>
+        </div>
+        
+    </main>
 
     <script>
-        // Configurado en puerto 5000 para evitar bloqueos del navegador
         const API_URL = 'http://127.0.0.1:5001/api';
         const consola = document.getElementById('consola');
         const tokenStatus = document.getElementById('tokenStatus');
 
-        function logMensaje(obj) {
-            consola.textContent = JSON.stringify(obj, null, 2);
+        function agregarLog(titulo, obj, esError = false) {
+            const timestamp = new Date().toLocaleTimeString();
+            const colorClase = esError ? 'text-red-400' : 'text-blue-300';
+            
+            // Si es el mensaje inicial, borramos
+            if (consola.textContent === 'Esperando comandos...') {
+                consola.innerHTML = '';
+            }
+
+            const logEntry = document.createElement('div');
+            logEntry.className = 'mb-4 pb-4 border-b border-slate-800/50';
+            logEntry.innerHTML = `
+                <div class="text-slate-500 text-xs mb-1">[${timestamp}] <span class="${colorClase} font-bold">${titulo}</span></div>
+                <div>${JSON.stringify(obj, null, 2)}</div>
+            `;
+            
+            consola.appendChild(logEntry);
+            const contenedorScroll = consola.parentElement;
+
+            
+        }
+
+        function limpiarConsola() {
+            consola.innerHTML = 'Esperando comandos...';
         }
 
         function actualizarEstadoToken() {
             const token = localStorage.getItem('mi_token_social');
             if (token) {
-                tokenStatus.textContent = "Guardado (" + token.substring(0,8) + "...)";
-                tokenStatus.className = "font-bold text-green-500";
+                tokenStatus.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> Activo (${token.substring(0,8)}...)`;
+                tokenStatus.className = "text-sm font-bold text-emerald-300";
             } else {
-                tokenStatus.textContent = "Ninguno";
-                tokenStatus.className = "font-bold text-red-500";
+                tokenStatus.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> Desconectado`;
+                tokenStatus.className = "text-sm font-bold text-red-300";
             }
         }
 
-        // 1. Iniciar Sesión
         async function iniciarSesion() {
             const userIdValue = document.getElementById('userIdInput').value;
             const usernameValue = document.getElementById('usernameInput').value;
@@ -105,83 +167,64 @@
                 const response = await fetch(`${API_URL}/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        user_id: userIdValue,
-                        username: usernameValue
-                    })
+                    body: JSON.stringify({ user_id: userIdValue, username: usernameValue })
                 });
                 const data = await response.json();
                 
                 if (response.ok && data.token) {
                     localStorage.setItem('mi_token_social', data.token);
                     actualizarEstadoToken();
+                    agregarLog('POST /api/login (200 OK)', data);
+                } else {
+                    agregarLog(`POST /api/login (${response.status})`, data, true);
                 }
-                logMensaje(data);
             } catch (error) {
-                logMensaje({ error: error.message });
+                agregarLog('ERROR DE RED', { error: error.message }, true);
             }
         }
 
-        // 2. Ver Feed (Petición Autenticada)
         async function verFeed() {
             const token = localStorage.getItem('mi_token_social');
-            
             try {
                 const response = await fetch(`${API_URL}/feed`, {
                     method: 'GET',
-                    headers: { 
-                        'Authorization': `Bearer ${token}` 
-                    }
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const data = await response.json();
-                logMensaje(data);
+                agregarLog(`GET /api/feed (${response.status})`, data, !response.ok);
             } catch (error) {
-                logMensaje({ error: error.message });
+                agregarLog('ERROR DE RED', { error: error.message }, true);
             }
         }
 
-        // 3. Cerrar Sesión
         async function cerrarSesion() {
             const token = localStorage.getItem('mi_token_social');
-            
             try {
                 const response = await fetch(`${API_URL}/logout`, {
                     method: 'POST',
-                    headers: { 
-                        'Authorization': `Bearer ${token}` 
-                    }
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const data = await response.json();
-                
                 localStorage.removeItem('mi_token_social');
                 actualizarEstadoToken();
-                logMensaje(data);
+                agregarLog(`POST /api/logout (${response.status})`, data, !response.ok);
             } catch (error) {
-                logMensaje({ error: error.message });
+                agregarLog('ERROR DE RED', { error: error.message }, true);
             }
         }
 
-        // ==========================================
-        // NUEVAS FUNCIONES DE ADMINISTRACIÓN
-        // ==========================================
-
-        // 4. Consultar cantidad de usuarios online
         async function verUsuariosOnline() {
             try {
-                const response = await fetch(`${API_URL}/admin/online`, {
-                    method: 'GET'
-                });
+                const response = await fetch(`${API_URL}/admin/online`);
                 const data = await response.json();
-                logMensaje(data);
+                agregarLog(`GET /api/admin/online (${response.status})`, data, !response.ok);
             } catch (error) {
-                logMensaje({ error: error.message });
+                agregarLog('ERROR DE RED', { error: error.message }, true);
             }
         }
 
-        // 5. Enviar IP para aplicar baneo
         async function banearIP() {
             const ipValue = document.getElementById('ipBanInput').value;
-            
             try {
                 const response = await fetch(`${API_URL}/admin/ban`, {
                     method: 'POST',
@@ -189,16 +232,14 @@
                     body: JSON.stringify({ ip_address: ipValue })
                 });
                 const data = await response.json();
-                logMensaje(data);
+                agregarLog(`POST /api/admin/ban (${response.status})`, data, !response.ok);
             } catch (error) {
-                logMensaje({ error: error.message });
+                agregarLog('ERROR DE RED', { error: error.message }, true);
             }
         }
 
-        // 6. Enviar IP para quitar baneo
         async function desbanearIP() {
             const ipValue = document.getElementById('ipBanInput').value;
-            
             try {
                 const response = await fetch(`${API_URL}/admin/unban`, {
                     method: 'POST',
@@ -206,13 +247,13 @@
                     body: JSON.stringify({ ip_address: ipValue })
                 });
                 const data = await response.json();
-                logMensaje(data);
+                agregarLog(`POST /api/admin/unban (${response.status})`, data, !response.ok);
             } catch (error) {
-                logMensaje({ error: error.message });
+                agregarLog('ERROR DE RED', { error: error.message }, true);
             }
         }
 
-        // Iniciar el estado visual al cargar la página
+        // Inicialización
         actualizarEstadoToken();
     </script>
 </body>
