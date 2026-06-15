@@ -6,9 +6,10 @@ USER = "neo4j"
 PASSWORD = "Independiente2026"     
 
 def main():
+    try:
     #Conectar al motor
-    db = Neo4jService(URI, USER, PASSWORD)
-    print("Conexión establecida con Neo4j.\n")
+        db = Neo4jService(URI, USER, PASSWORD)
+        print("Conexión establecida con Neo4j.\n")
 
     except Exception as e:
         print(f"Ocurrió un error: {e}")
