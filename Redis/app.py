@@ -65,6 +65,27 @@ def logout():
         
     return jsonify({"mensaje": "Sesión cerrada correctamente"}), 200
 
+
+@app.route('/api/admin/session', methods=['POST'])
+def inspeccionar_sesion():
+    """Recibe un token en formato JSON y devuelve los datos almacenados en su Hash de Redis"""
+    data = request.json or {}
+    token = data.get("token")
+    
+    if not token:
+        return jsonify({"error": "Se requiere el 'token' para realizar la inspección"}), 400
+        
+    # Reutilizamos el método del repositorio que lee el HGETALL
+    sesion = repo.validar_sesion(token)
+    
+    if sesion:
+        return jsonify({
+            "mensaje": "Sesión localizada con éxito en Redis",
+            "datos_sesion": sesion
+        }), 200
+    else:
+        return jsonify({"error": "La sesión no existe, es inválida o ya ha expirado"}), 404
+
 @app.route('/api/admin/online', methods=['GET'])
 def usuarios_online():
     """Devuelve la cantidad de usuarios activos en los últimos 5 minutos"""

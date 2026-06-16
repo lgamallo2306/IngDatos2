@@ -9,13 +9,12 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
 
-    <header class="bg-indigo-700 shadow-md text-white">
+    <header class="bg-indigo-700 shadow-md text-white z-10 relative">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div>
                 <h1 class="text-2xl font-bold tracking-tight">
                     <i class="fa-solid fa-database mr-2"></i>Gestion de Sesiones
                 </h1>
-              
             </div>
             <div class="flex items-center space-x-3 bg-indigo-800 px-4 py-2 rounded-lg shadow-inner">
                 <i class="fa-solid fa-key text-indigo-300"></i>
@@ -25,9 +24,9 @@
         </div>
     </header>
 
-    <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
         
-        <div class="lg:col-span-7 space-y-6">
+        <div class="md:col-span-7 lg:col-span-8 space-y-6 relative">
             
             <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
@@ -61,8 +60,8 @@
                 </div>
             </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
                 <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
                     <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
                         <h2 class="text-lg font-semibold text-slate-700">
@@ -70,19 +69,20 @@
                         </h2>
                     </div>
                     <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                        <p class="text-sm text-slate-500">Consulta los usuarios activos en una ventana móvil de 5 minutos mediante Sorted Sets.</p>
+                        <p class="text-sm text-slate-500">Consulta usuarios activos en ventana móvil de 5 minutos.</p>
                         <button onclick="verUsuariosOnline()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg shadow-sm transition font-medium flex justify-center items-center">
                             <i class="fa-solid fa-eye mr-2"></i> Ver Usuarios Online
                         </button>
                     </div>
                 </section>
-                <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+
+                <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
                     <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
                         <h2 class="text-lg font-semibold text-slate-700">
-                            <i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i>Seguridad 
+                            <i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i>Seguridad (Ban)
                         </h2>
                     </div>
-                    <div class="p-6 space-y-4">
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Dirección IP</label>
                             <input type="text" id="ipBanInput" value="127.0.0.1" class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none transition">
@@ -98,13 +98,47 @@
                     </div>
                 </section>
 
+                <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+                    <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
+                        <h2 class="text-lg font-semibold text-slate-700">
+                            <i class="fa-solid fa-magnifying-glass text-indigo-500 mr-2"></i>Inspeccionar Sesión
+                        </h2>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Token a Consultar</label>
+                            <input type="text" id="tokenConsultarInput" placeholder="Pega un token..." class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                        </div>
+                        <button onclick="inspeccionarSesion()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-lg shadow-sm transition font-medium flex justify-center items-center">
+                            <i class="fa-solid fa-search mr-2"></i> Buscar en Redis
+                        </button>
+                    </div>
+                </section>
+
+                <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+                    <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
+                        <h2 class="text-lg font-semibold text-slate-700">
+                            <i class="fa-solid fa-user-slash text-rose-500 mr-2"></i>Revocar Sesión
+                        </h2>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Token de Sesión</label>
+                            <input type="text" id="tokenEliminarInput" placeholder="Pega el token..." class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none transition">
+                        </div>
+                        <button onclick="eliminarSesionPorToken()" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-3 px-4 rounded-lg shadow-sm transition font-medium flex justify-center items-center">
+                            <i class="fa-solid fa-trash-can mr-2"></i> Eliminar Sesión
+                        </button>
+                    </div>
+                </section>
+
             </div>
         </div>
 
-        <div class="lg:col-span-5 h-[600px] flex flex-col bg-slate-900 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
+        <div class="md:col-span-5 lg:col-span-4 h-[550px] sticky top-6 flex flex-col bg-slate-900 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
             <div class="bg-slate-800 px-4 py-3 border-b border-slate-700 flex justify-between items-center">
                 <h2 class="text-sm font-semibold text-slate-300 flex items-center">
-                    <i class="fa-solid fa-terminal mr-2"></i>Terminal de Respuestas (API)
+                    <i class="fa-solid fa-terminal mr-2"></i>Terminal (API)
                 </h2>
                 <button onclick="limpiarConsola()" class="text-xs text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-trash-can"></i> Limpiar
@@ -126,7 +160,6 @@
             const timestamp = new Date().toLocaleTimeString();
             const colorClase = esError ? 'text-red-400' : 'text-blue-300';
             
-            // Si es el mensaje inicial, borramos
             if (consola.textContent === 'Esperando comandos...') {
                 consola.innerHTML = '';
             }
@@ -139,9 +172,7 @@
             `;
             
             consola.appendChild(logEntry);
-            const contenedorScroll = consola.parentElement;
-
-            
+            consola.parentElement.scrollTop = consola.parentElement.scrollHeight;
         }
 
         function limpiarConsola() {
@@ -253,7 +284,63 @@
             }
         }
 
-        // Inicialización
+        async function eliminarSesionPorToken() {
+            const tokenAEliminar = document.getElementById('tokenEliminarInput').value.trim();
+            
+            if (!tokenAEliminar) {
+                agregarLog('ERROR DE VALIDACIÓN', { error: 'Por favor, ingresa un token válido.' }, true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/logout`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${tokenAEliminar}` 
+                    }
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    if (tokenAEliminar === localStorage.getItem('mi_token_social')) {
+                        localStorage.removeItem('mi_token_social');
+                        actualizarEstadoToken();
+                    }
+                    agregarLog('POST /api/logout (Sesión Revocada)', data);
+                    document.getElementById('tokenEliminarInput').value = '';
+                } else {
+                    agregarLog(`POST /api/logout (${response.status} Error)`, data, true);
+                }
+            } catch (error) {
+                agregarLog('ERROR DE RED', { error: error.message }, true);
+            }
+        }
+
+        async function inspeccionarSesion() {
+            const tokenAConsultar = document.getElementById('tokenConsultarInput').value.trim();
+            
+            if (!tokenAConsultar) {
+                agregarLog('ERROR DE VALIDACIÓN', { error: 'Por favor, ingresa un token para consultar.' }, true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/admin/session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: tokenAConsultar })
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    agregarLog('POST /api/admin/session (Datos Recuperados)', data);
+                } else {
+                    agregarLog(`POST /api/admin/session (${response.status} Error)`, data, true);
+                }
+            } catch (error) {
+                agregarLog('ERROR DE RED', { error: error.message }, true);
+            }
+        }
         actualizarEstadoToken();
     </script>
 </body>
