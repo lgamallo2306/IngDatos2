@@ -8,17 +8,17 @@ PASSWORD = "password123"
 RUTA_DATASET = "../datasetMediano.json"
 
 def main():
-    print("🔄 Iniciando cargador inteligente de dataset...")
+    print("Iniciando cargador inteligente de dataset...")
     
     # 2. Leer el archivo JSON
     try:
         with open(RUTA_DATASET, 'r', encoding='utf-8') as archivo:
             datos_brutos = json.load(archivo)
     except FileNotFoundError:
-        print(f"❌ Error: No se encontró el archivo '{RUTA_DATASET}'. Verificá que esté en esta misma carpeta.")
+        print(f"Error: No se encontró el archivo '{RUTA_DATASET}'. Verificá que esté en esta misma carpeta.")
         return
     except json.JSONDecodeError as e:
-        print(f"❌ Error: El archivo JSON tiene un error de sintaxis: {e}")
+        print(f"Error: El archivo JSON tiene un error de sintaxis: {e}")
         return
 
     # 3. Desenvolver el JSON si viene adentro de un objeto/clave 'feed'
@@ -32,17 +32,17 @@ def main():
         lista_usuarios = datos_brutos
 
     if not lista_usuarios or not isinstance(lista_usuarios, list):
-        print("❌ Error: No se pudo encontrar una lista de registros válida en el JSON.")
+        print("Error: No se pudo encontrar una lista de registros válida en el JSON.")
         return
 
     # 4. DIAGNÓSTICO: Analizar las claves del primer registro real
     primer_registro = next((r for r in lista_usuarios if isinstance(r, dict)), None)
     if not primer_registro:
-        print("❌ Error: Los elementos de la lista no son objetos/diccionarios válidos.")
+        print("Error: Los elementos de la lista no son objetos/diccionarios válidos.")
         return
 
     claves_disponibles = list(primer_registro.keys())
-    print(f"🔍 Estructura detectada en tu JSON. Claves disponibles: {claves_disponibles}")
+    print(f"Estructura detectada en tu JSON. Claves disponibles: {claves_disponibles}")
 
     # Mapeo inteligente de claves para el ID y el Nombre
     posibles_ids = ['username', 'user_id', 'id', 'usuario', 'id_usuario', 'user']
@@ -57,7 +57,7 @@ def main():
     if not clave_nombre:
         clave_nombre = claves_disponibles[1] if len(claves_disponibles) > 1 else clave_id
 
-    print(f"🎯 Mapeo seleccionado de forma automática:")
+    print(f"Mapeo seleccionado de forma automática:")
     print(f"   - Identificador único (username): '{clave_id}'")
     print(f"   - Nombre para mostrar (nombre): '{clave_nombre}'\n")
 
@@ -75,7 +75,7 @@ def main():
                     'nombre_limpio': str(nombre_valor)
                 })
 
-    print(f"⏳ Procesando e inyectando {len(datos_filtrados)} registros limpios en Neo4j...")
+    print(f" Procesando e inyectando {len(datos_filtrados)} registros limpios en Neo4j...")
 
     # 6. Conexión e inyección masiva optimizada con UNWIND
     db = Neo4jService(URI, USER, PASSWORD)
@@ -90,12 +90,12 @@ def main():
     try:
         with db.driver.session() as session:
             session.run(query, batch=datos_filtrados)
-        print("✅ ¡Carga masiva finalizada con un éxito rotundo! No se saltó ningún dato por error de mapeo.")
+        print("¡Carga masiva finalizada con un éxito rotundo! No se saltó ningún dato por error de mapeo.")
     except Exception as e:
-        print(f"❌ Error crítico al interactuar con Neo4j: {e}")
+        print(f" Error crítico al interactuar con Neo4j: {e}")
     finally:
         db.close()
-        print("🔌 Conexión con Neo4j cerrada de forma segura.")
+        print("Conexión con Neo4j cerrada de forma segura.")
 
 if __name__ == "__main__":
     main()
