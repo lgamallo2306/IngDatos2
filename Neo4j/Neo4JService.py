@@ -88,6 +88,17 @@ class Neo4jService:
             result = session.run(query, username1 = username1, username2 = username2)
             return result.data()
 
+    def obtener_amigos(self, username):
+        """Devuelve los amigos directos (vecinos por AMIGO_DE) de un usuario."""
+        query = """
+        MATCH (u:Usuario {username: $username})-[:AMIGO_DE]-(amigo:Usuario)
+        RETURN DISTINCT amigo.username AS username, amigo.nombre AS nombre
+        ORDER BY amigo.nombre
+        """
+        with self.driver.session() as session:
+            result = session.run(query, username=username)
+            return [record.data() for record in result]
+
     def actualizar_usuario(self, username, nuevo_nombre):
         query = """
         MATCH (u:Usuario {username: $username})

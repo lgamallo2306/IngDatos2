@@ -235,29 +235,29 @@ function Neo4jFeed({ me }) {
   return (
     <>
       <p className="hint">
-        Neo4j recorre el grafo de amistades y sugiere personas que quizás conozcas.
+        Neo4j muestra las personas con las que estás conectado directamente en el grafo.
       </p>
-      {loading && <Loader label="Recorriendo el grafo…" />}
+      {loading && <Loader label="Consultando el grafo…" />}
       <ErrorNote error={error} />
-      {recs?.length === 0 && <Empty>Sin sugerencias por ahora — agregá amigos desde «Personas».</Empty>}
+      {recs?.length === 0 && <Empty>Sin conexiones aún — agregá amigos desde «Personas».</Empty>}
       <div className="feed-list">
         {recs?.map((r, i) => (
-          <article key={r.recomendado} className="card feed-entry reveal" style={{ '--delay': `${i * 35}ms` }}>
+          <article key={r.username} className="card feed-entry reveal" style={{ '--delay': `${i * 35}ms` }}>
             <header className="post-head">
-              <Avatar name={r.nombre || r.recomendado} size={42} />
+              <Avatar name={r.nombre || r.username} size={42} />
               <div className="post-who">
-                <span className="post-author">{r.nombre || r.recomendado}</span>
-                <span className="post-meta mono">@{r.recomendado} · {r.amigos_en_comun} amigos en común</span>
+                <span className="post-author">{r.nombre || r.username}</span>
+                <span className="post-meta mono">@{r.username}</span>
               </div>
               <DbBadge db="neo4j" />
             </header>
             <footer className="post-foot">
               <button
                 className="btn btn-sm"
-                disabled={added[r.recomendado]}
-                onClick={() => agregar(r.recomendado)}
+                disabled={added[r.username]}
+                onClick={() => agregar(r.username)}
               >
-                {added[r.recomendado] ? '✓ Amigos' : '+ Agregar'}
+                {added[r.username] ? '✓ Agregado' : '+ Agregar'}
               </button>
             </footer>
           </article>

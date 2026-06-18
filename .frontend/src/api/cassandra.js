@@ -5,8 +5,6 @@ const base = API.cassandra
 const enc = encodeURIComponent
 
 export const cassandra = {
-  cargarDataset: () => http(`${base}/cargar`, { method: 'POST' }),
-
   // ---- feed ----
   feed: (ownerId) => http(`${base}/feed/${enc(ownerId)}`),
   feedUltimos: (ownerId, n) => http(`${base}/feed/${enc(ownerId)}/ultimos/${n}`),

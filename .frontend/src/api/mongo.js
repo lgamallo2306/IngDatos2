@@ -9,6 +9,7 @@ export const mongo = {
   usersByInterest: (interest) => http(`${base}/users/interest/${encodeURIComponent(interest)}`),
   getUser: (username) => http(`${base}/users/${encodeURIComponent(username)}`),
   getUserStats: (userId) => http(`${base}/users/${encodeURIComponent(userId)}/stats`),
+  createUser: (body) => http(`${base}/users/`, { method: 'POST', body }),
   updateUser: (userId, body) => http(`${base}/users/${encodeURIComponent(userId)}`, { method: 'PUT', body }),
 
   // ---- posts ----

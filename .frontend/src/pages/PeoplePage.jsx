@@ -16,6 +16,7 @@ export default function PeoplePage() {
       <div className="col-main">
         <h1 className="page-title">Personas <em>y el grafo</em></h1>
         <SearchPeople me={me} />
+        <FriendsExplorer me={me} />
         <RecsExplorer me={me} />
       </div>
       <aside className="col-side">
@@ -81,6 +82,47 @@ function SearchPeople({ me }) {
         ))}
       </div>
     </>
+  )
+}
+
+function FriendsExplorer({ me }) {
+  const [username, setUsername] = useState(me.username)
+  const [friends, setFriends] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  const buscar = async (e) => {
+    e?.preventDefault()
+    setLoading(true); setError(null)
+    try {
+      setFriends(await neo4j.amigos(username.trim()))
+    } catch (err) {
+      setError(err); setFriends(null)
+    }
+    setLoading(false)
+  }
+
+  return (
+    <Panel title="Amigos de un nodo" db="neo4j" className="recs-explorer">
+      <form onSubmit={buscar} className="search-row">
+        <input className="input input-sm mono" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <button className="btn btn-sm" type="submit">Ver relaciones</button>
+      </form>
+      {loading && <Loader label="Consultando aristas del nodo…" />}
+      <ErrorNote error={error} />
+      {friends?.length === 0 && <Empty>Este nodo no tiene conexiones aún.</Empty>}
+      <ul className="rec-list">
+        {friends?.map((f) => (
+          <li key={f.username} className="rec-item">
+            <Avatar name={f.nombre || f.username} size={32} />
+            <div className="rec-info">
+              <strong>{f.nombre || f.username}</strong>
+              <span className="mono">@{f.username}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Panel>
   )
 }
 

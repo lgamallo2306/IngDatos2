@@ -26,6 +26,15 @@ except json.JSONDecodeError as e:
 def index():
     return render_template('index.html')
 
+@app.route('/api/amigos/<username>')
+def api_amigos(username):
+    try:
+        datos = dbGrafo.obtener_amigos(username)
+        return jsonify(datos)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route('/api/recomendaciones')
 def recomendaciones():
     username = request.args.get('username')

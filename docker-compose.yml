@@ -19,7 +19,7 @@ services:
     image: neo4j:latest
     container_name: dev-neo4j
     environment:
-      - NEO4J_AUTH=neo4j/passwordsecreta
+      - NEO4J_AUTH=neo4j/password123
     ports:
       - "7474:7474" # HTTP
       - "7687:7687" # Bolt

@@ -5,29 +5,11 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from cassandra_repository import CassandraRepository
-from cargar_dataset import cargar_dataset
 
 app = Flask(__name__)
 CORS(app)
 
 repo = CassandraRepository()
-
-
-# =========================================================================
-# CARGA
-# =========================================================================
-
-@app.route('/cargar', methods=['POST'])
-def cargar():
-    try:
-        feed, mensajes = cargar_dataset(repo)
-        return jsonify({
-            "status": "ok",
-            "feed_insertados": feed,
-            "mensajes_insertados": mensajes,
-        }), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 
 # =========================================================================

@@ -3,7 +3,7 @@ from Neo4JService import Neo4jService
 #Configuracion del proyecto en Neo4j
 URI = "bolt://localhost:7687"  
 USER = "neo4j"                 
-PASSWORD = "Independiente2026"     
+PASSWORD = "password123"
 
 def main():
     try:

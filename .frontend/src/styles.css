@@ -540,7 +540,9 @@ a.post-author:hover { color: var(--accent); }
 
 .login-tools { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
 
+.login-panels { display: flex; flex-direction: column; gap: 24px; }
 .login-panel { animation: rise 0.5s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.required { color: var(--accent); font-size: 11px; }
 .login-results { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .login-result {
   display: flex;

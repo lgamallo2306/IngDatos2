@@ -31,9 +31,6 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <footer className="footer mono">
-        Vínculo ✶ TP Ingeniería de Datos 2 — MongoDB · Cassandra · Neo4j · Redis
-      </footer>
     </div>
   )
 }
