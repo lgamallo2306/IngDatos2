@@ -1,18 +1,14 @@
 from neo4j import GraphDatabase
 
+
 class Neo4jService:
     def __init__(self, uri, user, password):
-        """
-        Inicializa la conexión con la base de datos Neo4j.
-        Buenas prácticas: Se utiliza un único Driver para la aplicación.
-        """
+
         self.driver = GraphDatabase.driver(uri, auth=(user, password))
 
     def close(self):
-        """Cierra la conexión con el clúster o base de datos."""
-        self.driver.close()
 
-    #OPERACIONES BÁSICAS
+        self.driver.close()
 
     def crear_relacion_amigo(self, username1, username2):
         query = """
@@ -43,9 +39,9 @@ class Neo4jService:
         RETURN count(r) AS relaciones_eliminadas
         """
         with self.driver.session() as session:
-            result = session.run(query, username1= username1, username2=username2)
+            result = session.run(query, username1=username1, username2=username2)
             return result.data()
-        
+
     def eliminar_relacion_familiar(self, username1, username2):
         query = """
         MATCH (a:Usuario {username: $username1})-[r:FAMILIAR_DE]-(b:Usuario {username: $username2})
@@ -57,11 +53,7 @@ class Neo4jService:
             return result.data()
 
     def obtener_recomendaciones(self, username):
-        """
-        Operación Avanzada: Algoritmo "Quizás conozcas a".
-        Busca amigos de mis amigos que NO sean mis amigos actualmente,
-        y los ordena por la cantidad de amigos en común.
-        """
+
         query = """
         MATCH (usuario:Usuario {username: $username})-[:AMIGO_DE]-(amigo)-[:AMIGO_DE]-(posible_amigo:Usuario)
         WHERE NOT (usuario)-[:AMIGO_DE]-(posible_amigo) AND usuario <> posible_amigo
@@ -76,24 +68,32 @@ class Neo4jService:
             return [record.data() for record in result]
 
     def obtener_amigos_comun(self, username1, username2):
-        """
-        Encuentra los usuarios que tienen una relación de amistad en común
-        entre dos usuarios específicos.
-        """
+
         query = """
         MATCH (a:Usuario {username: $username1})-[:AMIGO_DE]-(comun:Usuario)-[:AMIGO_DE]-(b:Usuario {username: $username2})
         RETURN comun.username AS username, comun.nombre AS nombre
         """
         with self.driver.session() as session:
-            result = session.run(query, username1 = username1, username2 = username2)
+            result = session.run(query, username1=username1, username2=username2)
             return result.data()
 
     def obtener_amigos(self, username):
-        """Devuelve los amigos directos (vecinos por AMIGO_DE) de un usuario."""
+
         query = """
         MATCH (u:Usuario {username: $username})-[:AMIGO_DE]-(amigo:Usuario)
         RETURN DISTINCT amigo.username AS username, amigo.nombre AS nombre
         ORDER BY amigo.nombre
+        """
+        with self.driver.session() as session:
+            result = session.run(query, username=username)
+            return [record.data() for record in result]
+
+    def obtener_familiares(self, username):
+
+        query = """
+        MATCH (u:Usuario {username: $username})-[:FAMILIAR_DE]-(familiar:Usuario)
+        RETURN DISTINCT familiar.username AS username, familiar.nombre AS nombre
+        ORDER BY familiar.nombre
         """
         with self.driver.session() as session:
             result = session.run(query, username=username)

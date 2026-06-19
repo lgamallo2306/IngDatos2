@@ -88,7 +88,7 @@ python Cassandra/cargar_dataset.py
 docker compose --profile mongo up -d
 
 pip install -r MongoDB/requirements.txt
-uvicorn app.main:app --reload --port 8000 --app-dir MongoDB
+uvicorn app.main:app --reload
 # → http://localhost:8000
 # Documentación interactiva: http://localhost:8000/docs
 

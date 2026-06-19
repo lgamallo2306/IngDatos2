@@ -14300,7 +14300,7 @@
       "author_username": "renata_rojas954",
       "content_preview": "My experience with django\n\nThis is a discussion about python.",
       "created_at": "2021-12-24T02:51:09+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "d8defe1e-bd72-5b36-b97c-aadc2cdcf4f1",
@@ -14309,7 +14309,7 @@
       "author_username": "dylan_lopez819",
       "content_preview": "Question about databases\n\nThis is a discussion about apis.",
       "created_at": "2021-12-13T04:23:33+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "d8defe1e-bd72-5b36-b97c-aadc2cdcf4f1",
@@ -14318,7 +14318,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "1ff4305c-bef6-5c31-a23c-3211e6e22ff1",
@@ -14327,7 +14327,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "1ff4305c-bef6-5c31-a23c-3211e6e22ff1",
@@ -14336,7 +14336,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "1ff4305c-bef6-5c31-a23c-3211e6e22ff1",
@@ -14345,7 +14345,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "821b449e-f36f-5f88-9844-df534e54aaf3",
@@ -14354,7 +14354,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "821b449e-f36f-5f88-9844-df534e54aaf3",
@@ -14363,7 +14363,7 @@
       "author_username": "dylan_lopez819",
       "content_preview": "Question about databases\n\nThis is a discussion about apis.",
       "created_at": "2021-12-13T04:23:33+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "821b449e-f36f-5f88-9844-df534e54aaf3",
@@ -14381,7 +14381,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "15c1de84-0769-5ee0-9831-1b629ae2e388",
@@ -14390,7 +14390,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "15c1de84-0769-5ee0-9831-1b629ae2e388",
@@ -14399,7 +14399,7 @@
       "author_username": "emma_gimenez862",
       "content_preview": "My experience with apis\n\nThis is a discussion about databases.",
       "created_at": "2021-11-28T11:37:53+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "ceac3ab9-4ba9-583f-9053-dc8fb2a22c03",
@@ -14408,7 +14408,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ceac3ab9-4ba9-583f-9053-dc8fb2a22c03",
@@ -14417,7 +14417,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ceac3ab9-4ba9-583f-9053-dc8fb2a22c03",
@@ -14426,7 +14426,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "83867d44-7f8c-59e6-bb29-2d864b3abce4",
@@ -14435,7 +14435,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "83867d44-7f8c-59e6-bb29-2d864b3abce4",
@@ -14453,7 +14453,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "30b43ae6-fda6-5ddb-8d06-fddf9296757f",
@@ -14471,7 +14471,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "30b43ae6-fda6-5ddb-8d06-fddf9296757f",
@@ -14480,7 +14480,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "03d22099-99f5-5149-900e-4c963d776b91",
@@ -14489,7 +14489,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "03d22099-99f5-5149-900e-4c963d776b91",
@@ -14507,7 +14507,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "2ffc9dd8-1543-5010-86c0-78ea77d74458",
@@ -14516,7 +14516,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "2ffc9dd8-1543-5010-86c0-78ea77d74458",
@@ -14525,7 +14525,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "2ffc9dd8-1543-5010-86c0-78ea77d74458",
@@ -14534,7 +14534,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "a5ac45ca-6545-5f7f-8b26-50c335787a09",
@@ -14543,7 +14543,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "a5ac45ca-6545-5f7f-8b26-50c335787a09",
@@ -14552,7 +14552,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "a5ac45ca-6545-5f7f-8b26-50c335787a09",
@@ -14561,7 +14561,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "744cff2c-7497-5c9d-94db-e11835c5dbbd",
@@ -14579,7 +14579,7 @@
       "author_username": "victoria_medina180",
       "content_preview": "Review: django\n\nThis is a discussion about flask.",
       "created_at": "2021-11-15T07:10:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "744cff2c-7497-5c9d-94db-e11835c5dbbd",
@@ -14588,7 +14588,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "f3102d0c-68ab-5f31-8cec-57a03ec7f4ab",
@@ -14597,7 +14597,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "f3102d0c-68ab-5f31-8cec-57a03ec7f4ab",
@@ -14606,7 +14606,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "f3102d0c-68ab-5f31-8cec-57a03ec7f4ab",
@@ -14615,7 +14615,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "7c602321-c0ca-585f-8b2b-d49b41373638",
@@ -14633,7 +14633,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "7c602321-c0ca-585f-8b2b-d49b41373638",
@@ -14651,7 +14651,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "f8820026-c4a4-5c5a-b1f6-912838117667",
@@ -14660,7 +14660,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "f8820026-c4a4-5c5a-b1f6-912838117667",
@@ -14669,7 +14669,7 @@
       "author_username": "tomàs_garcia588",
       "content_preview": "My experience with testing\n\nThis is a discussion about apis.",
       "created_at": "2021-11-18T21:01:00+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "b36b3ffa-4811-58f0-9728-1abcabcef75b",
@@ -14678,7 +14678,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "b36b3ffa-4811-58f0-9728-1abcabcef75b",
@@ -14687,7 +14687,7 @@
       "author_username": "dylan_lopez819",
       "content_preview": "Question about databases\n\nThis is a discussion about apis.",
       "created_at": "2021-12-13T04:23:33+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "b36b3ffa-4811-58f0-9728-1abcabcef75b",
@@ -14696,7 +14696,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "f4cdf6dd-a819-510f-a0f2-27533b659eaa",
@@ -14705,7 +14705,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "f4cdf6dd-a819-510f-a0f2-27533b659eaa",
@@ -14714,7 +14714,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "f4cdf6dd-a819-510f-a0f2-27533b659eaa",
@@ -14723,7 +14723,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "f97c8089-73d5-5176-8880-e35a14036a63",
@@ -14732,7 +14732,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "f97c8089-73d5-5176-8880-e35a14036a63",
@@ -14741,7 +14741,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "f97c8089-73d5-5176-8880-e35a14036a63",
@@ -14759,7 +14759,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "e3b0ff10-347d-5682-91b3-e4a364829963",
@@ -14777,7 +14777,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "1ca4dd11-dbd3-5a57-bd09-1631e5b5167f",
@@ -14786,7 +14786,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "1ca4dd11-dbd3-5a57-bd09-1631e5b5167f",
@@ -14795,7 +14795,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "1ca4dd11-dbd3-5a57-bd09-1631e5b5167f",
@@ -14804,7 +14804,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "ab7cbcf2-da5d-5392-9d72-83693448415e",
@@ -14813,7 +14813,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ab7cbcf2-da5d-5392-9d72-83693448415e",
@@ -14822,7 +14822,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "ab7cbcf2-da5d-5392-9d72-83693448415e",
@@ -14831,7 +14831,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "55c2312d-09a3-53e6-aa0a-3981ae0313fb",
@@ -14840,7 +14840,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "55c2312d-09a3-53e6-aa0a-3981ae0313fb",
@@ -14849,7 +14849,7 @@
       "author_username": "renata_rojas954",
       "content_preview": "My experience with django\n\nThis is a discussion about python.",
       "created_at": "2021-12-24T02:51:09+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "55c2312d-09a3-53e6-aa0a-3981ae0313fb",
@@ -14858,7 +14858,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "38be8941-1fd0-57b1-83c8-3851e25a4113",
@@ -14885,7 +14885,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "a0dfb6ef-eb5c-5826-a4c5-662474a9358b",
@@ -14894,7 +14894,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "a0dfb6ef-eb5c-5826-a4c5-662474a9358b",
@@ -14903,7 +14903,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "a0dfb6ef-eb5c-5826-a4c5-662474a9358b",
@@ -14912,7 +14912,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "494ae70a-2aa1-5436-b38f-c1dbeffa9b55",
@@ -14921,7 +14921,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "494ae70a-2aa1-5436-b38f-c1dbeffa9b55",
@@ -14930,7 +14930,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "494ae70a-2aa1-5436-b38f-c1dbeffa9b55",
@@ -14939,7 +14939,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "bd09896f-0e7a-5665-9b0f-964f2d48485e",
@@ -14957,7 +14957,7 @@
       "author_username": "lola_diaz287",
       "content_preview": "Question about databases\n\nThis is a discussion about databases.",
       "created_at": "2021-11-23T10:37:36+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "bd09896f-0e7a-5665-9b0f-964f2d48485e",
@@ -14966,7 +14966,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "016c0eee-4632-5803-a409-13cc894ebd2c",
@@ -14975,7 +14975,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "016c0eee-4632-5803-a409-13cc894ebd2c",
@@ -14984,7 +14984,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "016c0eee-4632-5803-a409-13cc894ebd2c",
@@ -14993,7 +14993,7 @@
       "author_username": "emma_gimenez862",
       "content_preview": "My experience with apis\n\nThis is a discussion about databases.",
       "created_at": "2021-11-28T11:37:53+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "933e56ae-ed5d-5275-ab7e-fb7bad64b271",
@@ -15029,7 +15029,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "011cd892-51f3-5ae6-8236-1565ad7ddeb1",
@@ -15038,7 +15038,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "011cd892-51f3-5ae6-8236-1565ad7ddeb1",
@@ -15047,7 +15047,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "63cf4281-fdc1-577d-a786-8698f6cb7020",
@@ -15056,7 +15056,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "63cf4281-fdc1-577d-a786-8698f6cb7020",
@@ -15065,7 +15065,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "63cf4281-fdc1-577d-a786-8698f6cb7020",
@@ -15092,7 +15092,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "220fb471-5413-5a02-88eb-3e85544da93c",
@@ -15101,7 +15101,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ea574751-f719-5d1c-8695-778012ef30de",
@@ -15110,7 +15110,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ea574751-f719-5d1c-8695-778012ef30de",
@@ -15128,7 +15128,7 @@
       "author_username": "emma_gimenez862",
       "content_preview": "My experience with apis\n\nThis is a discussion about databases.",
       "created_at": "2021-11-28T11:37:53+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "bd4887e8-d2c3-5b60-beea-5b662930fac2",
@@ -15137,7 +15137,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "bd4887e8-d2c3-5b60-beea-5b662930fac2",
@@ -15146,7 +15146,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "bd4887e8-d2c3-5b60-beea-5b662930fac2",
@@ -15155,7 +15155,7 @@
       "author_username": "tomàs_garcia588",
       "content_preview": "My experience with testing\n\nThis is a discussion about apis.",
       "created_at": "2021-11-18T21:01:00+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "e6ea3b85-bda6-526b-8731-3e5631a08238",
@@ -15164,7 +15164,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "e6ea3b85-bda6-526b-8731-3e5631a08238",
@@ -15182,7 +15182,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "a60b0d4f-fb62-5335-9870-accd7dc8665a",
@@ -15218,7 +15218,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "92af5d2a-d669-5a6a-b3d4-8afaacf196a7",
@@ -15227,7 +15227,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "92af5d2a-d669-5a6a-b3d4-8afaacf196a7",
@@ -15236,7 +15236,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "75b1a4de-5d4a-550c-844f-2708db43f925",
@@ -15245,7 +15245,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "75b1a4de-5d4a-550c-844f-2708db43f925",
@@ -15254,7 +15254,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "75b1a4de-5d4a-550c-844f-2708db43f925",
@@ -15263,7 +15263,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "f5a84715-9e7f-59fe-85cb-0a508c427830",
@@ -15272,7 +15272,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "f5a84715-9e7f-59fe-85cb-0a508c427830",
@@ -15290,7 +15290,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "e4aee6f0-f83b-5089-926f-f14115238f5a",
@@ -15308,7 +15308,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "e4aee6f0-f83b-5089-926f-f14115238f5a",
@@ -15317,7 +15317,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "66ac6c59-506e-5bb6-b023-45f508265433",
@@ -15326,7 +15326,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "66ac6c59-506e-5bb6-b023-45f508265433",
@@ -15335,7 +15335,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "66ac6c59-506e-5bb6-b023-45f508265433",
@@ -15344,7 +15344,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "aaab9699-e75d-51a5-8d66-d3be758fe00e",
@@ -15353,7 +15353,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "aaab9699-e75d-51a5-8d66-d3be758fe00e",
@@ -15362,7 +15362,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "aaab9699-e75d-51a5-8d66-d3be758fe00e",
@@ -15371,7 +15371,7 @@
       "author_username": "tomàs_garcia588",
       "content_preview": "My experience with testing\n\nThis is a discussion about apis.",
       "created_at": "2021-11-18T21:01:00+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "2392c9c4-30bc-5941-af17-d9dba0b7c34e",
@@ -15380,7 +15380,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "2392c9c4-30bc-5941-af17-d9dba0b7c34e",
@@ -15389,7 +15389,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "2392c9c4-30bc-5941-af17-d9dba0b7c34e",
@@ -15398,7 +15398,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "0e12933e-11e6-52b0-a4ba-9259fedc2867",
@@ -15416,7 +15416,7 @@
       "author_username": "dylan_lopez819",
       "content_preview": "Question about databases\n\nThis is a discussion about apis.",
       "created_at": "2021-12-13T04:23:33+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "0e12933e-11e6-52b0-a4ba-9259fedc2867",
@@ -15425,7 +15425,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "9130efce-76ca-504e-be54-35af3ba9d8dc",
@@ -15434,7 +15434,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "9130efce-76ca-504e-be54-35af3ba9d8dc",
@@ -15443,7 +15443,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "9130efce-76ca-504e-be54-35af3ba9d8dc",
@@ -15452,7 +15452,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "3af4e5a4-2b52-5e17-a6a6-2c3c28492135",
@@ -15461,7 +15461,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "3af4e5a4-2b52-5e17-a6a6-2c3c28492135",
@@ -15470,7 +15470,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "3af4e5a4-2b52-5e17-a6a6-2c3c28492135",
@@ -15479,7 +15479,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "6516d04f-cb0f-5591-b0d8-0888f60c3559",
@@ -15488,7 +15488,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "6516d04f-cb0f-5591-b0d8-0888f60c3559",
@@ -15506,7 +15506,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "6edcb385-aa6f-5c88-993d-dc3217ac15b5",
@@ -15515,7 +15515,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "6edcb385-aa6f-5c88-993d-dc3217ac15b5",
@@ -15524,7 +15524,7 @@
       "author_username": "victoria_medina180",
       "content_preview": "Review: django\n\nThis is a discussion about flask.",
       "created_at": "2021-11-15T07:10:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "6edcb385-aa6f-5c88-993d-dc3217ac15b5",
@@ -15542,7 +15542,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "27a9e352-527c-590f-8d8b-6f29e23cd133",
@@ -15551,7 +15551,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "27a9e352-527c-590f-8d8b-6f29e23cd133",
@@ -15569,7 +15569,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "c9eceb67-1e35-5fe0-b966-28f0a5bef830",
@@ -15578,7 +15578,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "c9eceb67-1e35-5fe0-b966-28f0a5bef830",
@@ -15587,7 +15587,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "f9bba2ee-036e-5fea-bf00-b41b165abaa0",
@@ -15605,7 +15605,7 @@
       "author_username": "lola_diaz287",
       "content_preview": "Question about databases\n\nThis is a discussion about databases.",
       "created_at": "2021-11-23T10:37:36+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "f9bba2ee-036e-5fea-bf00-b41b165abaa0",
@@ -15632,7 +15632,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "217d34ea-c429-55dd-a39e-01e9f2fab696",
@@ -15641,7 +15641,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "b30389b3-cd29-57fc-827f-474e7acdf51e",
@@ -15650,7 +15650,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "b30389b3-cd29-57fc-827f-474e7acdf51e",
@@ -15659,7 +15659,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "b30389b3-cd29-57fc-827f-474e7acdf51e",
@@ -15668,7 +15668,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "c57e7ddb-6965-5665-b06f-7dbd40181144",
@@ -15677,7 +15677,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "c57e7ddb-6965-5665-b06f-7dbd40181144",
@@ -15686,7 +15686,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "c57e7ddb-6965-5665-b06f-7dbd40181144",
@@ -15695,7 +15695,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "53ccdc01-f10d-59f8-8799-8f9c31f1a81f",
@@ -15704,7 +15704,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "53ccdc01-f10d-59f8-8799-8f9c31f1a81f",
@@ -15713,7 +15713,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "53ccdc01-f10d-59f8-8799-8f9c31f1a81f",
@@ -15722,7 +15722,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "9d237b7e-1b02-5b4a-840a-0c7dae6e888f",
@@ -15731,7 +15731,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "9d237b7e-1b02-5b4a-840a-0c7dae6e888f",
@@ -15740,7 +15740,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "9d237b7e-1b02-5b4a-840a-0c7dae6e888f",
@@ -15749,7 +15749,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "4a70876a-efd7-5fd2-8c4d-3235fd6e2128",
@@ -15758,7 +15758,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "4a70876a-efd7-5fd2-8c4d-3235fd6e2128",
@@ -15767,7 +15767,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "4a70876a-efd7-5fd2-8c4d-3235fd6e2128",
@@ -15776,7 +15776,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "1290ff36-afec-5526-b54e-488ec1155781",
@@ -15785,7 +15785,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "1290ff36-afec-5526-b54e-488ec1155781",
@@ -15803,7 +15803,7 @@
       "author_username": "tomàs_garcia588",
       "content_preview": "My experience with testing\n\nThis is a discussion about apis.",
       "created_at": "2021-11-18T21:01:00+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ea742ae5-62ce-537c-81c5-6c10d814e7c6",
@@ -15812,7 +15812,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ea742ae5-62ce-537c-81c5-6c10d814e7c6",
@@ -15830,7 +15830,7 @@
       "author_username": "emma_gimenez862",
       "content_preview": "My experience with apis\n\nThis is a discussion about databases.",
       "created_at": "2021-11-28T11:37:53+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "25b6615c-1f8e-56c6-b16f-3b175a25c192",
@@ -15857,7 +15857,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "a3d4294e-13d9-5f55-9cb5-eb8edba70d55",
@@ -15866,7 +15866,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "a3d4294e-13d9-5f55-9cb5-eb8edba70d55",
@@ -15875,7 +15875,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "a3d4294e-13d9-5f55-9cb5-eb8edba70d55",
@@ -15893,7 +15893,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "a9a18a8a-845e-580c-9366-07c27d532736",
@@ -15929,7 +15929,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "4691885f-9e39-51e7-b3fe-bbf55407debc",
@@ -15938,7 +15938,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "cdf38189-10eb-555f-9eb2-7096b63e07b9",
@@ -15947,7 +15947,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "cdf38189-10eb-555f-9eb2-7096b63e07b9",
@@ -15965,7 +15965,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "e7ccde37-1d6e-5d1c-8c6a-4a26e5db66c7",
@@ -15974,7 +15974,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "e7ccde37-1d6e-5d1c-8c6a-4a26e5db66c7",
@@ -15983,7 +15983,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "e7ccde37-1d6e-5d1c-8c6a-4a26e5db66c7",
@@ -15992,7 +15992,7 @@
       "author_username": "victoria_medina180",
       "content_preview": "Review: django\n\nThis is a discussion about flask.",
       "created_at": "2021-11-15T07:10:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "0c227802-c7c8-507c-8cd7-f0d80cb43f25",
@@ -16001,7 +16001,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "0c227802-c7c8-507c-8cd7-f0d80cb43f25",
@@ -16019,7 +16019,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "3b8448f8-1c39-53ca-87cb-2e322d5b3a96",
@@ -16037,7 +16037,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "3b8448f8-1c39-53ca-87cb-2e322d5b3a96",
@@ -16046,7 +16046,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "ca7a205f-d383-5b0e-b5d9-d2cf5f006a06",
@@ -16064,7 +16064,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ca7a205f-d383-5b0e-b5d9-d2cf5f006a06",
@@ -16073,7 +16073,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "1dec2f6f-5187-59c6-9cba-c302f9bd7b04",
@@ -16091,7 +16091,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "1dec2f6f-5187-59c6-9cba-c302f9bd7b04",
@@ -16100,7 +16100,7 @@
       "author_username": "emma_gimenez862",
       "content_preview": "My experience with apis\n\nThis is a discussion about databases.",
       "created_at": "2021-11-28T11:37:53+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "cf71c7de-b8aa-5340-a80f-02161584c00d",
@@ -16109,7 +16109,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "cf71c7de-b8aa-5340-a80f-02161584c00d",
@@ -16118,7 +16118,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "cf71c7de-b8aa-5340-a80f-02161584c00d",
@@ -16127,7 +16127,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "a871744e-2749-5e65-b151-cf6ff5c0a458",
@@ -16136,7 +16136,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "a871744e-2749-5e65-b151-cf6ff5c0a458",
@@ -16172,7 +16172,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "94c03627-36a3-5731-8037-7b57817e9f0f",
@@ -16190,7 +16190,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "42c5cfa6-91b6-5eef-aa32-8c76ef4ac0fe",
@@ -16199,7 +16199,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "42c5cfa6-91b6-5eef-aa32-8c76ef4ac0fe",
@@ -16217,7 +16217,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "18d5b8ab-89f1-5ee8-9f8b-cd4f068faf1b",
@@ -16235,7 +16235,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "5f36d6f7-8c8c-58d8-868f-454c2648182b",
@@ -16253,7 +16253,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "5f36d6f7-8c8c-58d8-868f-454c2648182b",
@@ -16280,7 +16280,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "e535b427-8614-5196-a869-c6e63e7be0c8",
@@ -16289,7 +16289,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "fcf6238d-62e2-5781-a0c7-84d6dd33cdff",
@@ -16298,7 +16298,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "fcf6238d-62e2-5781-a0c7-84d6dd33cdff",
@@ -16307,7 +16307,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "fcf6238d-62e2-5781-a0c7-84d6dd33cdff",
@@ -16316,7 +16316,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "b0ad4532-48d0-5208-8dee-3c789649b847",
@@ -16325,7 +16325,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "b0ad4532-48d0-5208-8dee-3c789649b847",
@@ -16334,7 +16334,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "b0ad4532-48d0-5208-8dee-3c789649b847",
@@ -16343,7 +16343,7 @@
       "author_username": "emma_gimenez862",
       "content_preview": "My experience with apis\n\nThis is a discussion about databases.",
       "created_at": "2021-11-28T11:37:53+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "b824a219-341a-521a-9a05-43f13667fcc4",
@@ -16352,7 +16352,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "b824a219-341a-521a-9a05-43f13667fcc4",
@@ -16370,7 +16370,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "73f73fc9-de1c-5df0-a664-01da10af147e",
@@ -16379,7 +16379,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "73f73fc9-de1c-5df0-a664-01da10af147e",
@@ -16388,7 +16388,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "73f73fc9-de1c-5df0-a664-01da10af147e",
@@ -16397,7 +16397,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "14d8ee22-111d-5468-8439-4bc8ecfae7c9",
@@ -16406,7 +16406,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "14d8ee22-111d-5468-8439-4bc8ecfae7c9",
@@ -16415,7 +16415,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "14d8ee22-111d-5468-8439-4bc8ecfae7c9",
@@ -16424,7 +16424,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "790b3929-b1f0-5518-a628-75c40b77dde9",
@@ -16442,7 +16442,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "790b3929-b1f0-5518-a628-75c40b77dde9",
@@ -16451,7 +16451,7 @@
       "author_username": "emma_gimenez862",
       "content_preview": "My experience with apis\n\nThis is a discussion about databases.",
       "created_at": "2021-11-28T11:37:53+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "d4bccf1d-3c6a-5065-a34b-61a35c9078b5",
@@ -16460,7 +16460,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "d4bccf1d-3c6a-5065-a34b-61a35c9078b5",
@@ -16469,7 +16469,7 @@
       "author_username": "lola_diaz287",
       "content_preview": "Question about databases\n\nThis is a discussion about databases.",
       "created_at": "2021-11-23T10:37:36+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "d4bccf1d-3c6a-5065-a34b-61a35c9078b5",
@@ -16487,7 +16487,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "0a5be243-ab26-5446-ad78-bb3cd82f228d",
@@ -16496,7 +16496,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "0a5be243-ab26-5446-ad78-bb3cd82f228d",
@@ -16505,7 +16505,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "6c70cd91-2b59-561f-8dd3-502ae1e92ed7",
@@ -16514,7 +16514,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "6c70cd91-2b59-561f-8dd3-502ae1e92ed7",
@@ -16523,7 +16523,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "6c70cd91-2b59-561f-8dd3-502ae1e92ed7",
@@ -16532,7 +16532,7 @@
       "author_username": "victoria_medina180",
       "content_preview": "Review: django\n\nThis is a discussion about flask.",
       "created_at": "2021-11-15T07:10:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "3634640c-2c7c-55b2-baa8-cf4680c59a78",
@@ -16550,7 +16550,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "3634640c-2c7c-55b2-baa8-cf4680c59a78",
@@ -16559,7 +16559,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "1520e58f-f720-5918-9044-c15c7761517d",
@@ -16577,7 +16577,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "1520e58f-f720-5918-9044-c15c7761517d",
@@ -16586,7 +16586,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "5389704d-e65d-5cdd-a572-7b800ddf48cf",
@@ -16595,7 +16595,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "5389704d-e65d-5cdd-a572-7b800ddf48cf",
@@ -16613,7 +16613,7 @@
       "author_username": "victoria_suarez755",
       "content_preview": "Question about testing\n\nThis is a discussion about testing.",
       "created_at": "2021-11-18T21:16:04+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "f95470d4-d205-50e2-bfa3-0fa69e9c78c5",
@@ -16622,7 +16622,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "f95470d4-d205-50e2-bfa3-0fa69e9c78c5",
@@ -16631,7 +16631,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "f95470d4-d205-50e2-bfa3-0fa69e9c78c5",
@@ -16640,7 +16640,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "e62fd8be-7e6d-5212-a259-b06cb1dbc8e9",
@@ -16649,7 +16649,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "e62fd8be-7e6d-5212-a259-b06cb1dbc8e9",
@@ -16658,7 +16658,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "e62fd8be-7e6d-5212-a259-b06cb1dbc8e9",
@@ -16667,7 +16667,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "bc634dc7-e5d6-56c0-b904-29c1d9d0e2ad",
@@ -16676,7 +16676,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "bc634dc7-e5d6-56c0-b904-29c1d9d0e2ad",
@@ -16685,7 +16685,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "bc634dc7-e5d6-56c0-b904-29c1d9d0e2ad",
@@ -16694,7 +16694,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "92fdac44-2fdf-5ffd-8d66-8abb12601fd9",
@@ -16703,7 +16703,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "92fdac44-2fdf-5ffd-8d66-8abb12601fd9",
@@ -16721,7 +16721,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "0aaa3866-debe-5828-bfc2-c33b230761c3",
@@ -16730,7 +16730,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "0aaa3866-debe-5828-bfc2-c33b230761c3",
@@ -16739,7 +16739,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "0aaa3866-debe-5828-bfc2-c33b230761c3",
@@ -16748,7 +16748,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "9ee94f84-9fd7-5921-8e44-b9e44b7b71f4",
@@ -16757,7 +16757,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "9ee94f84-9fd7-5921-8e44-b9e44b7b71f4",
@@ -16766,7 +16766,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "9ee94f84-9fd7-5921-8e44-b9e44b7b71f4",
@@ -16775,7 +16775,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "62955481-0e0f-5f65-93ef-e95f1c9cd2a5",
@@ -16784,7 +16784,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "62955481-0e0f-5f65-93ef-e95f1c9cd2a5",
@@ -16793,7 +16793,7 @@
       "author_username": "lola_diaz287",
       "content_preview": "Question about databases\n\nThis is a discussion about databases.",
       "created_at": "2021-11-23T10:37:36+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "62955481-0e0f-5f65-93ef-e95f1c9cd2a5",
@@ -16802,7 +16802,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "ee2e2fce-f934-5357-800d-24f0cdb790d5",
@@ -16811,7 +16811,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "ee2e2fce-f934-5357-800d-24f0cdb790d5",
@@ -16820,7 +16820,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "ee2e2fce-f934-5357-800d-24f0cdb790d5",
@@ -16829,7 +16829,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "10007525-9faf-54db-b5ef-f7ca05481844",
@@ -16838,7 +16838,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "10007525-9faf-54db-b5ef-f7ca05481844",
@@ -16847,7 +16847,7 @@
       "author_username": "bautista_vazquez532",
       "content_preview": "My experience with apis\n\nThis is a discussion about django.",
       "created_at": "2021-12-07T15:41:29+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "10007525-9faf-54db-b5ef-f7ca05481844",
@@ -16865,7 +16865,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "3abe9881-c8a9-55b1-a9b6-8e875dfd98a9",
@@ -16874,7 +16874,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "3abe9881-c8a9-55b1-a9b6-8e875dfd98a9",
@@ -16883,7 +16883,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "cea26710-52c0-58ef-8cb6-882f85ea2238",
@@ -16901,7 +16901,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "cea26710-52c0-58ef-8cb6-882f85ea2238",
@@ -16910,7 +16910,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "4491c02e-e0fd-5b34-8e60-4d968a13ccce",
@@ -16919,7 +16919,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "4491c02e-e0fd-5b34-8e60-4d968a13ccce",
@@ -16928,7 +16928,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "4491c02e-e0fd-5b34-8e60-4d968a13ccce",
@@ -16937,7 +16937,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "402b540d-2862-5aaf-b05e-0d270721fa13",
@@ -16946,7 +16946,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: databases\n\nThis is a discussion about databases.",
       "created_at": "2021-12-27T03:11:15+00:00",
-      "post_type": "link"
+      "post_type": "video"
     },
     {
       "owner_user_id": "402b540d-2862-5aaf-b05e-0d270721fa13",
@@ -16955,7 +16955,7 @@
       "author_username": "benicio_rivero973",
       "content_preview": "Review: testing\n\nThis is a discussion about django.",
       "created_at": "2021-12-09T23:36:57+00:00",
-      "post_type": "link"
+      "post_type": "photo"
     },
     {
       "owner_user_id": "402b540d-2862-5aaf-b05e-0d270721fa13",
@@ -16982,7 +16982,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: flask\n\nThis is a discussion about python.",
       "created_at": "2021-11-12T08:10:51+00:00",
-      "post_type": "link"
+      "post_type": "text"
     },
     {
       "owner_user_id": "e1e33edf-a2b0-5387-93d3-502bd9d3a815",
@@ -16991,7 +16991,7 @@
       "author_username": "luca_gonzalez940",
       "content_preview": "Review: python\n\nThis is a discussion about apis.",
       "created_at": "2021-11-11T20:08:43+00:00",
-      "post_type": "link"
+      "post_type": "text"
     }
   ]
 }

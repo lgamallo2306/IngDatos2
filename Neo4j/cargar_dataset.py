@@ -9,13 +9,12 @@ RUTA_DATASET = os.path.join(os.path.dirname(__file__), "..", "datasetMediano.jso
 
 
 def cargar_dataset(db, ruta=RUTA_DATASET):
-    """Carga nodos Usuario y relaciones AMIGO_DE desde el dataset. Devuelve (usuarios, relaciones)."""
+
     with open(ruta, "r", encoding="utf-8") as archivo:
         datos = json.load(archivo)
 
     usuarios = datos.get("users", [])
 
-    # Cargar nodos Usuario
     batch_usuarios = [
         {"username": u["username"], "nombre": u.get("display_name") or u["username"]}
         for u in usuarios
@@ -29,10 +28,12 @@ def cargar_dataset(db, ruta=RUTA_DATASET):
     with db.driver.session() as session:
         session.run(query_usuarios, batch=batch_usuarios)
 
-    # Mapeo user_id → username para resolver las relaciones
-    id_a_username = {u["user_id"]: u["username"] for u in usuarios if u.get("user_id") and u.get("username")}
+    id_a_username = {
+        u["user_id"]: u["username"]
+        for u in usuarios
+        if u.get("user_id") and u.get("username")
+    }
 
-    # Cargar relaciones FOLLOWS como AMIGO_DE
     batch_rels = []
     for rel in datos.get("relationships", []):
         if rel.get("type") != "FOLLOWS":
@@ -59,8 +60,10 @@ if __name__ == "__main__":
     db = Neo4jService(URI, USER, PASSWORD)
     try:
         usuarios, relaciones = cargar_dataset(db)
-        print(f"Carga finalizada: {usuarios} nodos Usuario, {relaciones} relaciones AMIGO_DE")
+        print(
+            f"Carga finalizada: {usuarios } nodos Usuario, {relaciones } relaciones AMIGO_DE"
+        )
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error: {e }")
     finally:
         db.close()

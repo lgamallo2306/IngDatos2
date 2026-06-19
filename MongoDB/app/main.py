@@ -16,7 +16,7 @@ app = FastAPI(
     title="Social Network — MongoDB",
     description="API de usuarios y posts para el TP de Ingeniería de Datos 2",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 app.add_middleware(

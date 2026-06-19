@@ -7,7 +7,7 @@ import { mongo } from '../api/mongo'
 import Panel from '../components/Panel'
 import Avatar from '../components/Avatar'
 import DbBadge from '../components/DbBadge'
-import { Loader, ErrorNote, Empty, OkNote } from '../components/Feedback'
+import { Loader, ErrorNote, Empty } from '../components/Feedback'
 import { fmtDate, shortId } from '../utils/fmt'
 
 const POST_TYPES = ['text', 'photo', 'video', 'link']
@@ -16,8 +16,6 @@ export default function FeedPage() {
   const { session, validar } = useSession()
   const me = session.user
 
-  const [tab, setTab] = useState('cassandra')
-
   return (
     <div className="layout-two-cols">
       <div className="col-main">
@@ -25,16 +23,7 @@ export default function FeedPage() {
           Hola, <em>{(me.display_name || me.username).split(' ')[0]}</em>
         </h1>
 
-        <div className="tabs">
-          <button className={`tab-btn ${tab === 'cassandra' ? 'active' : ''}`} onClick={() => setTab('cassandra')}>
-            Mi feed <DbBadge db="cassandra" />
-          </button>
-          <button className={`tab-btn ${tab === 'neo4j' ? 'active' : ''}`} onClick={() => setTab('neo4j')}>
-            Siguiendo <DbBadge db="neo4j" />
-          </button>
-        </div>
-
-        {tab === 'cassandra' ? <CassandraFeed me={me} /> : <Neo4jFeed me={me} />}
+        <CassandraFeed me={me} />
       </div>
 
       <aside className="col-side">
@@ -60,11 +49,6 @@ function CassandraFeed({ me }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const [content, setContent] = useState('')
-  const [newType, setNewType] = useState('text')
-  const [posting, setPosting] = useState(false)
-  const [okMsg, setOkMsg] = useState(null)
-
   const load = useCallback(async () => {
     setLoading(true); setError(null)
     try {
@@ -88,28 +72,6 @@ function CassandraFeed({ me }) {
 
   useEffect(() => { load() }, [load])
 
-  const publicar = async (e) => {
-    e.preventDefault()
-    if (!content.trim()) return
-    setPosting(true); setError(null); setOkMsg(null)
-    try {
-      await cassandra.crearFeed({
-        ownerUserId: me.user_id,
-        postId: crypto.randomUUID(),
-        authorId: me.user_id,
-        authorUsername: me.username,
-        contentPreview: content.trim(),
-        postType: newType,
-      })
-      setContent('')
-      setOkMsg('Entrada publicada en tu feed.')
-      load()
-    } catch (err) {
-      setError(err)
-    }
-    setPosting(false)
-  }
-
   const eliminar = async (entry) => {
     try {
       await cassandra.eliminarFeed(entry.ownerUserId, entry.createdAt, entry.postId)
@@ -121,28 +83,6 @@ function CassandraFeed({ me }) {
 
   return (
     <>
-      <Panel db="cassandra" className="composer-panel">
-        <form onSubmit={publicar} className="composer">
-          <Avatar userId={me.user_id} url={me.avatar_url} name={me.display_name || me.username} size={42} />
-          <textarea
-            className="input composer-input"
-            placeholder={`¿Qué estás pensando, ${(me.display_name || me.username).split(' ')[0]}?`}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows={2}
-          />
-          <div className="composer-foot">
-            <select className="input input-sm" value={newType} onChange={(e) => setNewType(e.target.value)}>
-              {POST_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
-            <button className="btn btn-primary" disabled={posting || !content.trim()}>
-              {posting ? 'Publicando…' : 'Publicar'}
-            </button>
-          </div>
-        </form>
-        <OkNote>{okMsg}</OkNote>
-      </Panel>
-
       <div className="filter-bar">
         <select className="input input-sm" value={mode} onChange={(e) => setMode(e.target.value)}>
           <option value="todo">Todo el feed</option>
@@ -203,73 +143,10 @@ function CassandraFeed({ me }) {
   )
 }
 
-/* ---------------- Feed por seguidos (Neo4j + dataset) ---------------- */
-
-function Neo4jFeed({ me }) {
-  const [recs, setRecs] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [added, setAdded] = useState({})
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true); setError(null)
-      try {
-        setRecs(await neo4j.feedSeguidos(me.username))
-      } catch (err) {
-        setError(err)
-      }
-      setLoading(false)
-    })()
-  }, [me.username])
-
-  const agregar = async (username) => {
-    try {
-      await neo4j.crearAmistad(me.username, username)
-      setAdded((p) => ({ ...p, [username]: true }))
-    } catch (err) {
-      setError(err)
-    }
-  }
-
-  return (
-    <>
-      <p className="hint">
-        Neo4j muestra las personas con las que estás conectado directamente en el grafo.
-      </p>
-      {loading && <Loader label="Consultando el grafo…" />}
-      <ErrorNote error={error} />
-      {recs?.length === 0 && <Empty>Sin conexiones aún — agregá amigos desde «Personas».</Empty>}
-      <div className="feed-list">
-        {recs?.map((r, i) => (
-          <article key={r.username} className="card feed-entry reveal" style={{ '--delay': `${i * 35}ms` }}>
-            <header className="post-head">
-              <Avatar name={r.nombre || r.username} size={42} />
-              <div className="post-who">
-                <span className="post-author">{r.nombre || r.username}</span>
-                <span className="post-meta mono">@{r.username}</span>
-              </div>
-              <DbBadge db="neo4j" />
-            </header>
-            <footer className="post-foot">
-              <button
-                className="btn btn-sm"
-                disabled={added[r.username]}
-                onClick={() => agregar(r.username)}
-              >
-                {added[r.username] ? '✓ Agregado' : '+ Agregar'}
-              </button>
-            </footer>
-          </article>
-        ))}
-      </div>
-    </>
-  )
-}
-
 /* ---------------- Paneles laterales ---------------- */
 
 function SessionPanel({ session, validar }) {
+  const { logout } = useSession()
   const [info, setInfo] = useState(null)
   const [error, setError] = useState(null)
   const [busy, setBusy] = useState(false)
@@ -279,14 +156,14 @@ function SessionPanel({ session, validar }) {
     try {
       setInfo(await validar())
     } catch (err) {
-      setError(err)
+      await logout()
     }
     setBusy(false)
   }
 
   return (
     <Panel title="Sesión" db="redis">
-      <p className="mono session-token" title={session.token}>token: {session.token?.slice(0, 18)}…</p>
+      <p className="mono session-token">{session.token}</p>
       <button className="btn btn-sm" onClick={check} disabled={busy}>
         {busy ? 'Validando…' : 'Validar sesión'}
       </button>

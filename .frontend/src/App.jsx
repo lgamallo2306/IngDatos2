@@ -28,7 +28,7 @@ export default function App() {
           <Route path="/mensajes" element={<RequireSession><MessagesPage /></RequireSession>} />
           <Route path="/perfil/:username" element={<RequireSession><ProfilePage /></RequireSession>} />
           <Route path="/post/:postId" element={<RequireSession><PostDetailPage /></RequireSession>} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+<Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>

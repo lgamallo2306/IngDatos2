@@ -3,7 +3,6 @@ import types
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
-# Stub para cassandra-driver en Python 3.12 (asyncore fue eliminado)
 _stub = types.ModuleType("asyncore")
 _stub.dispatcher = object
 sys.modules.setdefault("asyncore", _stub)
@@ -20,26 +19,26 @@ def _parse_dt(s):
 
 def _feed_row(r):
     return {
-        "ownerUserId":    str(r.owner_user_id),
-        "createdAt":      r.created_at.isoformat() if r.created_at else None,
-        "postId":         str(r.post_id),
-        "authorId":       str(r.author_id) if r.author_id else None,
+        "ownerUserId": str(r.owner_user_id),
+        "createdAt": r.created_at.isoformat() if r.created_at else None,
+        "postId": str(r.post_id),
+        "authorId": str(r.author_id) if r.author_id else None,
         "authorUsername": r.author_username,
         "contentPreview": r.content_preview,
-        "postType":       r.post_type,
+        "postType": r.post_type,
     }
 
 
 def _msg_row(r):
     return {
         "conversationId": str(r.conversation_id),
-        "sentAt":         r.sent_at.isoformat() if r.sent_at else None,
-        "messageId":      str(r.message_id),
-        "senderId":       str(r.sender_id) if r.sender_id else None,
-        "receiverId":     str(r.receiver_id) if r.receiver_id else None,
-        "content":        r.content,
-        "read":           bool(r.is_read),
-        "mediaUrl":       r.media_url,
+        "sentAt": r.sent_at.isoformat() if r.sent_at else None,
+        "messageId": str(r.message_id),
+        "senderId": str(r.sender_id) if r.sender_id else None,
+        "receiverId": str(r.receiver_id) if r.receiver_id else None,
+        "content": r.content,
+        "read": bool(r.is_read),
+        "mediaUrl": r.media_url,
     }
 
 
@@ -52,10 +51,6 @@ class CassandraRepository:
 
     def close(self):
         self.cluster.shutdown()
-
-    # =========================================================================
-    # ESQUEMA
-    # =========================================================================
 
     def _crear_esquema(self):
         s = self.session
@@ -107,12 +102,16 @@ class CassandraRepository:
         )
         print("[CassandraRepository] Keyspace y tablas listas.")
 
-    # =========================================================================
-    # FEED
-    # =========================================================================
-
-    def insertar_feed(self, owner_user_id, created_at, post_id, author_id,
-                      author_username, content_preview, post_type):
+    def insertar_feed(
+        self,
+        owner_user_id,
+        created_at,
+        post_id,
+        author_id,
+        author_username,
+        content_preview,
+        post_type,
+    ):
         oid = UUID(str(owner_user_id))
         pid = UUID(str(post_id))
         aid = UUID(str(author_id))
@@ -121,78 +120,95 @@ class CassandraRepository:
             "INSERT INTO social_network.feed "
             "(owner_user_id, created_at, post_id, author_id, author_username, content_preview, post_type) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-            [oid, cat, pid, aid, author_username, content_preview, post_type]
+            [oid, cat, pid, aid, author_username, content_preview, post_type],
         )
         self.session.execute(
             "INSERT INTO social_network.feed_by_type "
             "(owner_user_id, post_type, created_at, post_id, author_id, content_preview) "
             "VALUES (%s, %s, %s, %s, %s, %s)",
-            [oid, post_type, cat, pid, aid, content_preview]
+            [oid, post_type, cat, pid, aid, content_preview],
         )
         self.session.execute(
             "INSERT INTO social_network.feed_by_author "
             "(author_id, created_at, post_id, owner_user_id, content_preview, post_type) "
             "VALUES (%s, %s, %s, %s, %s, %s)",
-            [aid, cat, pid, oid, content_preview, post_type]
+            [aid, cat, pid, oid, content_preview, post_type],
         )
 
     def obtener_feed(self, owner_id):
         rows = self.session.execute(
             "SELECT * FROM social_network.feed WHERE owner_user_id = %s LIMIT 50",
-            [UUID(str(owner_id))]
+            [UUID(str(owner_id))],
         )
         return [_feed_row(r) for r in rows]
 
     def eliminar_feed(self, owner_id, created_at, post_id):
         self.session.execute(
             "DELETE FROM social_network.feed WHERE owner_user_id = %s AND created_at = %s AND post_id = %s",
-            [UUID(str(owner_id)), _parse_dt(created_at), UUID(str(post_id))]
+            [UUID(str(owner_id)), _parse_dt(created_at), UUID(str(post_id))],
         )
 
     def obtener_feed_rango(self, owner_id, desde, hasta):
         rows = self.session.execute(
             "SELECT * FROM social_network.feed WHERE owner_user_id = %s AND created_at >= %s AND created_at <= %s",
-            [UUID(str(owner_id)), _parse_dt(desde), _parse_dt(hasta)]
+            [UUID(str(owner_id)), _parse_dt(desde), _parse_dt(hasta)],
         )
         return [_feed_row(r) for r in rows]
 
     def obtener_feed_top_n(self, owner_id, n):
         rows = self.session.execute(
             "SELECT * FROM social_network.feed WHERE owner_user_id = %s LIMIT %s",
-            [UUID(str(owner_id)), int(n)]
+            [UUID(str(owner_id)), int(n)],
         )
         return [_feed_row(r) for r in rows]
 
     def obtener_feed_por_tipo(self, owner_id, post_type):
         rows = self.session.execute(
             "SELECT * FROM social_network.feed_by_type WHERE owner_user_id = %s AND post_type = %s",
-            [UUID(str(owner_id)), post_type]
+            [UUID(str(owner_id)), post_type],
         )
-        return [{
-            "ownerUserId": str(r.owner_user_id), "createdAt": r.created_at.isoformat() if r.created_at else None,
-            "postId": str(r.post_id), "authorId": str(r.author_id) if r.author_id else None,
-            "authorUsername": None, "contentPreview": r.content_preview, "postType": post_type,
-        } for r in rows]
+        return [
+            {
+                "ownerUserId": str(r.owner_user_id),
+                "createdAt": r.created_at.isoformat() if r.created_at else None,
+                "postId": str(r.post_id),
+                "authorId": str(r.author_id) if r.author_id else None,
+                "authorUsername": None,
+                "contentPreview": r.content_preview,
+                "postType": post_type,
+            }
+            for r in rows
+        ]
 
     def obtener_feed_por_autor(self, author_id):
         aid = UUID(str(author_id))
         rows = self.session.execute(
-            "SELECT * FROM social_network.feed_by_author WHERE author_id = %s",
-            [aid]
+            "SELECT * FROM social_network.feed_by_author WHERE author_id = %s", [aid]
         )
-        return [{
-            "ownerUserId": str(r.owner_user_id) if r.owner_user_id else None,
-            "createdAt": r.created_at.isoformat() if r.created_at else None,
-            "postId": str(r.post_id), "authorId": str(aid),
-            "authorUsername": None, "contentPreview": r.content_preview, "postType": r.post_type,
-        } for r in rows]
+        return [
+            {
+                "ownerUserId": str(r.owner_user_id) if r.owner_user_id else None,
+                "createdAt": r.created_at.isoformat() if r.created_at else None,
+                "postId": str(r.post_id),
+                "authorId": str(aid),
+                "authorUsername": None,
+                "contentPreview": r.content_preview,
+                "postType": r.post_type,
+            }
+            for r in rows
+        ]
 
-    # =========================================================================
-    # MENSAJES
-    # =========================================================================
-
-    def insertar_mensaje(self, conversation_id, sent_at, message_id, sender_id,
-                         receiver_id, content, is_read=False, media_url=None):
+    def insertar_mensaje(
+        self,
+        conversation_id,
+        sent_at,
+        message_id,
+        sender_id,
+        receiver_id,
+        content,
+        is_read=False,
+        media_url=None,
+    ):
         cid = UUID(str(conversation_id))
         mid = UUID(str(message_id)) if message_id else uuid4()
         sid = UUID(str(sender_id))
@@ -202,25 +218,25 @@ class CassandraRepository:
             "INSERT INTO social_network.messages "
             "(conversation_id, sent_at, message_id, sender_id, receiver_id, content, is_read, media_url) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-            [cid, sat, mid, sid, rid, content, is_read, media_url]
+            [cid, sat, mid, sid, rid, content, is_read, media_url],
         )
         if not is_read:
             self.session.execute(
                 "INSERT INTO social_network.messages_unread "
                 "(conversation_id, sent_at, message_id, sender_id, content) VALUES (%s, %s, %s, %s, %s)",
-                [cid, sat, mid, sid, content]
+                [cid, sat, mid, sid, content],
             )
         self.session.execute(
             "INSERT INTO social_network.messages_by_sender "
             "(sender_id, sent_at, message_id, conversation_id, receiver_id, content) VALUES (%s, %s, %s, %s, %s, %s)",
-            [sid, sat, mid, cid, rid, content]
+            [sid, sat, mid, cid, rid, content],
         )
         return mid, sat
 
     def obtener_mensajes(self, conv_id):
         rows = self.session.execute(
             "SELECT * FROM social_network.messages WHERE conversation_id = %s",
-            [UUID(str(conv_id))]
+            [UUID(str(conv_id))],
         )
         return [_msg_row(r) for r in rows]
 
@@ -228,69 +244,104 @@ class CassandraRepository:
         cid, sat, mid = UUID(str(conv_id)), _parse_dt(sent_at), UUID(str(msg_id))
         row = self.session.execute(
             "SELECT * FROM social_network.messages WHERE conversation_id = %s AND sent_at = %s AND message_id = %s",
-            [cid, sat, mid]
+            [cid, sat, mid],
         ).one()
         if row:
             self.session.execute(
                 "INSERT INTO social_network.messages "
                 "(conversation_id, sent_at, message_id, sender_id, receiver_id, content, is_read, media_url) "
                 "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                [cid, sat, mid, row.sender_id, row.receiver_id, row.content, True, row.media_url]
+                [
+                    cid,
+                    sat,
+                    mid,
+                    row.sender_id,
+                    row.receiver_id,
+                    row.content,
+                    True,
+                    row.media_url,
+                ],
             )
             self.session.execute(
                 "DELETE FROM social_network.messages_unread "
                 "WHERE conversation_id = %s AND sent_at = %s AND message_id = %s",
-                [cid, sat, mid]
+                [cid, sat, mid],
             )
             return True
         return False
 
     def eliminar_mensaje(self, conv_id, sent_at, msg_id):
         cid, sat, mid = UUID(str(conv_id)), _parse_dt(sent_at), UUID(str(msg_id))
+
+        row = self.session.execute(
+            "SELECT sender_id FROM social_network.messages "
+            "WHERE conversation_id = %s AND sent_at = %s AND message_id = %s",
+            [cid, sat, mid],
+        ).one()
         self.session.execute(
             "DELETE FROM social_network.messages WHERE conversation_id = %s AND sent_at = %s AND message_id = %s",
-            [cid, sat, mid]
+            [cid, sat, mid],
         )
         self.session.execute(
             "DELETE FROM social_network.messages_unread WHERE conversation_id = %s AND sent_at = %s AND message_id = %s",
-            [cid, sat, mid]
+            [cid, sat, mid],
         )
+        if row:
+            self.session.execute(
+                "DELETE FROM social_network.messages_by_sender "
+                "WHERE sender_id = %s AND sent_at = %s AND message_id = %s",
+                [row.sender_id, sat, mid],
+            )
 
     def obtener_mensajes_rango(self, conv_id, desde, hasta):
         rows = self.session.execute(
             "SELECT * FROM social_network.messages WHERE conversation_id = %s AND sent_at >= %s AND sent_at <= %s",
-            [UUID(str(conv_id)), _parse_dt(desde), _parse_dt(hasta)]
+            [UUID(str(conv_id)), _parse_dt(desde), _parse_dt(hasta)],
         )
         return [_msg_row(r) for r in rows]
 
     def obtener_mensajes_desde(self, conv_id, desde):
         rows = self.session.execute(
             "SELECT * FROM social_network.messages WHERE conversation_id = %s AND sent_at >= %s",
-            [UUID(str(conv_id)), _parse_dt(desde)]
+            [UUID(str(conv_id)), _parse_dt(desde)],
         )
         return [_msg_row(r) for r in rows]
 
     def obtener_mensajes_no_leidos(self, conv_id):
         rows = self.session.execute(
             "SELECT * FROM social_network.messages_unread WHERE conversation_id = %s",
-            [UUID(str(conv_id))]
+            [UUID(str(conv_id))],
         )
-        return [{
-            "conversationId": str(r.conversation_id), "sentAt": r.sent_at.isoformat() if r.sent_at else None,
-            "messageId": str(r.message_id), "senderId": str(r.sender_id) if r.sender_id else None,
-            "receiverId": None, "content": r.content, "read": False, "mediaUrl": None,
-        } for r in rows]
+        return [
+            {
+                "conversationId": str(r.conversation_id),
+                "sentAt": r.sent_at.isoformat() if r.sent_at else None,
+                "messageId": str(r.message_id),
+                "senderId": str(r.sender_id) if r.sender_id else None,
+                "receiverId": None,
+                "content": r.content,
+                "read": False,
+                "mediaUrl": None,
+            }
+            for r in rows
+        ]
 
     def obtener_mensajes_por_sender(self, sender_id):
         sid = UUID(str(sender_id))
         rows = self.session.execute(
             "SELECT * FROM social_network.messages_by_sender WHERE sender_id = %s",
-            [sid]
+            [sid],
         )
-        return [{
-            "conversationId": str(r.conversation_id) if r.conversation_id else None,
-            "sentAt": r.sent_at.isoformat() if r.sent_at else None,
-            "messageId": str(r.message_id), "senderId": str(sid),
-            "receiverId": str(r.receiver_id) if r.receiver_id else None,
-            "content": r.content, "read": False, "mediaUrl": None,
-        } for r in rows]
+        return [
+            {
+                "conversationId": str(r.conversation_id) if r.conversation_id else None,
+                "sentAt": r.sent_at.isoformat() if r.sent_at else None,
+                "messageId": str(r.message_id),
+                "senderId": str(sid),
+                "receiverId": str(r.receiver_id) if r.receiver_id else None,
+                "content": r.content,
+                "read": False,
+                "mediaUrl": None,
+            }
+            for r in rows
+        ]

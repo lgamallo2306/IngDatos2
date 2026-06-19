@@ -12,7 +12,6 @@ export const cassandra = {
   feedRango: (ownerId, desde, hasta) =>
     http(`${base}/feed/${enc(ownerId)}/rango?desde=${enc(desde)}&hasta=${enc(hasta)}`),
   feedPorAutor: (authorId) => http(`${base}/feed/autor/${enc(authorId)}`),
-  crearFeed: (body) => http(`${base}/feed`, { method: 'POST', body }),
   eliminarFeed: (ownerId, createdAt, postId) =>
     http(`${base}/feed/${enc(ownerId)}/${enc(createdAt)}/${enc(postId)}`, { method: 'DELETE' }),
 

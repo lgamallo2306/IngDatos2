@@ -52,6 +52,7 @@ export default function ProfilePage() {
         <div className="profile-id">
           <h1 className="profile-name">{user.display_name || user.username}</h1>
           <span className="mono profile-handle">@{user.username}</span>
+          <span className="mono profile-uuid">{user.user_id}</span>
           {user.bio && <p className="profile-bio">{user.bio}</p>}
           <p className="profile-meta mono">
             {user.location && <>⌖ {user.location} · </>}

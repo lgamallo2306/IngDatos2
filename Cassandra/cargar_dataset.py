@@ -7,7 +7,7 @@ RUTA_DATASET = os.path.join(os.path.dirname(__file__), "..", "datasetMediano.jso
 
 
 def cargar_dataset(repo, ruta=RUTA_DATASET):
-    """Carga el feed y los mensajes del dataset en Cassandra. Devuelve (feed, mensajes)."""
+
     with open(ruta, "r", encoding="utf-8") as archivo:
         datos = json.load(archivo)
 
@@ -25,7 +25,7 @@ def cargar_dataset(repo, ruta=RUTA_DATASET):
             )
             feed_count += 1
         except Exception as e:
-            print(f"[cargar_dataset] Error en feed: {e}")
+            print(f"[cargar_dataset] Error en feed: {e }")
 
     msg_count = 0
     for mensaje in datos.get("messages", []):
@@ -42,7 +42,7 @@ def cargar_dataset(repo, ruta=RUTA_DATASET):
             )
             msg_count += 1
         except Exception as e:
-            print(f"[cargar_dataset] Error en mensaje: {e}")
+            print(f"[cargar_dataset] Error en mensaje: {e }")
 
     return feed_count, msg_count
 
@@ -52,6 +52,6 @@ if __name__ == "__main__":
     repositorio = CassandraRepository()
     try:
         feed, mensajes = cargar_dataset(repositorio)
-        print(f"Carga finalizada: {feed} entradas de feed, {mensajes} mensajes")
+        print(f"Carga finalizada: {feed } entradas de feed, {mensajes } mensajes")
     finally:
         repositorio.close()
