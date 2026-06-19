@@ -20,15 +20,14 @@ npm run dev      # http://localhost:5173
 | Redis     | Flask (`Redis/app.py`)            | 6001   | `python app.py`                                  |
 | Cassandra | Javalin (`Cassandra/`)            | 7000   | `mvn exec:java` / correr `Main`                  |
 
-> Nota: el puerto de Redis se cambió de 6000 a 6001 porque los navegadores
-> bloquean el 6000 (puerto "inseguro" X11).
+
 
 Si algún puerto difiere, crear `frontend/.env.local`:
 
 ```
 VITE_MONGO_URL=http://localhost:8000
 VITE_NEO4J_URL=http://localhost:5000
-VITE_REDIS_URL=http://localhost:6001
+VITE_REDIS_URL=http://localhost:5001
 VITE_CASSANDRA_URL=http://localhost:7000
 ```
 
