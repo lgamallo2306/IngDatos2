@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSession } from '../context/SessionContext'
 import { mongo } from '../api/mongo'
 import { neo4j } from '../api/neo4j'
@@ -12,7 +12,7 @@ import { fmtDate } from '../utils/fmt'
 
 export default function ProfilePage() {
   const { username } = useParams()
-  const { session } = useSession()
+  const { session, logout } = useSession()
   const isMe = session.user.username === username
 
   const [user, setUser] = useState(null)
@@ -82,6 +82,7 @@ export default function ProfilePage() {
         <aside className="col-side">
           <StatsPanel userId={user.user_id} />
           {isMe && <EditProfile user={user} onSaved={setUser} />}
+          {isMe && <DangerZone user={user} logout={logout} />}
         </aside>
       </div>
     </div>
@@ -165,6 +166,35 @@ function StatsPanel({ userId }) {
           )}
         </>
       )}
+    </Panel>
+  )
+}
+
+function DangerZone({ user, logout }) {
+  const navigate = useNavigate()
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState(null)
+
+  const eliminar = async () => {
+    if (!window.confirm(`¿Seguro que querés eliminar la cuenta @${user.username}? Esta acción es irreversible.`)) return
+    setBusy(true)
+    try {
+      await mongo.deleteUser(user.user_id)
+      await logout()
+      navigate('/login')
+    } catch (err) {
+      setError(err)
+      setBusy(false)
+    }
+  }
+
+  return (
+    <Panel title="Zona peligrosa" db="mongo">
+      <p className="hint">Eliminar tu cuenta borra tu perfil de MongoDB permanentemente.</p>
+      <button className="btn btn-sm danger" disabled={busy} onClick={eliminar}>
+        {busy ? 'Eliminando…' : 'Eliminar mi cuenta'}
+      </button>
+      <ErrorNote error={error} />
     </Panel>
   )
 }

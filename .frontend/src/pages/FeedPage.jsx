@@ -58,7 +58,7 @@ function CassandraFeed({ me }) {
       else if (mode === 'tipo') data = await cassandra.feedPorTipo(me.user_id, tipo)
       else if (mode === 'rango') {
         if (!desde || !hasta) { setLoading(false); return }
-        data = await cassandra.feedRango(me.user_id, new Date(desde).toISOString(), new Date(hasta).toISOString())
+        data = await cassandra.feedRango(me.user_id, new Date(desde).toISOString(), new Date(hasta + 'T23:59:59').toISOString())
       } else if (mode === 'autor') {
         if (!autor.trim()) { setLoading(false); return }
         data = await cassandra.feedPorAutor(autor.trim())
@@ -102,9 +102,9 @@ function CassandraFeed({ me }) {
         )}
         {mode === 'rango' && (
           <>
-            <input className="input input-sm" type="datetime-local" value={desde} onChange={(e) => setDesde(e.target.value)} />
+            <input className="input input-sm" type="date" lang="es" value={desde} onChange={(e) => setDesde(e.target.value)} />
             <span className="mono">→</span>
-            <input className="input input-sm" type="datetime-local" value={hasta} onChange={(e) => setHasta(e.target.value)} />
+            <input className="input input-sm" type="date" lang="es" value={hasta} onChange={(e) => setHasta(e.target.value)} />
           </>
         )}
         {mode === 'autor' && (

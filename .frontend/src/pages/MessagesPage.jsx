@@ -104,7 +104,7 @@ function Conversation({ convId, me }) {
         data = await cassandra.mensajesDesde(convId, new Date(desde).toISOString())
       } else {
         if (!desde || !hasta) { setLoading(false); return }
-        data = await cassandra.mensajesRango(convId, new Date(desde).toISOString(), new Date(hasta).toISOString())
+        data = await cassandra.mensajesRango(convId, new Date(desde).toISOString(), new Date(hasta + 'T23:59:59').toISOString())
       }
       // Cassandra devuelve DESC por clustering: mostramos cronológico
       data = [...data].sort((a, b) => (a.sentAt > b.sentAt ? 1 : -1))
@@ -172,10 +172,10 @@ function Conversation({ convId, me }) {
             <option value="rango">Rango</option>
           </select>
           {(mode === 'desde' || mode === 'rango') && (
-            <input className="input input-sm" type="datetime-local" value={desde} onChange={(e) => setDesde(e.target.value)} />
+            <input className="input input-sm" type="date" lang="es" value={desde} onChange={(e) => setDesde(e.target.value)} />
           )}
           {mode === 'rango' && (
-            <input className="input input-sm" type="datetime-local" value={hasta} onChange={(e) => setHasta(e.target.value)} />
+            <input className="input input-sm" type="date" lang="es" value={hasta} onChange={(e) => setHasta(e.target.value)} />
           )}
           <button className="btn btn-sm" onClick={load}>⟳</button>
         </div>
@@ -198,7 +198,7 @@ function Conversation({ convId, me }) {
                     <a className="mono bubble-media" href={m.mediaUrl} target="_blank" rel="noreferrer">⌗ adjunto</a>
                   )}
                   <span className="bubble-meta mono">
-                    {fmtDate(m.sentAt)} · {m.read ? '✓✓ leído' : '○ sin leer'}
+                    {fmtDate(m.sentAt)}{!mine && ` · ${m.read ? '✓✓ leído' : '○ sin leer'}`}
                   </span>
                   <span className="bubble-actions">
                     {!m.read && !mine && (

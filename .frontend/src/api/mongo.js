@@ -21,4 +21,5 @@ export const mongo = {
   getPost: (postId) => http(`${base}/posts/${encodeURIComponent(postId)}`),
   createPost: (body) => http(`${base}/posts/`, { method: 'POST', body }),
   likePost: (postId) => http(`${base}/posts/${encodeURIComponent(postId)}/like`, { method: 'PATCH' }),
+  deleteUser: (userId) => http(`${base}/users/${encodeURIComponent(userId)}`, { method: 'DELETE' }),
 }

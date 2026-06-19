@@ -47,9 +47,6 @@ export default function LoginPage() {
         <h1 className="login-title">
           Vínculo<span className="logo-star">✶</span>
         </h1>
-        <p className="login-tagline">
-          Una red social. <em>Cuatro bases de datos.</em>
-        </p>
         <ul className="login-db-list">
           {Object.entries(DB).map(([key, meta]) => (
             <li key={key} className="reveal" style={{ '--db': meta.color }}>
